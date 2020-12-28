@@ -1,0 +1,16 @@
+.bigger-square-container {
+    border: 1px solid black;
+    width: 85px;
+    height: 85px;
+}
+
+.smaller-square-container {
+    box-sizing: border-box;
+    border: 1px solid black;
+    width: 18vw;
+    height: 18vw;
+}
+
+.game-square-image {
+    height: 80%;
+}

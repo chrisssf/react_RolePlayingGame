@@ -1,0 +1,10 @@
+.board-container {
+    /* flex: 1; */
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+}
