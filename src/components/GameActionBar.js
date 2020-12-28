@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import MovementPhase from './MovementPhase.js'
 
 
-const GameActionBar = ( { setSelectedCharacter, currentPhase, setCurrentPhase } ) =>{
+const GameActionBar = ( { setSelectedCharacter, currentPhase, setCurrentPhase, calculateMovementLocations } ) =>{
 
     return (
         <div>
@@ -10,6 +10,7 @@ const GameActionBar = ( { setSelectedCharacter, currentPhase, setCurrentPhase } 
             <MovementPhase 
                 setSelectedCharacter={setSelectedCharacter}
                 setCurrentPhase={setCurrentPhase}
+                calculateMovementLocations={calculateMovementLocations}
             />
         </div>
     )

@@ -17,10 +17,11 @@ const width = window.innerWidth
 
 
 
-const GameSquare = ({ squareNumber, playerPositions }) =>{
+const GameSquare = ({ squareNumber, playerPositions, movableSquares }) =>{
 
-    const [image, setImage] = useState(null)
-    const [modalVisable, setModalVisable] = useState(false)
+    const [ image, setImage ] = useState(null)
+    const [ modalVisable, setModalVisable ] = useState(false)
+    const [ squareStyling, setSquareStyling ] = useState("")
 
     const mage = {
         "image": "mage",
@@ -32,6 +33,7 @@ const GameSquare = ({ squareNumber, playerPositions }) =>{
         "spells": null
     }
 
+    
 
 useEffect(() => {
     if (playerPositions[0] === squareNumber) {
@@ -51,14 +53,23 @@ useEffect(() => {
     }
 }, [])
 
+// --- if image === null and movableSquares.includes(squareNumber) make a class with green background ---------------------
+// need way of preventing moving on top of another character!!!!!!!!!!!!!!!!!
+
+useEffect(() => {
+    if ( image === null && movableSquares.includes(squareNumber) ) {
+        setSquareStyling("movable")
+    } else {
+        setSquareStyling("")
+    }
+}, [movableSquares])
+
 
     console.log(width);
     
     if (width > 500) {
         return (
-            // <div style={styles.biggerContainer}>
-            <div className="bigger-square-container">
-
+            <div className={`bigger-square-container ${squareStyling}`}>
                 {image ? <img src={image} alt={image} className="game-square-image"></img> : <p>{squareNumber}</p>}
                 {/* <p>{squareNumber}</p>
                 {image && <img src={image} alt={image} className="game-square-image"></img>} */}
@@ -95,7 +106,8 @@ useEffect(() => {
     } else {
         return (
             // <div style={styles.container}>
-            <div className="smaller-square-container">
+            <div className={`smaller-square-container ${squareStyling}`}>
+
                 {/* <p>{squareNumber}</p> */}
                 {image ? <img src={image} alt={image} className="game-square-image"></img> : <p>{squareNumber}</p>}
 

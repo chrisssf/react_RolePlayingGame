@@ -11,6 +11,10 @@
     height: 18vw;
 }
 
+.movable {
+    background-color: palegreen;
+}
+
 .game-square-image {
     height: 80%;
 }

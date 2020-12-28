@@ -4,11 +4,7 @@ import './GameBoard.css'
 
 import GameSquare from './GameSquare.js'
 
-const GameBoard = ({ selectedCharacter, currentPhase }) => {
-
-    const [ magicPosition, setMagicPosition ] = useState(16)
-    const [ meleePosition, setMeleePosition ] = useState(6)
-    const [ healerPosition, setHealerPosition ] = useState(0)
+const GameBoard = ({ meleePosition, magicPosition, healerPosition, selectedCharacter, currentPhase, movableSquares }) => {
 
 
     const fillGameBoard = () => {
@@ -16,29 +12,14 @@ const GameBoard = ({ selectedCharacter, currentPhase }) => {
         const playerPositions = [magicPosition, meleePosition, healerPosition]
         console.log(playerPositions);
         
-
-        // const gameSquares = []
-
-        // for ( let i = 1; i < 26; i++ ) {
-        //     gameSquares.push(i)
-        // }  
-        // return <FlatList 
-        //     data={gameSquares}
-        //     renderItem={({ item }) => <GameSquare squareNumber={item} />}
-        //     keyExtractor={item => item}
-        //     numColumns={5}
-        // />
-
-
-        // using grid which doesnt work with react native
         const gameSquares = []
         for ( let i = 1; i < 26; i++ ) {
-            gameSquares.push(<GameSquare key={i} playerPositions={playerPositions} squareNumber={i}/>)
+            gameSquares.push(<GameSquare key={i} playerPositions={playerPositions} squareNumber={i} movableSquares={movableSquares}/>)
         }   
-        // console.log(gameSquares);
-        
         return gameSquares  
     }
+
+    
 
     return (
         <div>
