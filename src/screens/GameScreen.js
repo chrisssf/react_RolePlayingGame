@@ -67,6 +67,9 @@ const GameScreen = () =>{
                 magicPosition={magicPosition}
                 healerPosition={healerPosition}
                 meleePosition={meleePosition}
+                setMagicPosition={setMagicPosition}
+                setHealerPosition={setHealerPosition}
+                setMeleePosition={setMeleePosition}
                 movableSquares={movableSquares}
             />
             <GameActionBar 

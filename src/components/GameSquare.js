@@ -16,11 +16,20 @@ import boardImages from '../assets/boardImages'
 const width = window.innerWidth
 
 
-
-const GameSquare = ({ squareNumber, playerPositions, movableSquares }) =>{
+const GameSquare = ({ 
+    squareNumber, 
+    // playerPositions, 
+    movableSquares, 
+    selectedCharacter,
+    meleePosition,
+    magicPosition,
+    healerPosition,
+    setMeleePosition, 
+    setMagicPosition, 
+    setHealerPosition, }) =>{
 
     const [ image, setImage ] = useState(null)
-    const [ modalVisable, setModalVisable ] = useState(false)
+    // const [ modalVisable, setModalVisable ] = useState(false)
     const [ squareStyling, setSquareStyling ] = useState("")
 
     const mage = {
@@ -35,41 +44,54 @@ const GameSquare = ({ squareNumber, playerPositions, movableSquares }) =>{
 
     
 
-useEffect(() => {
-    if (playerPositions[0] === squareNumber) {
-        // setImage(mage.image)
-        // setImage('../assets/mage.png')
-        setImage(mageImage)
-    } else if (playerPositions[1] === squareNumber) {
-        // setImage("knight")
-        // setImage('../assets/knight.png')
-        setImage(knightImage)
-    } else if (playerPositions[2] === squareNumber) {
-        setImage(null) 
+    useEffect(() => {
+        if (magicPosition === squareNumber) {
+            // setImage(mage.image)
+            // setImage('../assets/mage.png')
+            setImage(mageImage)
+        } else if (meleePosition === squareNumber) {
+            // setImage("knight")
+            // setImage('../assets/knight.png')
+            setImage(knightImage)
+        } else if (healerPosition === squareNumber) {
+            setImage(null) 
+        } else {
+            setImage(null)
+        }
+
+        // if (squareNumber === 3){
+        //     setModalVisable(true)
+        // }
+    }, [magicPosition, meleePosition, healerPosition])
+
+    
+    useEffect(() => {
+        if ( image === null && movableSquares.includes(squareNumber) ) {
+            setSquareStyling("movable")
+        } else {
+            setSquareStyling("")
+        }
+    }, [movableSquares])
+
+    const handleClickSquare = () => {
+        if ( squareStyling === "movable"){
+            switch (selectedCharacter) {
+                case "meleePlayer":
+                    setMeleePosition(squareNumber)
+                    break
+                case "magicPlayer":
+                    setMagicPosition(squareNumber)
+                    break
+                case "healerPlayer":
+                    setHealerPosition(squareNumber)
+                    break
+            }
+        }
     }
-
-    if (squareNumber === 3){
-        setModalVisable(true)
-    }
-}, [])
-
-// --- if image === null and movableSquares.includes(squareNumber) make a class with green background ---------------------
-// need way of preventing moving on top of another character!!!!!!!!!!!!!!!!!
-
-useEffect(() => {
-    if ( image === null && movableSquares.includes(squareNumber) ) {
-        setSquareStyling("movable")
-    } else {
-        setSquareStyling("")
-    }
-}, [movableSquares])
-
-
-    console.log(width);
     
     if (width > 500) {
         return (
-            <div className={`bigger-square-container ${squareStyling}`}>
+            <div onClick={() => handleClickSquare()} className={`bigger-square-container ${squareStyling}`}>
                 {image ? <img src={image} alt={image} className="game-square-image"></img> : <p>{squareNumber}</p>}
                 {/* <p>{squareNumber}</p>
                 {image && <img src={image} alt={image} className="game-square-image"></img>} */}

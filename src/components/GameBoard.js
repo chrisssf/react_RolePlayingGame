@@ -4,17 +4,38 @@ import './GameBoard.css'
 
 import GameSquare from './GameSquare.js'
 
-const GameBoard = ({ meleePosition, magicPosition, healerPosition, selectedCharacter, currentPhase, movableSquares }) => {
+const GameBoard = ({ 
+    meleePosition, 
+    magicPosition, 
+    healerPosition, 
+    setMeleePosition, 
+    setMagicPosition, 
+    setHealerPosition, 
+    selectedCharacter, 
+    currentPhase, 
+    movableSquares }) => {
 
 
     const fillGameBoard = () => {
 
-        const playerPositions = [magicPosition, meleePosition, healerPosition]
-        console.log(playerPositions);
+        // const playerPositions = [magicPosition, meleePosition, healerPosition]
+        // console.log(playerPositions);
         
         const gameSquares = []
         for ( let i = 1; i < 26; i++ ) {
-            gameSquares.push(<GameSquare key={i} playerPositions={playerPositions} squareNumber={i} movableSquares={movableSquares}/>)
+            gameSquares.push(<GameSquare 
+                key={i} 
+                // playerPositions={playerPositions} 
+                squareNumber={i} 
+                selectedCharacter={selectedCharacter}
+                movableSquares={movableSquares}
+                meleePosition={meleePosition}
+                magicPosition={magicPosition}
+                healerPosition={healerPosition}
+                setMeleePosition={setMeleePosition}
+                setMagicPosition={setMagicPosition}
+                setHealerPosition={setHealerPosition}
+            />)
         }   
         return gameSquares  
     }
