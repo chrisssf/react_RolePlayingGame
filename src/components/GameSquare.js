@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './GameSquare.css'
 import mageImage from '../assets/mage.png'
 import knightImage from '../assets/knight.png'
+import healerImage from '../assets/healer.png'
+
 
 // import { StyleSheet, Text, View, Dimensions, Image, Modal } from 'react-native';
 
@@ -54,7 +56,7 @@ const GameSquare = ({
             // setImage('../assets/knight.png')
             setImage(knightImage)
         } else if (healerPosition === squareNumber) {
-            setImage(null) 
+            setImage(healerImage) 
         } else {
             setImage(null)
         }
@@ -64,7 +66,7 @@ const GameSquare = ({
         // }
     }, [magicPosition, meleePosition, healerPosition])
 
-    
+
     useEffect(() => {
         if ( image === null && movableSquares.includes(squareNumber) ) {
             setSquareStyling("movable")
@@ -128,7 +130,7 @@ const GameSquare = ({
     } else {
         return (
             // <div style={styles.container}>
-            <div className={`smaller-square-container ${squareStyling}`}>
+            <div onClick={() => handleClickSquare()} className={`smaller-square-container ${squareStyling}`}>
 
                 {/* <p>{squareNumber}</p> */}
                 {image ? <img src={image} alt={image} className="game-square-image"></img> : <p>{squareNumber}</p>}

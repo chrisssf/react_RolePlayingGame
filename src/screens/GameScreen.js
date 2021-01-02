@@ -6,8 +6,8 @@ import GameActionBar from '../components/GameActionBar'
 const GameScreen = () =>{
 
     const [ magicPosition, setMagicPosition ] = useState(16)
-    const [ meleePosition, setMeleePosition ] = useState(6)
-    const [ healerPosition, setHealerPosition ] = useState(0)
+    const [ meleePosition, setMeleePosition ] = useState(11)
+    const [ healerPosition, setHealerPosition ] = useState(6)
 
     const [ selectedCharacter, setSelectedCharacter ] = useState(null)
     const [ currentPhase, setCurrentPhase ] = useState(null)
