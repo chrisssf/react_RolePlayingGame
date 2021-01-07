@@ -5,15 +5,17 @@ import './GameBoard.css'
 import GameSquare from './GameSquare.js'
 
 const GameBoard = ({ 
-    meleePosition, 
-    magicPosition, 
-    healerPosition, 
-    setMeleePosition, 
-    setMagicPosition, 
-    setHealerPosition, 
+    // meleePosition, 
+    // magicPosition, 
+    // healerPosition, 
+    // setMeleePosition, 
+    // setMagicPosition, 
+    // setHealerPosition, 
     selectedCharacter, 
     currentPhase, 
-    movableSquares }) => {
+    movableSquares,
+    playerCharacters,
+    setPlayerCharacters }) => {
 
 
     const fillGameBoard = () => {
@@ -29,12 +31,14 @@ const GameBoard = ({
                 squareNumber={i} 
                 selectedCharacter={selectedCharacter}
                 movableSquares={movableSquares}
-                meleePosition={meleePosition}
-                magicPosition={magicPosition}
-                healerPosition={healerPosition}
-                setMeleePosition={setMeleePosition}
-                setMagicPosition={setMagicPosition}
-                setHealerPosition={setHealerPosition}
+                // meleePosition={meleePosition}
+                // magicPosition={magicPosition}
+                // healerPosition={healerPosition}
+                // setMeleePosition={setMeleePosition}
+                // setMagicPosition={setMagicPosition}
+                // setHealerPosition={setHealerPosition}
+                playerCharacters={playerCharacters}
+                setPlayerCharacters={setPlayerCharacters}
             />)
         }   
         return gameSquares  

@@ -1,11 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
-const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovementLocations  }) =>{
+const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovementLocations, setMovableSquares, playerCharacters, setPlayerCharacters  }) =>{
 
     const [ movedCharacters, setMovedCharacters ] = useState([])
     const [ characterMoving, setCharacterMoving ] = useState("")
+    const startingPosition = useRef(null)
+    // this didnt need to be useRef, also work with state
+    // const [ startingPosition, setStartingPosition ] = useState(null)
 
     const handleSelectCharacter = (character) => {
+        startingPosition.current = playerCharacters[character]["position"]
+        // setStartingPosition(playerCharacters[character]["position"])
+
         setSelectedCharacter(character)
         setCurrentPhase("movement")
         calculateMovementLocations(character, 2)
@@ -17,10 +23,17 @@ const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovemen
         setMovedCharacters([...movedCharacters, characterMoving])
         console.log("after push", movedCharacters)
         setCharacterMoving("")
+        setMovableSquares([])
     }
 
-    const needToWriteHandleCancel = () => {
-        console.log("NEED TO FIGURE THIS OUT")
+    const handleCancel = () => {
+        const tempPlayerCharacters = JSON.parse(JSON.stringify(playerCharacters))
+        tempPlayerCharacters[characterMoving]["position"] = startingPosition.current
+        // tempPlayerCharacters[characterMoving]["position"] = startingPosition
+        setPlayerCharacters(tempPlayerCharacters)
+        setCharacterMoving("")
+        setMovableSquares([])
+
     }
 
     return (
@@ -30,8 +43,8 @@ const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovemen
                 <div>
                     <p>Currently Moving {characterMoving}</p> 
                     <button onClick={() => handleFinishedCharacterMovement()}>Finish Moving {characterMoving}</button>
-                    <button onClick={() => needToWriteHandleCancel()}>Cancel</button>
-                    <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use charactes movement for this turn</p>
+                    <button onClick={() => handleCancel()}>Cancel</button>
+                    <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use characters movement for this turn</p>
                 </div>
             :
                 <div>

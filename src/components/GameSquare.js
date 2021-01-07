@@ -23,39 +23,61 @@ const GameSquare = ({
     // playerPositions, 
     movableSquares, 
     selectedCharacter,
-    meleePosition,
-    magicPosition,
-    healerPosition,
-    setMeleePosition, 
-    setMagicPosition, 
-    setHealerPosition, }) =>{
+    // meleePosition,
+    // magicPosition,
+    // healerPosition,
+    // setMeleePosition, 
+    // setMagicPosition, 
+    // setHealerPosition,
+    playerCharacters,
+    setPlayerCharacters }) =>{
 
     const [ image, setImage ] = useState(null)
     // const [ modalVisable, setModalVisable ] = useState(false)
     const [ squareStyling, setSquareStyling ] = useState("")
 
-    const mage = {
-        "image": "mage",
-        "maxHp": 10,
-        "currentHp": 6,
-        "baseAttack": 8, 
-        "equipedWeapon": null,
-        "inventory": null,
-        "spells": null
-    }
+    // const mage = {
+    //     "image": "mage",
+    //     "maxHp": 10,
+    //     "currentHp": 6,
+    //     "baseAttack": 8, 
+    //     "equipedWeapon": null,
+    //     "inventory": null,
+    //     "spells": null
+    // }
 
     
 
+    // useEffect(() => {
+    //     if (magicPosition === squareNumber) {
+    //         // setImage(mage.image)
+    //         // setImage('../assets/mage.png')
+    //         setImage(mageImage)
+    //     } else if (meleePosition === squareNumber) {
+    //         // setImage("knight")
+    //         // setImage('../assets/knight.png')
+    //         setImage(knightImage)
+    //     } else if (healerPosition === squareNumber) {
+    //         setImage(healerImage) 
+    //     } else {
+    //         setImage(null)
+    //     }
+
+    //     // if (squareNumber === 3){
+    //     //     setModalVisable(true)
+    //     // }
+    // }, [magicPosition, meleePosition, healerPosition])
+
     useEffect(() => {
-        if (magicPosition === squareNumber) {
+        if (playerCharacters["magicPlayer"]["position"] === squareNumber) {
             // setImage(mage.image)
             // setImage('../assets/mage.png')
             setImage(mageImage)
-        } else if (meleePosition === squareNumber) {
+        } else if (playerCharacters["meleePlayer"]["position"] === squareNumber) {
             // setImage("knight")
             // setImage('../assets/knight.png')
             setImage(knightImage)
-        } else if (healerPosition === squareNumber) {
+        } else if (playerCharacters["healerPlayer"]["position"] === squareNumber) {
             setImage(healerImage) 
         } else {
             setImage(null)
@@ -64,11 +86,23 @@ const GameSquare = ({
         // if (squareNumber === 3){
         //     setModalVisable(true)
         // }
-    }, [magicPosition, meleePosition, healerPosition])
+    }, [playerCharacters])
 
 
     useEffect(() => {
-        if ( image === null && movableSquares.includes(squareNumber) ) {
+        let currentImage = null
+        switch (selectedCharacter) {
+            case "meleePlayer":
+                currentImage = knightImage
+                break
+            case "magicPlayer":
+                currentImage = mageImage
+                break
+            case "healerPlayer":
+                currentImage = healerImage
+                break
+        }
+        if (( image === null || image === currentImage ) && movableSquares.includes(squareNumber) ) {
             setSquareStyling("movable")
         } else {
             setSquareStyling("")
@@ -77,17 +111,20 @@ const GameSquare = ({
 
     const handleClickSquare = () => {
         if ( squareStyling === "movable"){
-            switch (selectedCharacter) {
-                case "meleePlayer":
-                    setMeleePosition(squareNumber)
-                    break
-                case "magicPlayer":
-                    setMagicPosition(squareNumber)
-                    break
-                case "healerPlayer":
-                    setHealerPosition(squareNumber)
-                    break
-            }
+            // switch (selectedCharacter) {
+            //     case "meleePlayer":
+            //         setMeleePosition(squareNumber)
+            //         break
+            //     case "magicPlayer":
+            //         setMagicPosition(squareNumber)
+            //         break
+            //     case "healerPlayer":
+            //         setHealerPosition(squareNumber)
+            //         break
+            // }
+            const tempPlayerCharacters = JSON.parse(JSON.stringify(playerCharacters))
+            tempPlayerCharacters[selectedCharacter]["position"] = squareNumber
+            setPlayerCharacters(tempPlayerCharacters)
         }
     }
     

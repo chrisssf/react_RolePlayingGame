@@ -5,9 +5,30 @@ import GameActionBar from '../components/GameActionBar'
 
 const GameScreen = () =>{
 
-    const [ magicPosition, setMagicPosition ] = useState(16)
-    const [ meleePosition, setMeleePosition ] = useState(11)
-    const [ healerPosition, setHealerPosition ] = useState(6)
+    // const [ magicPosition, setMagicPosition ] = useState(16)
+    // const [ meleePosition, setMeleePosition ] = useState(11)
+    // const [ healerPosition, setHealerPosition ] = useState(6)
+
+    let startingPlayerCharacters = {
+        meleePlayer: {
+            position: 11,
+            type: "Knight",
+            name: "Jeff"
+        },
+        magicPlayer: {
+            position: 16,
+            type: "Mage",
+            name: "Dave"
+        },
+        healerPlayer: {
+            position: 6,
+            type: "Priest",
+            name: "Bob"
+        }
+    }
+
+    const [ playerCharacters, setPlayerCharacters ] = useState(startingPlayerCharacters)
+
 
     const [ selectedCharacter, setSelectedCharacter ] = useState(null)
     const [ currentPhase, setCurrentPhase ] = useState(null)
@@ -22,17 +43,18 @@ const GameScreen = () =>{
         const boardHeight = 5
 
         const movableLocations = []
-        switch(characterToMove){
-            case "meleePlayer":
-                movableLocations.push(meleePosition)
-                break
-            case "magicPlayer":
-                movableLocations.push(magicPosition)
-                break
-            case "healerPlayer":
-                movableLocations.push(healerPosition)
-                break
-        }
+        // switch(characterToMove){
+        //     case "meleePlayer":
+        //         movableLocations.push(meleePosition)
+        //         break
+        //     case "magicPlayer":
+        //         movableLocations.push(magicPosition)
+        //         break
+        //     case "healerPlayer":
+        //         movableLocations.push(healerPosition)
+        //         break
+        // }
+        movableLocations.push(playerCharacters[characterToMove]["position"])
 
         for (let i = 1; i <= numberOfStepsAllowed; i++){
             movableLocations.forEach( movableLocation => {
@@ -64,19 +86,24 @@ const GameScreen = () =>{
             <GameBoard 
                 selectedCharacter={selectedCharacter} 
                 currentPhase={currentPhase}
-                magicPosition={magicPosition}
-                healerPosition={healerPosition}
-                meleePosition={meleePosition}
-                setMagicPosition={setMagicPosition}
-                setHealerPosition={setHealerPosition}
-                setMeleePosition={setMeleePosition}
+                // magicPosition={magicPosition}
+                // healerPosition={healerPosition}
+                // meleePosition={meleePosition}
+                // setMagicPosition={setMagicPosition}
+                // setHealerPosition={setHealerPosition}
+                // setMeleePosition={setMeleePosition}
                 movableSquares={movableSquares}
+                playerCharacters={playerCharacters}
+                setPlayerCharacters={setPlayerCharacters}
             />
             <GameActionBar 
                 setSelectedCharacter={setSelectedCharacter} 
                 currentPhase={currentPhase} 
                 setCurrentPhase={setCurrentPhase}
                 calculateMovementLocations={calculateMovementLocations}
+                setMovableSquares={setMovableSquares}
+                playerCharacters={playerCharacters}
+                setPlayerCharacters={setPlayerCharacters}
             />
 
             {/* <View style={styles.thing}></View>
