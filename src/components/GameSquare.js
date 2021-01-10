@@ -3,6 +3,7 @@ import './GameSquare.css'
 import mageImage from '../assets/mage.png'
 import knightImage from '../assets/knight.png'
 import healerImage from '../assets/healer.png'
+import orcImage from '../assets/orc.png'
 
 
 // import { StyleSheet, Text, View, Dimensions, Image, Modal } from 'react-native';

@@ -1,9 +1,29 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import GameBoard from '../components/GameBoard'
 import GameActionBar from '../components/GameActionBar'
 
+import Character from '../models/Character.js'
+import MeleePlayer from '../models/MeleePlayer.js'
+import MeleeWeapon from '../models/MeleeWeapon.js'
+
+import Enemy from '../models/Enemy.js'
+
 const GameScreen = () =>{
+
+    useEffect(() =>{
+        const bob = new Character("bob", 10, 20)
+        const orc = new Enemy("orc", 1, 100)
+        const ken = new MeleePlayer("ken", 10, 20)
+        const sword = new MeleeWeapon("sword-5", 5, "club")
+
+        ken.equipedWeapon = sword
+        ken.attack(orc)
+        console.log(orc)
+        console.log(ken)
+
+
+    }, [])
 
     // const [ magicPosition, setMagicPosition ] = useState(16)
     // const [ meleePosition, setMeleePosition ] = useState(11)
