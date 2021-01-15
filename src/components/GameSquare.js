@@ -31,7 +31,8 @@ const GameSquare = ({
     // setMagicPosition, 
     // setHealerPosition,
     playerCharacters,
-    setPlayerCharacters }) =>{
+    setPlayerCharacters,
+    enemyCharacters }) =>{
 
     const [ image, setImage ] = useState(null)
     // const [ modalVisable, setModalVisable ] = useState(false)
@@ -88,6 +89,12 @@ const GameSquare = ({
         //     setModalVisable(true)
         // }
     }, [playerCharacters])
+    
+    useEffect(() =>{
+        if (enemyCharacters["one"]["position"] === squareNumber){
+            setImage(orcImage)
+        }
+    }, [enemyCharacters, playerCharacters])
 
 
     useEffect(() => {

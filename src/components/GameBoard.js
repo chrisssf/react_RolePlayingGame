@@ -15,7 +15,8 @@ const GameBoard = ({
     currentPhase, 
     movableSquares,
     playerCharacters,
-    setPlayerCharacters }) => {
+    setPlayerCharacters,
+    enemyCharacters }) => {
 
 
     const fillGameBoard = () => {
@@ -39,6 +40,7 @@ const GameBoard = ({
                 // setHealerPosition={setHealerPosition}
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
+                enemyCharacters={enemyCharacters}
             />)
         }   
         return gameSquares  

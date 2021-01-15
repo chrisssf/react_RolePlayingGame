@@ -1,8 +1,8 @@
-function meleeWeapon(name, attackPower, type){
+function MeleeWeapon(name, attackPower, type){
     this.name = name
     this.attackPower = attackPower
     this.type = type
 
 }
 
-export default meleeWeapon
+export default MeleeWeapon

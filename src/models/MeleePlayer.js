@@ -1,7 +1,7 @@
 import Character from './Character.js'
 
-function MeleePlayer(name, attackPoints, healthPoints, type) {
-    Character.call(this, name, attackPoints, healthPoints)
+function MeleePlayer(name, attackPoints, healthPoints, position, type) {
+    Character.call(this, name, attackPoints, healthPoints, position)
     this.type = type
     this.equipedWeapon  = null
     this.weapons = []

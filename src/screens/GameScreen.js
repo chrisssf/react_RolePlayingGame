@@ -13,11 +13,13 @@ const GameScreen = () =>{
 
     useEffect(() =>{
         const bob = new Character("bob", 10, 20)
-        const orc = new Enemy("orc", 1, 100)
-        const ken = new MeleePlayer("ken", 10, 20)
-        const sword = new MeleeWeapon("sword-5", 5, "club")
+        const orc = new Enemy("orc", 1, 100, 15)
+        const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
+        const club = new MeleeWeapon("club-5", 5, "club")
 
-        ken.equipedWeapon = sword
+        orc.move(playerCharacters, enemyCharacters)
+
+        ken.equipedWeapon = club
         ken.attack(orc)
         console.log(orc)
         console.log(ken)
@@ -29,25 +31,43 @@ const GameScreen = () =>{
     // const [ meleePosition, setMeleePosition ] = useState(11)
     // const [ healerPosition, setHealerPosition ] = useState(6)
 
+    // THIS WORKED!!!!!!
+    // let startingPlayerCharacters = {
+    //     meleePlayer: {
+    //         position: 11,
+    //         type: "Knight",
+    //         name: "Jeff"
+    //     },
+    //     magicPlayer: {
+    //         position: 16,
+    //         type: "Mage",
+    //         name: "Dave"
+    //     },
+    //     healerPlayer: {
+    //         position: 6,
+    //         type: "Priest",
+    //         name: "Bob"
+    //     }
+    // }
+
+    // TRYING THIS!!!!!!!!
+    const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
+    const matt = new MeleePlayer("matt", 10, 20, 2, "mage")
+    const peter = new MeleePlayer("ken", 10, 20, 21, "priest")
+
     let startingPlayerCharacters = {
-        meleePlayer: {
-            position: 11,
-            type: "Knight",
-            name: "Jeff"
-        },
-        magicPlayer: {
-            position: 16,
-            type: "Mage",
-            name: "Dave"
-        },
-        healerPlayer: {
-            position: 6,
-            type: "Priest",
-            name: "Bob"
-        }
+        meleePlayer: ken,
+        magicPlayer: matt,
+        healerPlayer: peter
+    }
+
+    const orc = new Enemy("orc", 1, 100, 15)
+    let startingEnemyCharacters = {
+        one: orc
     }
 
     const [ playerCharacters, setPlayerCharacters ] = useState(startingPlayerCharacters)
+    const [ enemyCharacters, setEnemyCharacters ] = useState(startingEnemyCharacters)
 
 
     const [ selectedCharacter, setSelectedCharacter ] = useState(null)
@@ -115,6 +135,7 @@ const GameScreen = () =>{
                 movableSquares={movableSquares}
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
+                enemyCharacters={enemyCharacters}
             />
             <GameActionBar 
                 setSelectedCharacter={setSelectedCharacter} 
