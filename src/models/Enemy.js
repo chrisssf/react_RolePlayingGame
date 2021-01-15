@@ -13,6 +13,9 @@ Object.defineProperty(Enemy.prototype, 'constructor', {
     writable: true 
 });
 
+const boardHeight = 5
+const boardWidth = 5
+
 Enemy.prototype.move = function (playerCharacters, enemyCharacters){
 
 
@@ -28,7 +31,10 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters){
     const attackablePositions = getAttackablePositions(playerCharacterPositions, allCharacterPositions)
     console.log("attackable positions = ", attackablePositions)
 
+    const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, this.position)
 
+    
+    console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
 
 }
 
@@ -63,6 +69,20 @@ const getAttackablePositions = (playerCharacterPositions, allCharacterPositions)
         if ( previousSquareRow === currentRow && !allCharacterPositions.includes(playerCharacterPosition - 1) && !attackablePositions.includes(playerCharacterPosition - 1)) attackablePositions.push(playerCharacterPosition - 1)
     })
     return attackablePositions
+}
+
+const getNumberOfMovesToEachAttackablePosition = (attackablePositions, currentPosition) => {
+    const numberOfMovesToEachAttackablePosition = attackablePositions.map((attackablePosition) => {
+        const enemyRow = Math.ceil(currentPosition / boardWidth)
+        const attackablePositionRow = Math.ceil(attackablePosition / boardWidth)
+        const rowDifference = Math.abs(enemyRow - attackablePositionRow)
+        let adjustedEnemyPosition = 0
+        if ( attackablePosition < currentPosition) adjustedEnemyPosition = currentPosition - boardWidth * rowDifference
+        else if ( attackablePosition > currentPosition) adjustedEnemyPosition = currentPosition + boardWidth * rowDifference
+        const numberOfMovesRequired = Math.abs(adjustedEnemyPosition - attackablePosition) + rowDifference
+        return numberOfMovesRequired
+    })
+    return numberOfMovesToEachAttackablePosition
 }
 
 
