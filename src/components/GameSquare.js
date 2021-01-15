@@ -84,17 +84,24 @@ const GameSquare = ({
         } else {
             setImage(null)
         }
+        if (enemyCharacters["one"]["position"] === squareNumber){
+            setImage(orcImage)
+        } else if (enemyCharacters["two"]["position"] === squareNumber){
+            setImage(orcImage)
+        } else if (enemyCharacters["three"]["position"] === squareNumber){
+            setImage(orcImage)
+        } 
 
         // if (squareNumber === 3){
         //     setModalVisable(true)
         // }
-    }, [playerCharacters])
+    }, [playerCharacters, enemyCharacters])
     
-    useEffect(() =>{
-        if (enemyCharacters["one"]["position"] === squareNumber){
-            setImage(orcImage)
-        }
-    }, [enemyCharacters, playerCharacters])
+    // useEffect(() =>{
+    //     if (enemyCharacters["one"]["position"] === squareNumber){
+    //         setImage(orcImage)
+    //     }
+    // }, [enemyCharacters, playerCharacters])
 
 
     useEffect(() => {

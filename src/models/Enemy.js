@@ -22,7 +22,6 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters){
     const playerCharacterPositions = getPlayerPositions(playerCharacters)
     const enemyCharacterPositions = getEnemyPositions(enemyCharacters)
     const allCharacterPositions = [...playerCharacterPositions, ...enemyCharacterPositions]
-
     // checks, can delete these when done!!!!
     console.log("player positions in enemy", playerCharacterPositions)
     console.log("enemy positions in enemy", enemyCharacterPositions)
@@ -32,9 +31,16 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters){
     console.log("attackable positions = ", attackablePositions)
 
     const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, this.position)
-
-    
     console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
+
+    const {indexOfClosestAttackablePosition, movesToClosestAttackablePosition} = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)    
+    console.log("indexOfClosestAttackablePosition", indexOfClosestAttackablePosition)
+    console.log("movesToClosestAttackablePosition", movesToClosestAttackablePosition)
+
+    // let newPosition = this.position
+    if ( movesToClosestAttackablePosition <= 3) this.position = attackablePositions[indexOfClosestAttackablePosition]
+    // return newPosition
+    return this
 
 }
 
@@ -56,8 +62,6 @@ const getEnemyPositions = (enemyCharacters) => {
 }
 
 const getAttackablePositions = (playerCharacterPositions, allCharacterPositions) => {
-    const boardHeight = 5
-    const boardWidth = 5
     const attackablePositions = []
     playerCharacterPositions.forEach(playerCharacterPosition => {
         const currentRow = Math.ceil(playerCharacterPosition / boardWidth)
@@ -83,6 +87,21 @@ const getNumberOfMovesToEachAttackablePosition = (attackablePositions, currentPo
         return numberOfMovesRequired
     })
     return numberOfMovesToEachAttackablePosition
+}
+
+const getIndexOfClosestAttackablePosition = (numberOfMovesToEachAttackablePosition) => {
+    let indexOfClosestAttackablePosition = null
+    let movesToClosestAttackablePosition = 100
+    numberOfMovesToEachAttackablePosition.forEach((movesToAttackablePosition, index) =>{
+        if (movesToAttackablePosition < movesToClosestAttackablePosition){
+            movesToClosestAttackablePosition = movesToAttackablePosition
+            indexOfClosestAttackablePosition = index
+        }
+    })
+    return {
+        indexOfClosestAttackablePosition: indexOfClosestAttackablePosition , 
+        movesToClosestAttackablePosition: movesToClosestAttackablePosition
+    }
 }
 
 

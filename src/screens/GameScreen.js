@@ -13,11 +13,25 @@ const GameScreen = () =>{
 
     useEffect(() =>{
         const bob = new Character("bob", 10, 20)
-        const orc = new Enemy("orc", 1, 100, 15)
+        // const orc = new Enemy("orc", 1, 100, 15)
         const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
         const club = new MeleeWeapon("club-5", 5, "club")
 
-        orc.move(playerCharacters, enemyCharacters)
+        // THIS IS FOR MOVING ENEMY!
+        const movedEnemy = orc.move(playerCharacters, enemyCharacters)
+        const movedEnemy2 = orc2.move(playerCharacters, enemyCharacters)
+        const movedEnemy3 = orc3.move(playerCharacters, enemyCharacters)
+
+        const tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+        tempEnemyCharacters["one"] = movedEnemy
+        tempEnemyCharacters["two"] = movedEnemy2
+        tempEnemyCharacters["three"] = movedEnemy3
+        setEnemyCharacters(tempEnemyCharacters)
+
+        // const movingEnemy = 
+        // console.log("newPosition", newPosition)
+        // console.log(enemyCharacters)
+
 
         ken.equipedWeapon = club
         ken.attack(orc)
@@ -53,7 +67,7 @@ const GameScreen = () =>{
     // TRYING THIS!!!!!!!!
     const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
     const matt = new MeleePlayer("matt", 10, 20, 2, "mage")
-    const peter = new MeleePlayer("ken", 10, 20, 21, "priest")
+    const peter = new MeleePlayer("ken", 10, 20, 18, "priest")
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -62,8 +76,13 @@ const GameScreen = () =>{
     }
 
     const orc = new Enemy("orc", 1, 100, 15)
+    const orc2 = new Enemy("orc", 1, 100, 10)
+    const orc3 = new Enemy("orc", 1, 100, 20)
+
     let startingEnemyCharacters = {
-        one: orc
+        one: orc,
+        two: orc2,
+        three: orc3
     }
 
     const [ playerCharacters, setPlayerCharacters ] = useState(startingPlayerCharacters)
