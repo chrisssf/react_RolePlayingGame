@@ -84,11 +84,11 @@ const GameSquare = ({
         } else {
             setImage(null)
         }
-        if (enemyCharacters["one"]["position"] === squareNumber){
+        if (enemyCharacters["enemy1"]["position"] === squareNumber){
             setImage(orcImage)
-        } else if (enemyCharacters["two"]["position"] === squareNumber){
+        } else if (enemyCharacters["enemy2"]["position"] === squareNumber){
             setImage(orcImage)
-        } else if (enemyCharacters["three"]["position"] === squareNumber){
+        } else if (enemyCharacters["enemy3"]["position"] === squareNumber){
             setImage(orcImage)
         } 
 

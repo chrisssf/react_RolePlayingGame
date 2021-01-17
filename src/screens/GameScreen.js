@@ -14,29 +14,61 @@ const GameScreen = () =>{
     useEffect(() =>{
         const bob = new Character("bob", 10, 20)
         // const orc = new Enemy("orc", 1, 100, 15)
-        const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
-        const club = new MeleeWeapon("club-5", 5, "club")
+        const karen = new MeleePlayer("karen", 10, 20, 11, "Knight")
+        const club = new MeleeWeapon("club-5", 5, "sword")
 
         // THIS IS FOR MOVING ENEMY!
-        const movedEnemy = orc.move(playerCharacters, enemyCharacters)
-        const movedEnemy2 = orc2.move(playerCharacters, enemyCharacters)
-        const movedEnemy3 = orc3.move(playerCharacters, enemyCharacters)
 
-        const tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-        tempEnemyCharacters["one"] = movedEnemy
-        tempEnemyCharacters["two"] = movedEnemy2
-        tempEnemyCharacters["three"] = movedEnemy3
-        setEnemyCharacters(tempEnemyCharacters)
+        const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        setTimeout(() => {
+            const movedEnemy2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        }, 4000)
+        setTimeout(() => {
+            const movedEnemy = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        }, 8000)
+
+        // const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        // const movedEnemy2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        // const movedEnemy3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        // const tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+        // setTimeout(() => setEnemyCharacters(tempEnemyCharacters), 2000)
+
+        // let tempEnemyCharacters = null
+        // setTimeout(() => {
+        //     const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+        //     setEnemyCharacters(tempEnemyCharacters)
+        // }, 1000)
+
+        // setTimeout(() => {
+        //     const movedEnemy = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+        //     setEnemyCharacters(tempEnemyCharacters)
+        // }, 2000)
+
+        // setTimeout(() => {
+        //     const movedEnemy = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+        //     setEnemyCharacters(tempEnemyCharacters)
+        // }, 3000)
+        
+
+
+        // tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+        // tempEnemyCharacters[enemy1.name] = movedEnemy
+        // tempEnemyCharacters[enemy2.name] = movedEnemy2
+        // tempEnemyCharacters[enemy3.name] = movedEnemy3
+        // setTimeout(() => setEnemyCharacters(tempEnemyCharacters), 6000)
 
         // const movingEnemy = 
         // console.log("newPosition", newPosition)
         // console.log(enemyCharacters)
 
 
-        ken.equipedWeapon = club
-        ken.attack(orc)
-        console.log(orc)
-        console.log(ken)
+        karen.equipedWeapon = club
+        karen.attack(enemy1)
+        console.log("enemy1", enemy1)
+        console.log("karen", karen)
 
 
     }, [])
@@ -65,9 +97,9 @@ const GameScreen = () =>{
     // }
 
     // TRYING THIS!!!!!!!!
-    const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
-    const matt = new MeleePlayer("matt", 10, 20, 2, "mage")
-    const peter = new MeleePlayer("ken", 10, 20, 18, "priest")
+    const ken = new MeleePlayer("ken", 10, 20, 2, "Knight")
+    const matt = new MeleePlayer("matt", 10, 20, 11, "mage")
+    const peter = new MeleePlayer("ken", 10, 20, 22, "priest")
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -75,14 +107,14 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const orc = new Enemy("orc", 1, 100, 15)
-    const orc2 = new Enemy("orc", 1, 100, 10)
-    const orc3 = new Enemy("orc", 1, 100, 20)
+    const enemy1 = new Enemy("orc1", 1, 100, 10)
+    const enemy2 = new Enemy("orc2", 1, 100, 15)
+    const enemy3 = new Enemy("orc3", 1, 100, 20)
 
     let startingEnemyCharacters = {
-        one: orc,
-        two: orc2,
-        three: orc3
+        enemy1: enemy1,
+        enemy2: enemy2,
+        enemy3: enemy3
     }
 
     const [ playerCharacters, setPlayerCharacters ] = useState(startingPlayerCharacters)
