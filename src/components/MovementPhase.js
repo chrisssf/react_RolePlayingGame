@@ -1,6 +1,13 @@
 import React, { useState, useRef } from 'react';
 
-const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovementLocations, setMovableSquares, playerCharacters, setPlayerCharacters  }) =>{
+const MovementPhase = ({ 
+    setSelectedCharacter, 
+    setCurrentPhase, 
+    calculateMovementLocations, 
+    setMovableSquares, 
+    playerCharacters, 
+    setPlayerCharacters,
+    setEnemyMovementPhase  }) =>{
 
     const [ movedCharacters, setMovedCharacters ] = useState([])
     const [ characterMoving, setCharacterMoving ] = useState("")
@@ -33,7 +40,10 @@ const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovemen
         setPlayerCharacters(tempPlayerCharacters)
         setCharacterMoving("")
         setMovableSquares([])
+    }
 
+    const handleEndMovementPhase = () => {
+        setEnemyMovementPhase(true)
     }
 
     return (
@@ -52,6 +62,7 @@ const MovementPhase = ({ setSelectedCharacter, setCurrentPhase, calculateMovemen
                     <button disabled={movedCharacters.includes("meleePlayer")} onClick={() => handleSelectCharacter("meleePlayer")}>Knight</button>
                     <button disabled={movedCharacters.includes("magicPlayer")} onClick={() => handleSelectCharacter("magicPlayer")}>Mage</button>
                     <button disabled={movedCharacters.includes("healerPlayer")} onClick={() => handleSelectCharacter("healerPlayer")}>Healer</button>
+                    <button onClick={() => handleEndMovementPhase()}>End Movement Phase</button>
                 </div>
             }
         </div>

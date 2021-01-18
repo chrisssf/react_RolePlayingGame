@@ -48,19 +48,35 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
 
 
 
-    // const moves = [-1, -5, 5]
+    // TAKE THIS OUT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // const enemy1 = new Enemy("orc1", 1, 100, 1)
+    // const enemy2 = new Enemy("orc2", 1, 100, 3)
+    // const enemy3 = new Enemy("orc3", 1, 100, 5)
 
+    // let startingEnemyCharacters = {
+    //     enemy1: enemy1,
+    //     enemy2: enemy2,
+    //     enemy3: enemy3
+    // }
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+    // const moves = [-1, -5, 5]
+    console.log("this", this.name)
     let tempEnemyCharacters = null
     if(moves.length <=3 ){
         moves.forEach((move, index) => {
             setTimeout(() => {
-                this.position += move
+                // this.position += move
+                enemyCharacters[this.name].position += move
                 tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
                 setEnemyCharacters(tempEnemyCharacters)
             }, 1000 * (index + 1))
         })
     }
 
+
+    
+    // setEnemyCharacters(startingEnemyCharacters)
 
     // let tempEnemyCharacters = null
     // setTimeout(() => {

@@ -11,6 +11,9 @@ import Enemy from '../models/Enemy.js'
 
 const GameScreen = () =>{
 
+
+    const [ enemyMovementPhase, setEnemyMovementPhase ] = useState(false)
+
     useEffect(() =>{
         const bob = new Character("bob", 10, 20)
         // const orc = new Enemy("orc", 1, 100, 15)
@@ -18,14 +21,18 @@ const GameScreen = () =>{
         const club = new MeleeWeapon("club-5", 5, "sword")
 
         // THIS IS FOR MOVING ENEMY!
+        console.log("RUNNING111111111")
 
-        const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        setTimeout(() => {
-            const movedEnemy2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        }, 4000)
-        setTimeout(() => {
-            const movedEnemy = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        }, 8000)
+        if (enemyMovementPhase) {
+            console.log("RUNNING22222222")
+            enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+            setTimeout(() => {
+                enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+            }, 4000)
+            setTimeout(() => {
+                enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+            }, 8000)
+        }
 
         // const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
         // const movedEnemy2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
@@ -71,7 +78,7 @@ const GameScreen = () =>{
         console.log("karen", karen)
 
 
-    }, [])
+    }, [enemyMovementPhase])
 
     // const [ magicPosition, setMagicPosition ] = useState(16)
     // const [ meleePosition, setMeleePosition ] = useState(11)
@@ -97,9 +104,9 @@ const GameScreen = () =>{
     // }
 
     // TRYING THIS!!!!!!!!
-    const ken = new MeleePlayer("ken", 10, 20, 2, "Knight")
-    const matt = new MeleePlayer("matt", 10, 20, 11, "mage")
-    const peter = new MeleePlayer("ken", 10, 20, 22, "priest")
+    const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
+    const matt = new MeleePlayer("matt", 10, 20, 3, "mage")
+    const peter = new MeleePlayer("ken", 10, 20, 17, "priest")
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -107,9 +114,9 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("orc1", 1, 100, 10)
-    const enemy2 = new Enemy("orc2", 1, 100, 15)
-    const enemy3 = new Enemy("orc3", 1, 100, 20)
+    const enemy1 = new Enemy("enemy1", 1, 100, 10)
+    const enemy2 = new Enemy("enemy2", 1, 100, 15)
+    const enemy3 = new Enemy("enemy3", 1, 100, 20)
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -123,7 +130,6 @@ const GameScreen = () =>{
 
     const [ selectedCharacter, setSelectedCharacter ] = useState(null)
     const [ currentPhase, setCurrentPhase ] = useState(null)
-
 
 
     const [ movableSquares, setMovableSquares ] = useState([])
@@ -196,6 +202,7 @@ const GameScreen = () =>{
                 setMovableSquares={setMovableSquares}
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
+                setEnemyMovementPhase={setEnemyMovementPhase}
             />
 
             {/* <View style={styles.thing}></View>
