@@ -89,19 +89,37 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
     console.log(enemyCharacters);
     console.log("POSITION", finalPosition)
     
-    if(playerCharacters.meleePlayer.position === finalPosition + 1 || 
-        playerCharacters.meleePlayer.position === finalPosition - 1 ||
+    const currentRow = Math.ceil(enemyCharacters[this.name].position / boardWidth)
+    const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)
+    const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
+    const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
+
+    if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
+        (playerCharacters.meleePlayer.position === finalPosition - 1 && currentRow === meleePlayerRow) ||
         playerCharacters.meleePlayer.position === finalPosition + 5 ||
-        playerCharacters.meleePlayer.position === finalPosition - 5 ) this.attack(playerCharacters.meleePlayer)
-    else if(playerCharacters.magicPlayer.position === finalPosition + 1 || 
-        playerCharacters.magicPlayer.position === finalPosition - 1 ||
+        playerCharacters.meleePlayer.position === finalPosition - 5 ) {
+            setTimeout(() => { 
+                this.attack(playerCharacters.meleePlayer)
+            }, 1000 * moves.length)
+        }
+    else if((playerCharacters.magicPlayer.position === finalPosition + 1 && currentRow === magicPlayerRow) || 
+        (playerCharacters.magicPlayer.position === finalPosition - 1 && currentRow === magicPlayerRow) ||
         playerCharacters.magicPlayer.position === finalPosition + 5 ||
-        playerCharacters.magicPlayer.position === finalPosition - 5 ) this.attack(playerCharacters.magicPlayer)
-    else if(playerCharacters.healerPlayer.position === finalPosition + 1 || 
-        playerCharacters.healerPlayer.position === finalPosition - 1 ||
+        playerCharacters.magicPlayer.position === finalPosition - 5 ) {
+            setTimeout(() => { 
+                this.attack(playerCharacters.magicPlayer)
+            }, 1000 * moves.length)
+        }
+    else if((playerCharacters.healerPlayer.position === finalPosition + 1 && currentRow === healerPlayerRow) || 
+        (playerCharacters.healerPlayer.position === finalPosition - 1 && currentRow === healerPlayerRow )||
         playerCharacters.healerPlayer.position === finalPosition + 5 ||
-        playerCharacters.healerPlayer.position === finalPosition - 5 ) this.attack(playerCharacters.healerPlayer)
-    
+        playerCharacters.healerPlayer.position === finalPosition - 5 ) {
+            setTimeout(() => { 
+                this.attack(playerCharacters.healerPlayer)
+            }, 1000 * moves.length)
+        }
+
+
         //need this!!!!!!!!!!!!
     return moves.length * 1000
     
