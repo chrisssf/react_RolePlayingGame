@@ -17,12 +17,14 @@ import boardImages from '../assets/boardImages'
 
 // const width = Dimensions.get('window').width
 const width = window.innerWidth
+// let character = null
 
 
 const GameSquare = ({ 
     squareNumber, 
     // playerPositions, 
     movableSquares, 
+    attackableSquares,
     selectedCharacter,
     // meleePosition,
     // magicPosition,
@@ -32,11 +34,13 @@ const GameSquare = ({
     // setHealerPosition,
     playerCharacters,
     setPlayerCharacters,
-    enemyCharacters }) =>{
+    enemyCharacters,
+    handleImageClick }) =>{
 
     const [ image, setImage ] = useState(null)
     // const [ modalVisable, setModalVisable ] = useState(false)
     const [ squareStyling, setSquareStyling ] = useState("")
+    const [ character, setCharacter ] = useState(null)
 
     // const mage = {
     //     "image": "mage",
@@ -69,26 +73,33 @@ const GameSquare = ({
     //     //     setModalVisable(true)
     //     // }
     // }, [magicPosition, meleePosition, healerPosition])
-
+    
     useEffect(() => {
         if (playerCharacters["magicPlayer"]["position"] === squareNumber) {
             // setImage(mage.image)
             // setImage('../assets/mage.png')
+            setCharacter(playerCharacters["magicPlayer"])
+            console.log("IMAAAAAAAGE", character)
             setImage(mageImage)
         } else if (playerCharacters["meleePlayer"]["position"] === squareNumber) {
             // setImage("knight")
             // setImage('../assets/knight.png')
+            setCharacter(playerCharacters["meleePlayer"])
             setImage(knightImage)
         } else if (playerCharacters["healerPlayer"]["position"] === squareNumber) {
+            setCharacter(playerCharacters["healerPlayer"])
             setImage(healerImage) 
         } else {
             setImage(null)
         }
         if (enemyCharacters["enemy1"]["position"] === squareNumber){
+            setCharacter(enemyCharacters["enemy1"])
             setImage(orcImage)
         } else if (enemyCharacters["enemy2"]["position"] === squareNumber){
+            setCharacter(enemyCharacters["enemy2"])
             setImage(orcImage)
         } else if (enemyCharacters["enemy3"]["position"] === squareNumber){
+            setCharacter(enemyCharacters["enemy3"])
             setImage(orcImage)
         } 
 
@@ -119,10 +130,14 @@ const GameSquare = ({
         }
         if (( image === null || image === currentImage ) && movableSquares.includes(squareNumber) ) {
             setSquareStyling("movable")
+        } else if (attackableSquares.includes(squareNumber)) {
+            setSquareStyling("attackable")
         } else {
             setSquareStyling("")
         }
-    }, [movableSquares])
+    }, [movableSquares, attackableSquares])
+
+    const [ refresh, setRefresh ] = useState(false)
 
     const handleClickSquare = () => {
         if ( squareStyling === "movable"){
@@ -137,16 +152,44 @@ const GameSquare = ({
             //         setHealerPosition(squareNumber)
             //         break
             // }
-            const tempPlayerCharacters = JSON.parse(JSON.stringify(playerCharacters))
-            tempPlayerCharacters[selectedCharacter]["position"] = squareNumber
-            setPlayerCharacters(tempPlayerCharacters)
+            //BROKEN!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // console.log("BEFOREEEEEE", playerCharacters)
+            // const tempPlayerCharacters = JSON.parse(JSON.stringify(playerCharacters))
+            // console.log("AFTERRRRRRR", tempPlayerCharacters)
+            // tempPlayerCharacters[selectedCharacter]["position"] = squareNumber
+            // setPlayerCharacters(tempPlayerCharacters)
+
+            // ATTEMP TO FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            // playerCharacters[selectedCharacter]["position"] = squareNumber
+            console.log("BEFOREEEEEE", playerCharacters)
+            const updateableCharacter = playerCharacters[selectedCharacter]
+            updateableCharacter.position = squareNumber
+            setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
+            console.log("AFTERRRRRRR", playerCharacters)
+
+
+
+
+        } else if ( squareStyling === "attackable" && image !== null) {
+            console.log("eeeee1", character)
+            console.log("qqqqqq", playerCharacters[selectedCharacter])
+            playerCharacters[selectedCharacter].attack(character)
+            console.log("eeeee2", character)
         }
     }
+
+    
     
     if (width > 500) {
         return (
             <div onClick={() => handleClickSquare()} className={`bigger-square-container ${squareStyling}`}>
-                {image ? <img src={image} alt={image} className="game-square-image"></img> : <p>{squareNumber}</p>}
+                {image ? 
+                    <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
+                : 
+                    <p>{squareNumber}</p>
+                    // <p></p>
+
+                }
                 {/* <p>{squareNumber}</p>
                 {image && <img src={image} alt={image} className="game-square-image"></img>} */}
 
@@ -185,7 +228,12 @@ const GameSquare = ({
             <div onClick={() => handleClickSquare()} className={`smaller-square-container ${squareStyling}`}>
 
                 {/* <p>{squareNumber}</p> */}
-                {image ? <img src={image} alt={image} className="game-square-image"></img> : <p>{squareNumber}</p>}
+                {image ? 
+                    <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
+                :
+                    <p>{squareNumber}</p>
+                    // <p></p>
+                }
 
                 {/* {image && <Image
                     style={{

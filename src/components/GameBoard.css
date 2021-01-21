@@ -1,5 +1,9 @@
 .board-container {
     /* flex: 1; */
+    background-image: url('../assets/desert.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

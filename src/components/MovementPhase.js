@@ -20,7 +20,7 @@ const MovementPhase = ({
         // setStartingPosition(playerCharacters[character]["position"])
 
         setSelectedCharacter(character)
-        setCurrentPhase("movement")
+        // setCurrentPhase("playerMovement")
         calculateMovementLocations(character, 2)
         setCharacterMoving(character)
     }
@@ -34,16 +34,22 @@ const MovementPhase = ({
     }
 
     const handleCancel = () => {
-        const tempPlayerCharacters = JSON.parse(JSON.stringify(playerCharacters))
-        tempPlayerCharacters[characterMoving]["position"] = startingPosition.current
-        // tempPlayerCharacters[characterMoving]["position"] = startingPosition
-        setPlayerCharacters(tempPlayerCharacters)
+        // CAUSES BUGS
+        // const tempPlayerCharacters = JSON.parse(JSON.stringify(playerCharacters))
+        // tempPlayerCharacters[characterMoving]["position"] = startingPosition.current
+        // // tempPlayerCharacters[characterMoving]["position"] = startingPosition
+        // setPlayerCharacters(tempPlayerCharacters)
+
+        const updateableCharacter = playerCharacters[characterMoving]
+        updateableCharacter.position = startingPosition.current
+        setPlayerCharacters(prevState => ({...prevState, [characterMoving]: updateableCharacter }))
         setCharacterMoving("")
         setMovableSquares([])
     }
 
     const handleEndMovementPhase = () => {
-        setEnemyMovementPhase(true)
+        // setEnemyMovementPhase(true)
+        setCurrentPhase("enemyMovement")
     }
 
     return (

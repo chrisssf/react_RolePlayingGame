@@ -20,7 +20,7 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
 
     const playerCharacterPositions = getPlayerPositions(playerCharacters)
     let enemyCharacterPositions = getEnemyPositions(enemyCharacters)
-    enemyCharacterPositions = enemyCharacterPositions.filter(item => item !== this.position)
+    enemyCharacterPositions = enemyCharacterPositions.filter(item => item !== enemyCharacters[this.name].position)
     const allCharacterPositions = [...playerCharacterPositions, ...enemyCharacterPositions]
     // checks, can delete these when done!!!!
     console.log("player positions in enemy", playerCharacterPositions)
@@ -30,7 +30,7 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
     const attackablePositions = getAttackablePositions(playerCharacterPositions, allCharacterPositions)
     console.log("attackable positions = ", attackablePositions)
 
-    const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, this.position)
+    const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, enemyCharacters[this.name].position)
     console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
 
     // const {indexOfClosestAttackablePosition, movesToClosestAttackablePosition} = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)    
@@ -67,14 +67,18 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
         moves.forEach((move, index) => {
             setTimeout(() => {
                 // this.position += move
-                enemyCharacters[this.name].position += move
-                tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-                setEnemyCharacters(tempEnemyCharacters)
+                // enemyCharacters[this.name].position += move
+                // tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+                // setEnemyCharacters(tempEnemyCharacters)
+
+                const updatableEnemy = enemyCharacters[this.name]
+                updatableEnemy.position += move
+                setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
             }, 1000 * (index + 1))
         })
     }
 
-
+    return moves.length * 1000
     
     // setEnemyCharacters(startingEnemyCharacters)
 

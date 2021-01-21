@@ -1,18 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
+import ReactDOM from 'react-dom'
+import Modal from 'react-modal'
 
+import './GameScreen.css'
 import GameBoard from '../components/GameBoard'
 import GameActionBar from '../components/GameActionBar'
 
 import Character from '../models/Character.js'
 import MeleePlayer from '../models/MeleePlayer.js'
 import MeleeWeapon from '../models/MeleeWeapon.js'
-
 import Enemy from '../models/Enemy.js'
+
+const boardWidth = 5
+const boardHeight = 5
 
 const GameScreen = () =>{
 
 
     const [ enemyMovementPhase, setEnemyMovementPhase ] = useState(false)
+    const [ selectedCharacter, setSelectedCharacter ] = useState(null)
+    const [ currentPhase, setCurrentPhase ] = useState("playerMovement")
+    const [ modalIsOpen, setModalIsOpen ] = useState(false)
+    const [ modalCharacter, setModalCharacter ] = useState(null)
 
     useEffect(() =>{
         const bob = new Character("bob", 10, 20)
@@ -21,18 +30,37 @@ const GameScreen = () =>{
         const club = new MeleeWeapon("club-5", 5, "sword")
 
         // THIS IS FOR MOVING ENEMY!
-        console.log("RUNNING111111111")
+        let timeout = 0
+        let timeout2 = 0
+        let timeout3 = 0
 
-        if (enemyMovementPhase) {
-            console.log("RUNNING22222222")
-            enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        if (currentPhase === "enemyMovement") {
+            timeout = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
             setTimeout(() => {
-                enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-            }, 4000)
-            setTimeout(() => {
-                enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-            }, 8000)
+                timeout2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+                setTimeout(() => {
+                    timeout3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+                    setTimeout(() => setCurrentPhase("playerAttack"), (timeout3 + 500))
+                }, (timeout2))
+            }, timeout)
         }
+
+        // if (currentPhase === "enemyMovement") {
+        //     console.log("RUNNING22222222")
+        //     timeout = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        //     console.log("1", timeout)
+
+        //     setTimeout(() => {
+        //         timeout2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        //         console.log("2", timeout2)
+        //     }, timeout)
+        //     setTimeout(() => {
+        //         timeout3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
+        //         console.log("3", timeout3)
+
+        //     }, (timeout + timeout2))
+        //     setTimeout(() => setCurrentPhase("playerMovement"), (timeout + timeout2 + timeout3))
+        // }
 
         // const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
         // const movedEnemy2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
@@ -72,13 +100,13 @@ const GameScreen = () =>{
         // console.log(enemyCharacters)
 
 
-        karen.equipedWeapon = club
-        karen.attack(enemy1)
-        console.log("enemy1", enemy1)
-        console.log("karen", karen)
+        // karen.equipedWeapon = club
+        // karen.attack(enemy1)
+        // console.log("enemy1", enemy1)
+        // console.log("karen", karen)
 
 
-    }, [enemyMovementPhase])
+    }, [currentPhase])
 
     // const [ magicPosition, setMagicPosition ] = useState(16)
     // const [ meleePosition, setMeleePosition ] = useState(11)
@@ -104,15 +132,18 @@ const GameScreen = () =>{
     // }
 
     // TRYING THIS!!!!!!!!
-    const ken = new MeleePlayer("ken", 10, 20, 11, "Knight")
-    const matt = new MeleePlayer("matt", 10, 20, 3, "mage")
-    const peter = new MeleePlayer("ken", 10, 20, 17, "priest")
+    const ken = new MeleePlayer("ken", 30, 20, 11, "Knight")
+    const matt = new MeleePlayer("matt", 20, 20, 6, "mage")
+    const peter = new MeleePlayer("peter", 10, 20, 16, "priest")
+    const sword = new MeleeWeapon("club-5", 5, "sword")
+    ken.equipedWeapon = sword
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
         magicPlayer: matt,
         healerPlayer: peter
     }
+    console.log(startingPlayerCharacters)
 
     const enemy1 = new Enemy("enemy1", 1, 100, 10)
     const enemy2 = new Enemy("enemy2", 1, 100, 15)
@@ -128,16 +159,13 @@ const GameScreen = () =>{
     const [ enemyCharacters, setEnemyCharacters ] = useState(startingEnemyCharacters)
 
 
-    const [ selectedCharacter, setSelectedCharacter ] = useState(null)
-    const [ currentPhase, setCurrentPhase ] = useState(null)
+    
 
 
     const [ movableSquares, setMovableSquares ] = useState([])
+    const [ attackableSquares, setAttackableSquares ] = useState([])
 
     const calculateMovementLocations = (characterToMove, numberOfStepsAllowed) => {
-
-        const boardWidth = 5
-        const boardHeight = 5
 
         const movableLocations = []
         // switch(characterToMove){
@@ -177,6 +205,26 @@ const GameScreen = () =>{
         setMovableSquares(movableLocations)
     }
 
+    const calculateAttackLocations = (characterToAttack, attackRange) => {
+        const currentPosition = playerCharacters[characterToAttack]["position"]
+        const currentRow = Math.ceil(currentPosition / boardWidth)
+        const attackableLocations = []
+
+        for (let i = 1 ; i <= attackRange ; i++) {
+            if( currentPosition + (i * 5) < boardWidth * boardHeight ) attackableLocations.push(currentPosition + (i * 5))
+            if( currentPosition - (i * 5) > 0 ) attackableLocations.push(currentPosition - (i * 5))
+            if( Math.ceil((currentPosition + (i * 1)) / boardWidth) === currentRow ) attackableLocations.push(currentPosition + (i * 1))
+            if( Math.ceil((currentPosition - (i * 1)) / boardWidth) === currentRow ) attackableLocations.push(currentPosition - (i * 1))
+        }
+        console.log("attackableLocations", attackableLocations)
+        setAttackableSquares(attackableLocations)
+    }
+
+    const handleImageClick = (character) => {
+        setModalIsOpen(true)
+        setModalCharacter(character)
+    }
+
     return (
         <div>
             <p>GameScreen</p>
@@ -190,24 +238,44 @@ const GameScreen = () =>{
                 // setHealerPosition={setHealerPosition}
                 // setMeleePosition={setMeleePosition}
                 movableSquares={movableSquares}
+                attackableSquares={attackableSquares}
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
                 enemyCharacters={enemyCharacters}
+                handleImageClick={handleImageClick}
             />
             <GameActionBar 
                 setSelectedCharacter={setSelectedCharacter} 
                 currentPhase={currentPhase} 
                 setCurrentPhase={setCurrentPhase}
                 calculateMovementLocations={calculateMovementLocations}
+                calculateAttackLocations={calculateAttackLocations}
                 setMovableSquares={setMovableSquares}
+                setAttackableSquares={setAttackableSquares}
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
+                enemyMovementPhase={enemyMovementPhase}
                 setEnemyMovementPhase={setEnemyMovementPhase}
             />
+            {modalCharacter && <Modal
+                className="modal-container"
+                appElement={document.getElementById('root')}
+                isOpen={modalIsOpen}
+                style={{
+                    overlay: {
+                        backgroundColor: 'rgba(0,0,0,0.7)'
+                    }
+                }}
+            >
+                <button className="modal-close-button" onClick={() => setModalIsOpen(false)}>
+					Close
+				</button>
+                <p>{modalCharacter.name}</p>
+                <p>Attack: {modalCharacter.attackPoints}</p>
+                <p>Health: {modalCharacter.healthPoints}</p>
 
-            {/* <View style={styles.thing}></View>
-            <View style={styles.thing}></View>
-            <View style={styles.thing}></View> */}
+            </Modal>}
+           
         </div>
     )
 

@@ -1,0 +1,29 @@
+.box {
+    background-color: #218D9B;
+    height: 100px;
+    width: 100px;
+    position: relative;
+  }
+
+  .transform {
+    background-color: yellow;
+  }
+
+  .right {
+    left: 30px
+  }
+  
+  /* .transform {
+    -webkit-transition: all 2s ease;  
+    -moz-transition: all 2s ease;  
+    -o-transition: all 2s ease;  
+    -ms-transition: all 2s ease;  
+    transition: all 2s ease;
+  }
+  
+  .transform-active {
+    background-color: #45CEE0;
+    height: 200px;
+    width: 200px;
+  } */
+    

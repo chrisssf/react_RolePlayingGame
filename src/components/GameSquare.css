@@ -1,20 +1,36 @@
 .bigger-square-container {
-    border: 1px solid black;
+    border: 1px solid white;
     width: 85px;
     height: 85px;
 }
 
 .smaller-square-container {
     box-sizing: border-box;
-    border: 1px solid black;
+    /* border: 1px solid lightgray; */
     width: 18vw;
     height: 18vw;
 }
 
 .movable {
     background-color: palegreen;
+    /* border: 1px solid black; */
+    outline: 1px solid black;
+}
+
+.attackable {
+    background-color: #ff6666;
+    /* border: 1px solid black; */
+    outline: 1px solid black;
+
+    /* background-color: #ff4d4d; */
+    /* background-color: #ff3333; */
+    /* background-color: red; */
+
 }
 
 .game-square-image {
     height: 80%;
+    position: relative;
+    top: 8px
+    /* left: 50px */
 }

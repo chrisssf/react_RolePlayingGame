@@ -14,9 +14,11 @@ const GameBoard = ({
     selectedCharacter, 
     currentPhase, 
     movableSquares,
+    attackableSquares,
     playerCharacters,
     setPlayerCharacters,
-    enemyCharacters }) => {
+    enemyCharacters,
+    handleImageClick }) => {
 
 
     const fillGameBoard = () => {
@@ -32,6 +34,7 @@ const GameBoard = ({
                 squareNumber={i} 
                 selectedCharacter={selectedCharacter}
                 movableSquares={movableSquares}
+                attackableSquares={attackableSquares}
                 // meleePosition={meleePosition}
                 // magicPosition={magicPosition}
                 // healerPosition={healerPosition}
@@ -41,6 +44,7 @@ const GameBoard = ({
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
                 enemyCharacters={enemyCharacters}
+                handleImageClick={handleImageClick}
             />)
         }   
         return gameSquares  
