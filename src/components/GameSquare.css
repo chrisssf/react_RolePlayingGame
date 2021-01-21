@@ -2,6 +2,7 @@
     border: 1px solid white;
     width: 85px;
     height: 85px;
+    position: relative;
 }
 
 .smaller-square-container {
@@ -9,6 +10,8 @@
     /* border: 1px solid lightgray; */
     width: 18vw;
     height: 18vw;
+    position: relative;
+
 }
 
 .movable {
@@ -34,3 +37,7 @@
     top: 8px
     /* left: 50px */
 }
+
+.blah {
+    left: 30px
+  }

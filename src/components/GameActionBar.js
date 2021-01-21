@@ -28,7 +28,7 @@ const GameActionBar = ( {
         
         testBox.current.classList.toggle("transform")
         testBox.current.classList.toggle("right")
-
+        console.log(testBox)
         // Both of the above do the same thing BUT using REF is the correct react way of doing it
     }
     // end of testing

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './GameSquare.css'
 import mageImage from '../assets/mage.png'
 import knightImage from '../assets/knight.png'
@@ -35,12 +35,28 @@ const GameSquare = ({
     playerCharacters,
     setPlayerCharacters,
     enemyCharacters,
-    handleImageClick }) =>{
+    handleImageClick
+ }) =>{
 
     const [ image, setImage ] = useState(null)
     // const [ modalVisable, setModalVisable ] = useState(false)
     const [ squareStyling, setSquareStyling ] = useState("")
     const [ character, setCharacter ] = useState(null)
+
+//test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // const [ fing, setFing ] = useState("meleePlayer")
+    // const meleeRef = useRef()
+    // const magicRef = useRef()
+    // const healerRef = useRef()
+    // const characterRef = useRef()
+
+    // const handleImageClick = (character) => {
+    //     meleeRef.current.classList.add("blah")
+    // }
+
+    // let makeRef = meleeRef
+//test end here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
     // const mage = {
     //     "image": "mage",
@@ -51,8 +67,6 @@ const GameSquare = ({
     //     "inventory": null,
     //     "spells": null
     // }
-
-    
 
     // useEffect(() => {
     //     if (magicPosition === squareNumber) {
@@ -161,14 +175,9 @@ const GameSquare = ({
 
             // ATTEMP TO FIX!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             // playerCharacters[selectedCharacter]["position"] = squareNumber
-            console.log("BEFOREEEEEE", playerCharacters)
             const updateableCharacter = playerCharacters[selectedCharacter]
             updateableCharacter.position = squareNumber
             setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
-            console.log("AFTERRRRRRR", playerCharacters)
-
-
-
 
         } else if ( squareStyling === "attackable" && image !== null) {
             console.log("eeeee1", character)

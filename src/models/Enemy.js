@@ -61,7 +61,8 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     // const moves = [-1, -5, 5]
-    console.log("this", this.name)
+    // console.log("this", this.name)
+    let finalPosition = this.position
     let tempEnemyCharacters = null
     if(moves.length <=3 ){
         moves.forEach((move, index) => {
@@ -73,13 +74,41 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
 
                 const updatableEnemy = enemyCharacters[this.name]
                 updatableEnemy.position += move
+                finalPosition += move
                 setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
             }, 1000 * (index + 1))
         })
     }
+    // // this is trying to get to attack!!!!!!!!!
+    // this.attack(playerCharacters.meleePlayer)
+    // console.log("POSITION", finalPosition)
 
+    // // if(playerCharacters.meleePlayer.position)
+    finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+    console.log("this POSITION", enemyCharacters[this.name].position)
+    console.log(enemyCharacters);
+    console.log("POSITION", finalPosition)
+    
+    if(playerCharacters.meleePlayer.position === finalPosition + 1 || 
+        playerCharacters.meleePlayer.position === finalPosition - 1 ||
+        playerCharacters.meleePlayer.position === finalPosition + 5 ||
+        playerCharacters.meleePlayer.position === finalPosition - 5 ) this.attack(playerCharacters.meleePlayer)
+    else if(playerCharacters.magicPlayer.position === finalPosition + 1 || 
+        playerCharacters.magicPlayer.position === finalPosition - 1 ||
+        playerCharacters.magicPlayer.position === finalPosition + 5 ||
+        playerCharacters.magicPlayer.position === finalPosition - 5 ) this.attack(playerCharacters.magicPlayer)
+    else if(playerCharacters.healerPlayer.position === finalPosition + 1 || 
+        playerCharacters.healerPlayer.position === finalPosition - 1 ||
+        playerCharacters.healerPlayer.position === finalPosition + 5 ||
+        playerCharacters.healerPlayer.position === finalPosition - 5 ) this.attack(playerCharacters.healerPlayer)
+    
+        //need this!!!!!!!!!!!!
     return moves.length * 1000
     
+
+
+
+
     // setEnemyCharacters(startingEnemyCharacters)
 
     // let tempEnemyCharacters = null
@@ -187,6 +216,10 @@ const getIndexOfClosestAttackablePosition = (numberOfMovesToEachAttackablePositi
     //     movesToClosestAttackablePosition: movesToClosestAttackablePosition
     // }
     return movesToClosestAttackablePosition
+}
+
+Enemy.prototype.attackClosestPlayer = function (){
+    // console.log("POSITION", this.position)
 }
 
 export default Enemy
