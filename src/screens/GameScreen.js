@@ -135,7 +135,7 @@ const GameScreen = () =>{
     const ken = new MeleePlayer("ken", 30, 100, 11, "Knight")
     const matt = new MeleePlayer("matt", 20, 100, 6, "mage")
     const peter = new MeleePlayer("peter", 10, 100, 16, "priest")
-    const sword = new MeleeWeapon("club-5", 5, "club")
+    const sword = new MeleeWeapon("club-5", 5, "axe")
     ken.equipedWeapon = sword
 
     let startingPlayerCharacters = {

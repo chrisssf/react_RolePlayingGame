@@ -98,6 +98,14 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
         const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
         const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
 
+
+        if(enemyCharacters[this.name].statusEffects.includes("attack down")){
+            this.attackPoints = this.attackPoints / 2
+            const updatableEnemy = enemyCharacters[this.name]
+            updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "attack down")
+            setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+        }
+
         if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
             (playerCharacters.meleePlayer.position === finalPosition - 1 && currentRow === meleePlayerRow) ||
             playerCharacters.meleePlayer.position === finalPosition + 5 ||
