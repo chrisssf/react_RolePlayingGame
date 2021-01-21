@@ -18,111 +18,115 @@ const boardWidth = 5
 
 Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyCharacters){
 
-    const playerCharacterPositions = getPlayerPositions(playerCharacters)
-    let enemyCharacterPositions = getEnemyPositions(enemyCharacters)
-    enemyCharacterPositions = enemyCharacterPositions.filter(item => item !== enemyCharacters[this.name].position)
-    const allCharacterPositions = [...playerCharacterPositions, ...enemyCharacterPositions]
-    // checks, can delete these when done!!!!
-    console.log("player positions in enemy", playerCharacterPositions)
-    console.log("enemy positions in enemy", enemyCharacterPositions)
-    console.log("all positions in enemy", allCharacterPositions)
+    if(enemyCharacters[this.name].statusEffects.includes("stun")){
+        const updatableEnemy = enemyCharacters[this.name]
+        updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "stun")
+        setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+        console.log("STUNNNNNEEEEDDDDDD!!!!!!");
+    } else {
+        const playerCharacterPositions = getPlayerPositions(playerCharacters)
+        let enemyCharacterPositions = getEnemyPositions(enemyCharacters)
+        enemyCharacterPositions = enemyCharacterPositions.filter(item => item !== enemyCharacters[this.name].position)
+        const allCharacterPositions = [...playerCharacterPositions, ...enemyCharacterPositions]
+        // checks, can delete these when done!!!!
+        console.log("player positions in enemy", playerCharacterPositions)
+        console.log("enemy positions in enemy", enemyCharacterPositions)
+        console.log("all positions in enemy", allCharacterPositions)
 
-    const attackablePositions = getAttackablePositions(playerCharacterPositions, allCharacterPositions)
-    console.log("attackable positions = ", attackablePositions)
+        const attackablePositions = getAttackablePositions(playerCharacterPositions, allCharacterPositions)
+        console.log("attackable positions = ", attackablePositions)
 
-    const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, enemyCharacters[this.name].position)
-    console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
+        const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, enemyCharacters[this.name].position)
+        console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
 
-    // const {indexOfClosestAttackablePosition, movesToClosestAttackablePosition} = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)    
-    // console.log("indexOfClosestAttackablePosition", indexOfClosestAttackablePosition)
-    // console.log("movesToClosestAttackablePosition", movesToClosestAttackablePosition)
+        // const {indexOfClosestAttackablePosition, movesToClosestAttackablePosition} = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)    
+        // console.log("indexOfClosestAttackablePosition", indexOfClosestAttackablePosition)
+        // console.log("movesToClosestAttackablePosition", movesToClosestAttackablePosition)
 
-    const moves = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)
-    console.log("moves", moves)
+        const moves = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)
+        console.log("moves", moves)
 
-    // This moves straight to closest attack point!!!
-    // let newPosition = this.position
-    // if ( movesToClosestAttackablePosition <= 3) this.position = attackablePositions[indexOfClosestAttackablePosition]
-    // return newPosition
-    // return this
+        // This moves straight to closest attack point!!!
+        // let newPosition = this.position
+        // if ( movesToClosestAttackablePosition <= 3) this.position = attackablePositions[indexOfClosestAttackablePosition]
+        // return newPosition
+        // return this
 
 
 
-    // TAKE THIS OUT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // const enemy1 = new Enemy("orc1", 1, 100, 1)
-    // const enemy2 = new Enemy("orc2", 1, 100, 3)
-    // const enemy3 = new Enemy("orc3", 1, 100, 5)
+        // TAKE THIS OUT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // const enemy1 = new Enemy("orc1", 1, 100, 1)
+        // const enemy2 = new Enemy("orc2", 1, 100, 3)
+        // const enemy3 = new Enemy("orc3", 1, 100, 5)
 
-    // let startingEnemyCharacters = {
-    //     enemy1: enemy1,
-    //     enemy2: enemy2,
-    //     enemy3: enemy3
-    // }
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // let startingEnemyCharacters = {
+        //     enemy1: enemy1,
+        //     enemy2: enemy2,
+        //     enemy3: enemy3
+        // }
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-    // const moves = [-1, -5, 5]
-    // console.log("this", this.name)
-    let finalPosition = this.position
-    let tempEnemyCharacters = null
-    if(moves.length <=3 ){
-        moves.forEach((move, index) => {
-            setTimeout(() => {
-                // this.position += move
-                // enemyCharacters[this.name].position += move
-                // tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-                // setEnemyCharacters(tempEnemyCharacters)
+        // const moves = [-1, -5, 5]
+        // console.log("this", this.name)
+        let finalPosition = this.position
+        let tempEnemyCharacters = null
+        if(moves.length <=3 ){
+            moves.forEach((move, index) => {
+                setTimeout(() => {
+                    // this.position += move
+                    // enemyCharacters[this.name].position += move
+                    // tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
+                    // setEnemyCharacters(tempEnemyCharacters)
 
-                const updatableEnemy = enemyCharacters[this.name]
-                updatableEnemy.position += move
-                finalPosition += move
-                setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
-            }, 1000 * (index + 1))
-        })
-    }
-    // // this is trying to get to attack!!!!!!!!!
-    // this.attack(playerCharacters.meleePlayer)
-    // console.log("POSITION", finalPosition)
-
-    // // if(playerCharacters.meleePlayer.position)
-    finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-    console.log("this POSITION", enemyCharacters[this.name].position)
-    console.log(enemyCharacters);
-    console.log("POSITION", finalPosition)
+                    const updatableEnemy = enemyCharacters[this.name]
+                    updatableEnemy.position += move
+                    finalPosition += move
+                    setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+                }, 1000 * (index + 1))
+            })
+        }
+        console.log("STATUS", enemyCharacters[this.name].statusEffects)
     
-    const currentRow = Math.ceil(enemyCharacters[this.name].position / boardWidth)
-    const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)
-    const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
-    const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
+        // this is to attack after moving
+        finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        console.log("this POSITION", enemyCharacters[this.name].position)
+        console.log(enemyCharacters);
+        console.log("POSITION", finalPosition)
+        
+        const currentRow = Math.ceil(enemyCharacters[this.name].position / boardWidth)
+        const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)
+        const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
+        const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
 
-    if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
-        (playerCharacters.meleePlayer.position === finalPosition - 1 && currentRow === meleePlayerRow) ||
-        playerCharacters.meleePlayer.position === finalPosition + 5 ||
-        playerCharacters.meleePlayer.position === finalPosition - 5 ) {
-            setTimeout(() => { 
-                this.attack(playerCharacters.meleePlayer)
-            }, 1000 * moves.length)
-        }
-    else if((playerCharacters.magicPlayer.position === finalPosition + 1 && currentRow === magicPlayerRow) || 
-        (playerCharacters.magicPlayer.position === finalPosition - 1 && currentRow === magicPlayerRow) ||
-        playerCharacters.magicPlayer.position === finalPosition + 5 ||
-        playerCharacters.magicPlayer.position === finalPosition - 5 ) {
-            setTimeout(() => { 
-                this.attack(playerCharacters.magicPlayer)
-            }, 1000 * moves.length)
-        }
-    else if((playerCharacters.healerPlayer.position === finalPosition + 1 && currentRow === healerPlayerRow) || 
-        (playerCharacters.healerPlayer.position === finalPosition - 1 && currentRow === healerPlayerRow )||
-        playerCharacters.healerPlayer.position === finalPosition + 5 ||
-        playerCharacters.healerPlayer.position === finalPosition - 5 ) {
-            setTimeout(() => { 
-                this.attack(playerCharacters.healerPlayer)
-            }, 1000 * moves.length)
-        }
+        if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
+            (playerCharacters.meleePlayer.position === finalPosition - 1 && currentRow === meleePlayerRow) ||
+            playerCharacters.meleePlayer.position === finalPosition + 5 ||
+            playerCharacters.meleePlayer.position === finalPosition - 5 ) {
+                setTimeout(() => { 
+                    this.attack(playerCharacters.meleePlayer)
+                }, 1000 * moves.length)
+            }
+        else if((playerCharacters.magicPlayer.position === finalPosition + 1 && currentRow === magicPlayerRow) || 
+            (playerCharacters.magicPlayer.position === finalPosition - 1 && currentRow === magicPlayerRow) ||
+            playerCharacters.magicPlayer.position === finalPosition + 5 ||
+            playerCharacters.magicPlayer.position === finalPosition - 5 ) {
+                setTimeout(() => { 
+                    this.attack(playerCharacters.magicPlayer)
+                }, 1000 * moves.length)
+            }
+        else if((playerCharacters.healerPlayer.position === finalPosition + 1 && currentRow === healerPlayerRow) || 
+            (playerCharacters.healerPlayer.position === finalPosition - 1 && currentRow === healerPlayerRow )||
+            playerCharacters.healerPlayer.position === finalPosition + 5 ||
+            playerCharacters.healerPlayer.position === finalPosition - 5 ) {
+                setTimeout(() => { 
+                    this.attack(playerCharacters.healerPlayer)
+                }, 1000 * moves.length)
+            }
 
 
-        //need this!!!!!!!!!!!!
-    return moves.length * 1000
-    
+            //need this!!!!!!!!!!!!
+        return moves.length * 1000
+        
 
 
 
@@ -134,7 +138,7 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
     //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
     //     setEnemyCharacters(tempEnemyCharacters)
     // }, 1000)
-
+    }
 }
 
 const getPlayerPositions = (playerCharacters) => {
@@ -234,10 +238,6 @@ const getIndexOfClosestAttackablePosition = (numberOfMovesToEachAttackablePositi
     //     movesToClosestAttackablePosition: movesToClosestAttackablePosition
     // }
     return movesToClosestAttackablePosition
-}
-
-Enemy.prototype.attackClosestPlayer = function (){
-    // console.log("POSITION", this.position)
 }
 
 export default Enemy

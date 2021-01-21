@@ -36,7 +36,6 @@ const GameScreen = () =>{
 
         if (currentPhase === "enemyMovement") {
             timeout = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-            enemy1.attackClosestPlayer()
             setTimeout(() => {
                 timeout2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
                 setTimeout(() => {
@@ -136,7 +135,7 @@ const GameScreen = () =>{
     const ken = new MeleePlayer("ken", 30, 100, 11, "Knight")
     const matt = new MeleePlayer("matt", 20, 100, 6, "mage")
     const peter = new MeleePlayer("peter", 10, 100, 16, "priest")
-    const sword = new MeleeWeapon("club-5", 5, "sword")
+    const sword = new MeleeWeapon("club-5", 5, "club")
     ken.equipedWeapon = sword
 
     let startingPlayerCharacters = {
@@ -274,6 +273,7 @@ const GameScreen = () =>{
                 <p>{modalCharacter.name}</p>
                 <p>Attack: {modalCharacter.attackPoints}</p>
                 <p>Health: {modalCharacter.healthPoints}</p>
+                <p>status: {modalCharacter.statusEffects[0]}</p>
 
             </Modal>}
            
