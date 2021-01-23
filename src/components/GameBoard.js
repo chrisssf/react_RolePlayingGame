@@ -13,12 +13,16 @@ const GameBoard = ({
     // setHealerPosition, 
     selectedCharacter, 
     currentPhase, 
+    setCurrentPhase,
     movableSquares,
     attackableSquares,
     playerCharacters,
     setPlayerCharacters,
     enemyCharacters,
-    handleImageClick }) => {
+    handleImageClick,
+    usedCharacters,
+    setUsedCharacters,
+    setAttackableSquares }) => {
 
 
     const fillGameBoard = () => {
@@ -32,6 +36,7 @@ const GameBoard = ({
                 key={i} 
                 // playerPositions={playerPositions} 
                 squareNumber={i} 
+                setCurrentPhase={setCurrentPhase}
                 selectedCharacter={selectedCharacter}
                 movableSquares={movableSquares}
                 attackableSquares={attackableSquares}
@@ -45,6 +50,9 @@ const GameBoard = ({
                 setPlayerCharacters={setPlayerCharacters}
                 enemyCharacters={enemyCharacters}
                 handleImageClick={handleImageClick}
+                usedCharacters={usedCharacters}
+                setUsedCharacters={setUsedCharacters}
+                setAttackableSquares={setAttackableSquares}
             />)
         }   
         return gameSquares  

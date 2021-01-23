@@ -1,19 +1,28 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 const MovementPhase = ({ 
+    selectedCharacter,
     setSelectedCharacter, 
     setCurrentPhase, 
     calculateMovementLocations, 
     setMovableSquares, 
     playerCharacters, 
     setPlayerCharacters,
-    setEnemyMovementPhase  }) =>{
+    setEnemyMovementPhase,
+    calculateAttackLocations,
+    startingPosition  }) =>{
 
     const [ movedCharacters, setMovedCharacters ] = useState([])
     const [ characterMoving, setCharacterMoving ] = useState("")
-    const startingPosition = useRef(null)
-    // this didnt need to be useRef, also work with state
-    // const [ startingPosition, setStartingPosition ] = useState(null)
+    // const startingPosition = useRef(null)
+    // // this didnt need to be useRef, also work with state
+    // // const [ startingPosition, setStartingPosition ] = useState(null)
+
+    // useEffect(() =>{
+    //     startingPosition.current = playerCharacters[selectedCharacter]["position"]
+        
+    // }, [])
+
 
     const handleSelectCharacter = (character) => {
         startingPosition.current = playerCharacters[character]["position"]
@@ -21,16 +30,18 @@ const MovementPhase = ({
 
         setSelectedCharacter(character)
         // setCurrentPhase("playerMovement")
-        calculateMovementLocations(character, 2)
+        calculateMovementLocations(playerCharacters[character].position, 2)
         setCharacterMoving(character)
     }
 
     const handleFinishedCharacterMovement = () => {
         // NEED TO DECIDE HOW CHARACTERS WILL BE NAMED/ REFERED TO AND STICK WITH IT!
-        setMovedCharacters([...movedCharacters, characterMoving])
-        console.log("after push", movedCharacters)
-        setCharacterMoving("")
+        // setMovedCharacters([...movedCharacters, characterMoving])
+        // console.log("after push", movedCharacters)
+        // setCharacterMoving("")
         setMovableSquares([])
+        calculateAttackLocations(selectedCharacter, 2)
+        setCurrentPhase("playerAttack")
     }
 
     const handleCancel = () => {
@@ -39,12 +50,12 @@ const MovementPhase = ({
         // tempPlayerCharacters[characterMoving]["position"] = startingPosition.current
         // // tempPlayerCharacters[characterMoving]["position"] = startingPosition
         // setPlayerCharacters(tempPlayerCharacters)
-
-        const updateableCharacter = playerCharacters[characterMoving]
+        const updateableCharacter = playerCharacters[selectedCharacter]
         updateableCharacter.position = startingPosition.current
-        setPlayerCharacters(prevState => ({...prevState, [characterMoving]: updateableCharacter }))
-        setCharacterMoving("")
+        setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
+        // setCharacterMoving("")
         setMovableSquares([])
+        setCurrentPhase("characterTurnSelect")
     }
 
     const handleEndMovementPhase = () => {
@@ -55,14 +66,14 @@ const MovementPhase = ({
     return (
         <div>
             <p>Movement Phase</p>
-            {characterMoving !== "" ? 
+            {/* {characterMoving !== "" ?  */}
                 <div>
-                    <p>Currently Moving {characterMoving}</p> 
+                    <p>Currently Moving {playerCharacters[selectedCharacter].type}</p> 
                     <button onClick={() => handleFinishedCharacterMovement()}>Finish Moving {characterMoving}</button>
                     <button onClick={() => handleCancel()}>Cancel</button>
                     <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use characters movement for this turn</p>
                 </div>
-            :
+            {/* :
                 <div>
                     <p>Select a character to move...</p>
                     <button disabled={movedCharacters.includes("meleePlayer")} onClick={() => handleSelectCharacter("meleePlayer")}>Knight</button>
@@ -70,7 +81,7 @@ const MovementPhase = ({
                     <button disabled={movedCharacters.includes("healerPlayer")} onClick={() => handleSelectCharacter("healerPlayer")}>Healer</button>
                     <button onClick={() => handleEndMovementPhase()}>End Movement Phase</button>
                 </div>
-            }
+            } */}
         </div>
     )
 

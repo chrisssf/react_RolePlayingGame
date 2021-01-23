@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactDOM from 'react-dom'
+import Modal from 'react-modal'
 import './GameSquare.css'
 import mageImage from '../assets/mage.png'
 import knightImage from '../assets/knight.png'
@@ -22,6 +24,7 @@ const width = window.innerWidth
 
 const GameSquare = ({ 
     squareNumber, 
+    setCurrentPhase,
     // playerPositions, 
     movableSquares, 
     attackableSquares,
@@ -35,13 +38,17 @@ const GameSquare = ({
     playerCharacters,
     setPlayerCharacters,
     enemyCharacters,
-    handleImageClick
+    handleImageClick,
+    usedCharacters,
+    setUsedCharacters,
+    setAttackableSquares
  }) =>{
 
     const [ image, setImage ] = useState(null)
     // const [ modalVisable, setModalVisable ] = useState(false)
     const [ squareStyling, setSquareStyling ] = useState("")
     const [ character, setCharacter ] = useState(null)
+    const [ modalIsOpen, setModalIsOpen ] = useState(false)
 
 //test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // const [ fing, setFing ] = useState("meleePlayer")
@@ -93,7 +100,6 @@ const GameSquare = ({
             // setImage(mage.image)
             // setImage('../assets/mage.png')
             setCharacter(playerCharacters["magicPlayer"])
-            console.log("IMAAAAAAAGE", character)
             setImage(mageImage)
         } else if (playerCharacters["meleePlayer"]["position"] === squareNumber) {
             // setImage("knight")
@@ -180,57 +186,81 @@ const GameSquare = ({
             setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
 
         } else if ( squareStyling === "attackable" && image !== null) {
-            console.log("eeeee1", character)
-            console.log("qqqqqq", playerCharacters[selectedCharacter])
-            playerCharacters[selectedCharacter].attack(character)
-            console.log("eeeee2", character)
+            setModalIsOpen(true)
+            // playerCharacters[selectedCharacter].attack(character)
         }
     }
 
-    
+    const handleModalAttack = () => {
+        setModalIsOpen(false)
+        playerCharacters[selectedCharacter].attack(character)
+        setCurrentPhase("characterTurnSelect")
+        const updatedUsedCharacters = [...usedCharacters, selectedCharacter]
+        setUsedCharacters(updatedUsedCharacters)
+        setAttackableSquares([])
+    }
     
     if (width > 500) {
         return (
-            <div onClick={() => handleClickSquare()} className={`bigger-square-container ${squareStyling}`}>
-                {image ? 
-                    <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
-                : 
-                    <p>{squareNumber}</p>
-                    // <p></p>
+            <>
+                <div onClick={() => handleClickSquare()} className={`bigger-square-container ${squareStyling}`}>
+                    {image ? 
+                        <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
+                    : 
+                        <p>{squareNumber}</p>
+                        // <p></p>
 
-                }
-                {/* <p>{squareNumber}</p>
-                {image && <img src={image} alt={image} className="game-square-image"></img>} */}
+                    }
+                    
+                    {/* <p>{squareNumber}</p>
+                    {image && <img src={image} alt={image} className="game-square-image"></img>} */}
 
-                {/* {image && <Image
+                    {/* {image && <Image
+                        style={{
+                            width: 80,
+                            height: 80,
+                            // alignSelf: "center",
+                            // justifyContent: "center"
+                            // borderRadius: 20,
+                            // marginTop: 10,
+                            // marginHorizontal: 16
+                        }}
+                        // source={require("../assets/knight.png")}
+                        source={boardImages[image]}
+                        // source={{uri: animalImageURL}}
+                    />} */}
+
+                    {/* <Modal
+                        style={{height: 500, width: 100}}
+                        // animationType="slide"
+                        // transparent={true}
+                        visible={true}
+                        // onRequestClose={() => {
+                        // Alert.alert("Modal has been closed.");
+                        // }}
+                    >
+                        <Text>Hi</Text>
+                    </Modal> */}
+                </div>
+                {character && selectedCharacter && <Modal
+                    className="modal-container"
+                    appElement={document.getElementById('root')}
+                    isOpen={modalIsOpen}
                     style={{
-                        width: 80,
-                        height: 80,
-                        // alignSelf: "center",
-                        // justifyContent: "center"
-                        // borderRadius: 20,
-                        // marginTop: 10,
-                        // marginHorizontal: 16
+                        overlay: {
+                            backgroundColor: 'rgba(0,0,0,0.7)'
+                        }
                     }}
-                    // source={require("../assets/knight.png")}
-                    source={boardImages[image]}
-                    // source={{uri: animalImageURL}}
-                />} */}
+                    >
+                    <p>Attack {character.name} with {playerCharacters[selectedCharacter].type}?</p>
+                    {selectedCharacter === "meleePlayer" && <p>Current equiped Weapon is {playerCharacters[selectedCharacter].equipedWeapon.name}</p>}
+                    <p>This will end this characters turn</p>
+                    <button onClick={() => handleModalAttack()}>Yes</button>
+                    <button onClick={() => setModalIsOpen(false)}>No</button>
 
-                {/* <Modal
-                    style={{height: 500, width: 100}}
-                    // animationType="slide"
-                    // transparent={true}
-                    visible={true}
-                    // onRequestClose={() => {
-                    // Alert.alert("Modal has been closed.");
-                    // }}
-                >
-                    <Text>Hi</Text>
-                </Modal> */}
-            </div>
+                </Modal>}
+            </>
         )
-        
     } else {
         return (
             // <div style={styles.container}>

@@ -1,5 +1,6 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './GameActionBar.css'
+import CharacterTurnSelect from './CharacterTurnSelect.js'
 import MovementPhase from './MovementPhase.js'
 import AttackPhase from './AttackPhase.js'
 
@@ -7,6 +8,7 @@ import AttackPhase from './AttackPhase.js'
 
 
 const GameActionBar = ( { 
+    selectedCharacter,
     setSelectedCharacter, 
     currentPhase, 
     setCurrentPhase, 
@@ -17,7 +19,9 @@ const GameActionBar = ( {
     playerCharacters, 
     setPlayerCharacters,
     // enemyMovementPhase,
-    setEnemyMovementPhase } ) =>{
+    setEnemyMovementPhase,
+    usedCharacters,
+    setUsedCharacters} ) =>{
 
     // testing
     const testBox = useRef()
@@ -34,10 +38,27 @@ const GameActionBar = ( {
     // end of testing
 
 
+
+    const startingPosition = useRef(null)
+    // this didnt need to be useRef, also work with state
+    // const [ startingPosition, setStartingPosition ] = useState(null)
+
+    useEffect(() =>{
+        if(selectedCharacter) startingPosition.current = playerCharacters[selectedCharacter]["position"]
+    }, [selectedCharacter])
+
     return (
         <div>
             <p>GameActionBar</p>
+            {currentPhase === "characterTurnSelect" && <CharacterTurnSelect
+                playerCharacters={playerCharacters} 
+                setSelectedCharacter={setSelectedCharacter}
+                usedCharacters={usedCharacters}
+                setCurrentPhase={setCurrentPhase}
+                calculateMovementLocations={calculateMovementLocations}
+            />}
             {currentPhase === "playerMovement" && <MovementPhase 
+                selectedCharacter={selectedCharacter}
                 setSelectedCharacter={setSelectedCharacter}
                 setCurrentPhase={setCurrentPhase}
                 calculateMovementLocations={calculateMovementLocations}
@@ -45,6 +66,8 @@ const GameActionBar = ( {
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
                 setEnemyMovementPhase={setEnemyMovementPhase}
+                calculateAttackLocations={calculateAttackLocations}
+                startingPosition={startingPosition}
             />}
             {currentPhase === "enemyMovement" && 
                 <div>
@@ -53,12 +76,17 @@ const GameActionBar = ( {
                 </div>
             }
             {currentPhase === "playerAttack" && <AttackPhase 
+                selectedCharacter={selectedCharacter}
                 setSelectedCharacter={setSelectedCharacter}
                 setCurrentPhase={setCurrentPhase}
                 calculateAttackLocations={calculateAttackLocations}
+                calculateMovementLocations={calculateMovementLocations}
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
                 setAttackableSquares={setAttackableSquares}
+                startingPosition={startingPosition}
+                usedCharacters={usedCharacters}
+                setUsedCharacters={setUsedCharacters}
             />}
 
             {/* testing  */}

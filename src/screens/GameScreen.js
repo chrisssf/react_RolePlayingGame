@@ -8,6 +8,8 @@ import GameActionBar from '../components/GameActionBar'
 
 import Character from '../models/Character.js'
 import MeleePlayer from '../models/MeleePlayer.js'
+import MagicPlayer from '../models/MeleePlayer.js'
+import HealerPlayer from '../models/MeleePlayer.js'
 import MeleeWeapon from '../models/MeleeWeapon.js'
 import Enemy from '../models/Enemy.js'
 
@@ -19,9 +21,17 @@ const GameScreen = () =>{
 
     const [ enemyMovementPhase, setEnemyMovementPhase ] = useState(false)
     const [ selectedCharacter, setSelectedCharacter ] = useState(null)
-    const [ currentPhase, setCurrentPhase ] = useState("playerMovement")
+    const [ usedCharacters, setUsedCharacters ] = useState([])
+    const [ currentPhase, setCurrentPhase ] = useState("characterTurnSelect")
     const [ modalIsOpen, setModalIsOpen ] = useState(false)
     const [ modalCharacter, setModalCharacter ] = useState(null)
+
+    useEffect(() =>{
+        if(usedCharacters.length === 3) {
+            setCurrentPhase("enemyMovement")
+            setUsedCharacters([])
+        }
+    }, [usedCharacters])
 
     useEffect(() =>{
         const bob = new Character("bob", 10, 20)
@@ -40,7 +50,7 @@ const GameScreen = () =>{
                 timeout2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
                 setTimeout(() => {
                     timeout3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-                    setTimeout(() => setCurrentPhase("playerAttack"), (timeout3 + 500))
+                    setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
                 }, (timeout2))
             }, timeout)
         }
@@ -133,9 +143,9 @@ const GameScreen = () =>{
 
     // TRYING THIS!!!!!!!!
     const ken = new MeleePlayer("ken", 30, 100, 11, "Knight")
-    const matt = new MeleePlayer("matt", 20, 100, 6, "mage")
-    const peter = new MeleePlayer("peter", 10, 100, 16, "priest")
-    const sword = new MeleeWeapon("club-5", 5, "axe")
+    const matt = new MagicPlayer("matt", 20, 100, 6, "mage")
+    const peter = new HealerPlayer("peter", 10, 100, 16, "priest")
+    const sword = new MeleeWeapon("club-5", 5, "club")
     ken.equipedWeapon = sword
 
     let startingPlayerCharacters = {
@@ -143,7 +153,7 @@ const GameScreen = () =>{
         magicPlayer: matt,
         healerPlayer: peter
     }
-    console.log(startingPlayerCharacters)
+
 
     const enemy1 = new Enemy("enemy1", 1, 100, 10)
     const enemy2 = new Enemy("enemy2", 1, 100, 15)
@@ -165,7 +175,7 @@ const GameScreen = () =>{
     const [ movableSquares, setMovableSquares ] = useState([])
     const [ attackableSquares, setAttackableSquares ] = useState([])
 
-    const calculateMovementLocations = (characterToMove, numberOfStepsAllowed) => {
+    const calculateMovementLocations = (startingPosition, numberOfStepsAllowed) => {
 
         const movableLocations = []
         // switch(characterToMove){
@@ -179,7 +189,8 @@ const GameScreen = () =>{
         //         movableLocations.push(healerPosition)
         //         break
         // }
-        movableLocations.push(playerCharacters[characterToMove]["position"])
+        // movableLocations.push(playerCharacters[characterToMove]["position"])
+        movableLocations.push(startingPosition)
 
         for (let i = 1; i <= numberOfStepsAllowed; i++){
             movableLocations.forEach( movableLocation => {
@@ -231,6 +242,7 @@ const GameScreen = () =>{
             <GameBoard 
                 selectedCharacter={selectedCharacter} 
                 currentPhase={currentPhase}
+                setCurrentPhase={setCurrentPhase}
                 // magicPosition={magicPosition}
                 // healerPosition={healerPosition}
                 // meleePosition={meleePosition}
@@ -243,8 +255,12 @@ const GameScreen = () =>{
                 setPlayerCharacters={setPlayerCharacters}
                 enemyCharacters={enemyCharacters}
                 handleImageClick={handleImageClick}
+                usedCharacters={usedCharacters}
+                setUsedCharacters={setUsedCharacters}
+                setAttackableSquares={setAttackableSquares}
             />
             <GameActionBar 
+                selectedCharacter={selectedCharacter}
                 setSelectedCharacter={setSelectedCharacter} 
                 currentPhase={currentPhase} 
                 setCurrentPhase={setCurrentPhase}
@@ -256,6 +272,8 @@ const GameScreen = () =>{
                 setPlayerCharacters={setPlayerCharacters}
                 enemyMovementPhase={enemyMovementPhase}
                 setEnemyMovementPhase={setEnemyMovementPhase}
+                usedCharacters={usedCharacters}
+                setUsedCharacters={setUsedCharacters}
             />
             {modalCharacter && <Modal
                 className="modal-container"

@@ -16,6 +16,8 @@ Object.defineProperty(Enemy.prototype, 'constructor', {
 const boardHeight = 5
 const boardWidth = 5
 
+// when setting EnemyCharacters, dont get the character from state, change it using "this." then 
+// set using this.name: this   !!!!!!!!!!!!!!!!!!! a decent amount of refactoring would be required for this!
 Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyCharacters){
 
     if(enemyCharacters[this.name].statusEffects.includes("stun")){
@@ -89,9 +91,6 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
     
         // this is to attack after moving
         finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-        console.log("this POSITION", enemyCharacters[this.name].position)
-        console.log(enemyCharacters);
-        console.log("POSITION", finalPosition)
         
         const currentRow = Math.ceil(enemyCharacters[this.name].position / boardWidth)
         const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)

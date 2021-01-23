@@ -17,4 +17,8 @@ Object.defineProperty(MagicPlayer.prototype, 'constructor', {
     writable: true 
 });
 
+MagicPlayer.prototype.freeze = function (enemy){
+    enemy.statusEffects.push(freeze)
+}
+
 export default MagicPlayer
