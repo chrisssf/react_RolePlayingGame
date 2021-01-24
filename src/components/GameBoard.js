@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './GameBoard.css'
-// import { StyleSheet, Text, View, FlatList, Modal } from 'react-native';
 
 import GameSquare from './GameSquare.js'
 

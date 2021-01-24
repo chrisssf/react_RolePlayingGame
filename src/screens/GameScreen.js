@@ -20,8 +20,16 @@ const GameScreen = () =>{
     const ken = new MeleePlayer("ken", 30, 100, 11, "Knight")
     const matt = new MagicPlayer("matt", 20, 100, 6, "mage")
     const peter = new HealerPlayer("peter", 10, 100, 16, "priest")
-    const sword = new MeleeWeapon("club-5", 5, "club")
-    ken.equipedWeapon = sword
+    const sword = new MeleeWeapon("sword-5", 5, "sword")
+    const club = new MeleeWeapon("club-6", 6, "club")
+    const axe = new MeleeWeapon("axe-4", 4, "axe")
+    // ken.weapons = ken.weapons.push(sword)
+    // ken.weapons = ken.weapons.push(club)
+    // ken.weapons = ken.weapons.push(axe)
+    ken.weapons.push(sword)
+    ken.weapons.push(club)
+    ken.weapons.push(axe)
+    // ken.equipedWeapon = sword
 
     let startingPlayerCharacters = {
         meleePlayer: ken,

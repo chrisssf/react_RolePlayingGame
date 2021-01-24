@@ -135,7 +135,7 @@ const GameSquare = ({
                 }}
                 >
                 <p>Attack {character.name} with {playerCharacters[selectedCharacter].type}?</p>
-                {selectedCharacter === "meleePlayer" && <p>Current equiped Weapon is {playerCharacters[selectedCharacter].equipedWeapon.name}</p>}
+                {selectedCharacter === "meleePlayer" && playerCharacters[selectedCharacter].equipedWeapon && <p>Current equiped Weapon is {playerCharacters[selectedCharacter].equipedWeapon.name}</p>}
                 <p>This will end this characters turn</p>
                 <button onClick={() => handleModalAttack()}>Yes</button>
                 <button onClick={() => setModalIsOpen(false)}>No</button>

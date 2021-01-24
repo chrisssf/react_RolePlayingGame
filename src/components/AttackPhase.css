@@ -1,0 +1,42 @@
+.weapon-select-modal-container{
+    width: 80%;
+    height: 90%;
+	background-color: white;
+	position: fixed;
+	top: 5%;
+	left: 10%;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: auto;
+	/* opacity: 100%; */
+}
+
+.weapon-select-modal-weapons-container {
+    /* position: relative;
+    display: flex;
+    flex-direction: row; */
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-gap: 10px;
+}
+
+.weapon-select-modal-weapon {
+    /* position: relative; */
+    /* width: 50%; */
+    border: .5px solid black;
+    text-align: center;
+    padding: 5px;
+}
+
+.weapon-select-modal-image {
+    max-height: 55px
+}
+
+.weapon-select-modal-button {
+    padding: 5px;
+    margin: 10px;
+}
+
+.equipedStyle {
+    background-color: yellow;
+}
