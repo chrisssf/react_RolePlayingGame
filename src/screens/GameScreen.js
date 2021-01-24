@@ -6,7 +6,6 @@ import './GameScreen.css'
 import GameBoard from '../components/GameBoard'
 import GameActionBar from '../components/GameActionBar'
 
-import Character from '../models/Character.js'
 import MeleePlayer from '../models/MeleePlayer.js'
 import MagicPlayer from '../models/MeleePlayer.js'
 import HealerPlayer from '../models/MeleePlayer.js'
@@ -18,130 +17,6 @@ const boardHeight = 5
 
 const GameScreen = () =>{
 
-
-    const [ enemyMovementPhase, setEnemyMovementPhase ] = useState(false)
-    const [ selectedCharacter, setSelectedCharacter ] = useState(null)
-    const [ usedCharacters, setUsedCharacters ] = useState([])
-    const [ currentPhase, setCurrentPhase ] = useState("characterTurnSelect")
-    const [ modalIsOpen, setModalIsOpen ] = useState(false)
-    const [ modalCharacter, setModalCharacter ] = useState(null)
-
-    useEffect(() =>{
-        if(usedCharacters.length === 3) {
-            setCurrentPhase("enemyMovement")
-            setUsedCharacters([])
-        }
-    }, [usedCharacters])
-
-    useEffect(() =>{
-        const bob = new Character("bob", 10, 20)
-        // const orc = new Enemy("orc", 1, 100, 15)
-        const karen = new MeleePlayer("karen", 10, 20, 11, "Knight")
-        const club = new MeleeWeapon("club-5", 5, "sword")
-
-        // THIS IS FOR MOVING ENEMY!
-        let timeout = 0
-        let timeout2 = 0
-        let timeout3 = 0
-
-        if (currentPhase === "enemyMovement") {
-            timeout = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-            setTimeout(() => {
-                timeout2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-                setTimeout(() => {
-                    timeout3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-                    setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
-                }, (timeout2))
-            }, timeout)
-        }
-
-        // if (currentPhase === "enemyMovement") {
-        //     console.log("RUNNING22222222")
-        //     timeout = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        //     console.log("1", timeout)
-
-        //     setTimeout(() => {
-        //         timeout2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        //         console.log("2", timeout2)
-        //     }, timeout)
-        //     setTimeout(() => {
-        //         timeout3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        //         console.log("3", timeout3)
-
-        //     }, (timeout + timeout2))
-        //     setTimeout(() => setCurrentPhase("playerMovement"), (timeout + timeout2 + timeout3))
-        // }
-
-        // const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        // const movedEnemy2 = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        // const movedEnemy3 = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        // const tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-        // setTimeout(() => setEnemyCharacters(tempEnemyCharacters), 2000)
-
-        // let tempEnemyCharacters = null
-        // setTimeout(() => {
-        //     const movedEnemy = enemy1.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-        //     setEnemyCharacters(tempEnemyCharacters)
-        // }, 1000)
-
-        // setTimeout(() => {
-        //     const movedEnemy = enemy2.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-        //     setEnemyCharacters(tempEnemyCharacters)
-        // }, 2000)
-
-        // setTimeout(() => {
-        //     const movedEnemy = enemy3.move(playerCharacters, enemyCharacters, setEnemyCharacters)
-        //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-        //     setEnemyCharacters(tempEnemyCharacters)
-        // }, 3000)
-        
-
-
-        // tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-        // tempEnemyCharacters[enemy1.name] = movedEnemy
-        // tempEnemyCharacters[enemy2.name] = movedEnemy2
-        // tempEnemyCharacters[enemy3.name] = movedEnemy3
-        // setTimeout(() => setEnemyCharacters(tempEnemyCharacters), 6000)
-
-        // const movingEnemy = 
-        // console.log("newPosition", newPosition)
-        // console.log(enemyCharacters)
-
-
-        // karen.equipedWeapon = club
-        // karen.attack(enemy1)
-        // console.log("enemy1", enemy1)
-        // console.log("karen", karen)
-
-
-    }, [currentPhase])
-
-    // const [ magicPosition, setMagicPosition ] = useState(16)
-    // const [ meleePosition, setMeleePosition ] = useState(11)
-    // const [ healerPosition, setHealerPosition ] = useState(6)
-
-    // THIS WORKED!!!!!!
-    // let startingPlayerCharacters = {
-    //     meleePlayer: {
-    //         position: 11,
-    //         type: "Knight",
-    //         name: "Jeff"
-    //     },
-    //     magicPlayer: {
-    //         position: 16,
-    //         type: "Mage",
-    //         name: "Dave"
-    //     },
-    //     healerPlayer: {
-    //         position: 6,
-    //         type: "Priest",
-    //         name: "Bob"
-    //     }
-    // }
-
-    // TRYING THIS!!!!!!!!
     const ken = new MeleePlayer("ken", 30, 100, 11, "Knight")
     const matt = new MagicPlayer("matt", 20, 100, 6, "mage")
     const peter = new HealerPlayer("peter", 10, 100, 16, "priest")
@@ -153,7 +28,6 @@ const GameScreen = () =>{
         magicPlayer: matt,
         healerPlayer: peter
     }
-
 
     const enemy1 = new Enemy("enemy1", 1, 100, 10)
     const enemy2 = new Enemy("enemy2", 1, 100, 15)
@@ -168,28 +42,44 @@ const GameScreen = () =>{
     const [ playerCharacters, setPlayerCharacters ] = useState(startingPlayerCharacters)
     const [ enemyCharacters, setEnemyCharacters ] = useState(startingEnemyCharacters)
 
-
-    
-
-
+    const [ enemyMovementPhase, setEnemyMovementPhase ] = useState(false) // dont think this being used any more
+    const [ selectedCharacter, setSelectedCharacter ] = useState(null)
+    const [ usedCharacters, setUsedCharacters ] = useState([])
+    const [ currentPhase, setCurrentPhase ] = useState("characterTurnSelect")
+    const [ modalIsOpen, setModalIsOpen ] = useState(false)
+    const [ modalCharacter, setModalCharacter ] = useState(null)
     const [ movableSquares, setMovableSquares ] = useState([])
     const [ attackableSquares, setAttackableSquares ] = useState([])
+
+    useEffect(() =>{
+        if(usedCharacters.length === 3) {
+            setCurrentPhase("enemyMovement")
+            setUsedCharacters([])
+        }
+    }, [usedCharacters])
+
+    useEffect(() =>{
+
+        let timeout = 0
+        let timeout2 = 0
+        let timeout3 = 0
+
+        if (currentPhase === "enemyMovement") {
+            timeout = enemy1.takeTurn(playerCharacters, enemyCharacters, setEnemyCharacters)
+            setTimeout(() => {
+                timeout2 = enemy2.takeTurn(playerCharacters, enemyCharacters, setEnemyCharacters)
+                setTimeout(() => {
+                    timeout3 = enemy3.takeTurn(playerCharacters, enemyCharacters, setEnemyCharacters)
+                    setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
+                }, (timeout2))
+            }, timeout)
+        }
+    }, [currentPhase])
+
 
     const calculateMovementLocations = (startingPosition, numberOfStepsAllowed) => {
 
         const movableLocations = []
-        // switch(characterToMove){
-        //     case "meleePlayer":
-        //         movableLocations.push(meleePosition)
-        //         break
-        //     case "magicPlayer":
-        //         movableLocations.push(magicPosition)
-        //         break
-        //     case "healerPlayer":
-        //         movableLocations.push(healerPosition)
-        //         break
-        // }
-        // movableLocations.push(playerCharacters[characterToMove]["position"])
         movableLocations.push(startingPosition)
 
         for (let i = 1; i <= numberOfStepsAllowed; i++){
@@ -212,7 +102,6 @@ const GameScreen = () =>{
                 }
             })
         }
-        console.log(movableLocations)
         setMovableSquares(movableLocations)
     }
 
@@ -227,7 +116,6 @@ const GameScreen = () =>{
             if( Math.ceil((currentPosition + (i * 1)) / boardWidth) === currentRow ) attackableLocations.push(currentPosition + (i * 1))
             if( Math.ceil((currentPosition - (i * 1)) / boardWidth) === currentRow ) attackableLocations.push(currentPosition - (i * 1))
         }
-        console.log("attackableLocations", attackableLocations)
         setAttackableSquares(attackableLocations)
     }
 
@@ -243,12 +131,6 @@ const GameScreen = () =>{
                 selectedCharacter={selectedCharacter} 
                 currentPhase={currentPhase}
                 setCurrentPhase={setCurrentPhase}
-                // magicPosition={magicPosition}
-                // healerPosition={healerPosition}
-                // meleePosition={meleePosition}
-                // setMagicPosition={setMagicPosition}
-                // setHealerPosition={setHealerPosition}
-                // setMeleePosition={setMeleePosition}
                 movableSquares={movableSquares}
                 attackableSquares={attackableSquares}
                 playerCharacters={playerCharacters}
@@ -292,12 +174,9 @@ const GameScreen = () =>{
                 <p>Attack: {modalCharacter.attackPoints}</p>
                 <p>Health: {modalCharacter.healthPoints}</p>
                 <p>status: {modalCharacter.statusEffects[0]}</p>
-
             </Modal>}
-           
         </div>
     )
-
 }
 
 export default GameScreen

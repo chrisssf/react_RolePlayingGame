@@ -18,7 +18,7 @@ const boardWidth = 5
 
 // when setting EnemyCharacters, dont get the character from state, change it using "this." then 
 // set using this.name: this   !!!!!!!!!!!!!!!!!!! a decent amount of refactoring would be required for this!
-Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyCharacters){
+Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemyCharacters){
 
     if(enemyCharacters[this.name].statusEffects.includes("stun")){
         const updatableEnemy = enemyCharacters[this.name]
@@ -38,51 +38,18 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
         const attackablePositions = getAttackablePositions(playerCharacterPositions, allCharacterPositions)
         console.log("attackable positions = ", attackablePositions)
 
-        const numberOfMovesToEachAttackablePosition = getNumberOfMovesToEachAttackablePosition(attackablePositions, enemyCharacters[this.name].position)
-        console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
+        const possibleAttackPaths = getPossibleAttackPaths(attackablePositions, enemyCharacters[this.name].position)
+        console.log("possibleAttackPaths", possibleAttackPaths)
 
-        // const {indexOfClosestAttackablePosition, movesToClosestAttackablePosition} = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)    
-        // console.log("indexOfClosestAttackablePosition", indexOfClosestAttackablePosition)
-        // console.log("movesToClosestAttackablePosition", movesToClosestAttackablePosition)
-
-        const moves = getIndexOfClosestAttackablePosition(numberOfMovesToEachAttackablePosition)
+        const moves = getPathToClosestAttackablePosition(possibleAttackPaths)
         console.log("moves", moves)
 
-        // This moves straight to closest attack point!!!
-        // let newPosition = this.position
-        // if ( movesToClosestAttackablePosition <= 3) this.position = attackablePositions[indexOfClosestAttackablePosition]
-        // return newPosition
-        // return this
-
-
-
-        // TAKE THIS OUT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        // const enemy1 = new Enemy("orc1", 1, 100, 1)
-        // const enemy2 = new Enemy("orc2", 1, 100, 3)
-        // const enemy3 = new Enemy("orc3", 1, 100, 5)
-
-        // let startingEnemyCharacters = {
-        //     enemy1: enemy1,
-        //     enemy2: enemy2,
-        //     enemy3: enemy3
-        // }
-        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-        // const moves = [-1, -5, 5]
-        // console.log("this", this.name)
         let finalPosition = this.position
-        let tempEnemyCharacters = null
         if(moves.length <=3 ){
             moves.forEach((move, index) => {
                 setTimeout(() => {
-                    // this.position += move
-                    // enemyCharacters[this.name].position += move
-                    // tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-                    // setEnemyCharacters(tempEnemyCharacters)
-
                     const updatableEnemy = enemyCharacters[this.name]
                     updatableEnemy.position += move
-                    finalPosition += move
                     setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
                 }, 1000 * (index + 1))
             })
@@ -91,12 +58,11 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
     
         // this is to attack after moving
         finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
-        
-        const currentRow = Math.ceil(enemyCharacters[this.name].position / boardWidth)
+    
+        const currentRow = Math.ceil(finalPosition / boardWidth)
         const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)
         const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
         const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
-
 
         if(enemyCharacters[this.name].statusEffects.includes("attack down")){
             this.attackPoints = this.attackPoints / 2
@@ -129,22 +95,7 @@ Enemy.prototype.move = function (playerCharacters, enemyCharacters, setEnemyChar
                     this.attack(playerCharacters.healerPlayer)
                 }, 1000 * moves.length)
             }
-
-
-            //need this!!!!!!!!!!!!
         return moves.length * 1000
-        
-
-
-
-
-    // setEnemyCharacters(startingEnemyCharacters)
-
-    // let tempEnemyCharacters = null
-    // setTimeout(() => {
-    //     tempEnemyCharacters = JSON.parse(JSON.stringify(enemyCharacters))
-    //     setEnemyCharacters(tempEnemyCharacters)
-    // }, 1000)
     }
 }
 
@@ -179,72 +130,45 @@ const getAttackablePositions = (playerCharacterPositions, allCharacterPositions)
     return attackablePositions
 }
 
-const getNumberOfMovesToEachAttackablePosition = (attackablePositions, currentPosition) => {
-    const numberOfMovesToEachAttackablePosition = attackablePositions.map((attackablePosition) => {
+const getPossibleAttackPaths = (attackablePositions, currentPosition) => {
+    const possibleAttackPaths = attackablePositions.map((attackablePosition) => {
         const enemyRow = Math.ceil(currentPosition / boardWidth)
         const attackablePositionRow = Math.ceil(attackablePosition / boardWidth)
-        const rowDifference = Math.abs(enemyRow - attackablePositionRow)
+        const AbsoluteRowDifference = Math.abs(enemyRow - attackablePositionRow)
         let adjustedEnemyPosition = currentPosition
-        if ( attackablePosition < currentPosition) adjustedEnemyPosition = currentPosition - boardWidth * rowDifference
-        else if ( attackablePosition > currentPosition) adjustedEnemyPosition = currentPosition + boardWidth * rowDifference
-        const numberOfMovesRequired = Math.abs(adjustedEnemyPosition - attackablePosition) + rowDifference
+        if ( attackablePosition < currentPosition) adjustedEnemyPosition = currentPosition - boardWidth * AbsoluteRowDifference
+        else if ( attackablePosition > currentPosition) adjustedEnemyPosition = currentPosition + boardWidth * AbsoluteRowDifference
+        // const numberOfMovesRequired = Math.abs(adjustedEnemyPosition - attackablePosition) + AbsoluteRowDifference
         
-        // GETTING PATH BIT!!!!!!!
         let movementPath = []
+        const rowDifference = enemyRow - attackablePositionRow
+        console.log("rowDifference", rowDifference)
 
-        const rowws = enemyRow - attackablePositionRow
-        console.log("rowws", rowws)
+        if ( rowDifference < 0 ) movementPath = [...Array(Math.abs(rowDifference)).fill(5)]
+        else if(rowDifference > 0) movementPath = [...Array(Math.abs(rowDifference)).fill(-5)]
 
-        // if ( rowws < 0 ) movementPath = [...movementPath, Array(Math.abs(rowws)).fill(-5)]
-        // else if(rowws > 0) movementPath = [...movementPath, Array(Math.abs(rowws)).fill(5)]
-
-        if ( rowws < 0 ) movementPath = [...Array(Math.abs(rowws)).fill(5)]
-        else if(rowws > 0) movementPath = [...Array(Math.abs(rowws)).fill(-5)]
-        
         console.log("movementPath1", movementPath)
 
-
-        const cols = adjustedEnemyPosition - attackablePosition
-        if ( cols < 0 ) movementPath = [...movementPath, ...Array(Math.abs(cols)).fill(1)]
-        else if(cols > 0) movementPath = [...movementPath, ...Array(Math.abs(cols)).fill(-1)]
-        console.log("cols", cols)
+        const columnDifference = adjustedEnemyPosition - attackablePosition
+        if ( columnDifference < 0 ) movementPath = [...movementPath, ...Array(Math.abs(columnDifference)).fill(1)]
+        else if(columnDifference > 0) movementPath = [...movementPath, ...Array(Math.abs(columnDifference)).fill(-1)]
+        console.log("columnDifference", columnDifference)
         console.log("movementPath2", movementPath)
 
-        //TO HERE!!!!!!!!!!!!
-        
-        // return numberOfMovesRequired
         return movementPath
     })
-    console.log("numberOfMovesToEachAttackablePosition", numberOfMovesToEachAttackablePosition)
-    return numberOfMovesToEachAttackablePosition
+    console.log("possibleAttackPaths", possibleAttackPaths)
+    return possibleAttackPaths
 }
 
-const getIndexOfClosestAttackablePosition = (numberOfMovesToEachAttackablePosition) => {
-    // let indexOfClosestAttackablePosition = null
-    // let movesToClosestAttackablePosition = 100
-    // numberOfMovesToEachAttackablePosition.forEach((movesToAttackablePosition, index) =>{
-    //     if (movesToAttackablePosition < movesToClosestAttackablePosition){
-    //         movesToClosestAttackablePosition = movesToAttackablePosition
-    //         indexOfClosestAttackablePosition = index
-    //     }
-    // })
-    // return {
-    //     indexOfClosestAttackablePosition: indexOfClosestAttackablePosition , 
-    //     movesToClosestAttackablePosition: movesToClosestAttackablePosition
-    // }
-    let indexOfClosestAttackablePosition = null
-    let movesToClosestAttackablePosition = numberOfMovesToEachAttackablePosition[0]
-    numberOfMovesToEachAttackablePosition.forEach((movesToAttackablePosition, index) =>{
-        if (movesToAttackablePosition.length < movesToClosestAttackablePosition.length){
-            movesToClosestAttackablePosition = movesToAttackablePosition
-            indexOfClosestAttackablePosition = index
+const getPathToClosestAttackablePosition = (possibleAttackPaths) => {
+    let pathToClosestAttackablePosition = possibleAttackPaths[0]
+    possibleAttackPaths.forEach(attackPath =>{
+        if (attackPath.length < pathToClosestAttackablePosition.length){
+            pathToClosestAttackablePosition = attackPath
         }
     })
-    // return {
-    //     indexOfClosestAttackablePosition: indexOfClosestAttackablePosition , 
-    //     movesToClosestAttackablePosition: movesToClosestAttackablePosition
-    // }
-    return movesToClosestAttackablePosition
+    return pathToClosestAttackablePosition
 }
 
 export default Enemy

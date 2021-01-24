@@ -12,7 +12,9 @@ Character.prototype.attack = function (enemy){
     const newHealth = startingHealth - this.attackPoints
     // enemy.setHealthPoints(newHealth)
     enemy.healthPoints = newHealth
-    // console.log(newHealth)
+    console.log("4444444444")
+
+    console.log(newHealth)
 }
 
 export default Character

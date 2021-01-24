@@ -5,8 +5,6 @@ import MovementPhase from './MovementPhase.js'
 import AttackPhase from './AttackPhase.js'
 
 
-
-
 const GameActionBar = ( { 
     selectedCharacter,
     setSelectedCharacter, 
@@ -36,8 +34,6 @@ const GameActionBar = ( {
         // Both of the above do the same thing BUT using REF is the correct react way of doing it
     }
     // end of testing
-
-
 
     const startingPosition = useRef(null)
     // this didnt need to be useRef, also work with state
