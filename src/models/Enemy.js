@@ -20,11 +20,22 @@ const boardWidth = 5
 // set using this.name: this   !!!!!!!!!!!!!!!!!!! a decent amount of refactoring would be required for this!
 Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemyCharacters){
 
-    if(enemyCharacters[this.name].statusEffects.includes("stun")){
-        const updatableEnemy = enemyCharacters[this.name]
-        updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "stun")
-        setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
-        console.log("STUNNNNNEEEEDDDDDD!!!!!!");
+    let cantAct = false
+    let attackDown = false
+    enemyCharacters[this.name].statusEffects.forEach(statusEffect => {
+        if(statusEffect.effect === "freeze" || statusEffect.effect === "stun") cantAct = true
+        else if (statusEffect.effect === "attack down" ) attackDown = true
+    })
+
+    //old code
+    // if(enemyCharacters[this.name].statusEffects.includes("stun")){
+    //     const updatableEnemy = enemyCharacters[this.name]
+    //     updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "stun")
+    //     setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+    //     console.log("STUNNNNNEEEEDDDDDD!!!!!!");
+    if(cantAct) {
+        console.log("stuned", enemyCharacters[this.name].statusEffects)
+        updateStatusEffects(this.name, enemyCharacters, setEnemyCharacters)
     } else {
         const playerCharacterPositions = getPlayerPositions(playerCharacters)
         let enemyCharacterPositions = getEnemyPositions(enemyCharacters)
@@ -64,11 +75,12 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
         const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
         const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
 
-        if(enemyCharacters[this.name].statusEffects.includes("attack down")){
+        // if(enemyCharacters[this.name].statusEffects.includes("attack down")){
+        if(attackDown){
             this.attackPoints = this.attackPoints / 2
-            const updatableEnemy = enemyCharacters[this.name]
-            updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "attack down")
-            setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+            // const updatableEnemy = enemyCharacters[this.name]
+            // updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "attack down")
+            // setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
         }
 
         if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
@@ -95,6 +107,8 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
                     this.attack(playerCharacters.healerPlayer)
                 }, 1000 * moves.length)
             }
+        
+        updateStatusEffects(this.name, enemyCharacters, setEnemyCharacters)
         return moves.length * 1000
     }
 }
@@ -169,6 +183,19 @@ const getPathToClosestAttackablePosition = (possibleAttackPaths) => {
         }
     })
     return pathToClosestAttackablePosition
+}
+
+const updateStatusEffects = (name, enemyCharacters, setEnemyCharacters) => {
+    const updatedStatusEffects = []
+    enemyCharacters[name].statusEffects.forEach(statusEffect => {
+        statusEffect.duration -= 1
+        if (statusEffect.duration > 0) updatedStatusEffects.push(statusEffect)
+    })
+    const updatableEnemy = enemyCharacters[name]
+    updatableEnemy.statusEffects = updatedStatusEffects
+    console.log("updatedStatusEffects", updatedStatusEffects);
+    console.log("updatableEnemy", updatableEnemy);
+    setEnemyCharacters(prevState => ({...prevState, [name]: updatableEnemy}))
 }
 
 export default Enemy

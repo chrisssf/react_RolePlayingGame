@@ -7,10 +7,11 @@ import GameBoard from '../components/GameBoard'
 import GameActionBar from '../components/GameActionBar'
 
 import MeleePlayer from '../models/MeleePlayer.js'
-import MagicPlayer from '../models/MeleePlayer.js'
-import HealerPlayer from '../models/MeleePlayer.js'
+import MagicPlayer from '../models/MagicPlayer.js'
+import HealerPlayer from '../models/HealerPlayer.js'
 import MeleeWeapon from '../models/MeleeWeapon.js'
 import Enemy from '../models/Enemy.js'
+import Spell from '../models/Spell.js'
 
 const boardWidth = 5
 const boardHeight = 5
@@ -23,12 +24,14 @@ const GameScreen = () =>{
     const sword = new MeleeWeapon("sword-5", 5, "sword")
     const club = new MeleeWeapon("club-6", 6, "club")
     const axe = new MeleeWeapon("axe-4", 4, "axe")
+    const fireball = new Spell("fireball", 3, "stun", 100, 3)
     // ken.weapons = ken.weapons.push(sword)
     // ken.weapons = ken.weapons.push(club)
     // ken.weapons = ken.weapons.push(axe)
     ken.weapons.push(sword)
     ken.weapons.push(club)
     ken.weapons.push(axe)
+    matt.equipedSpell = fireball
     // ken.equipedWeapon = sword
 
     let startingPlayerCharacters = {
@@ -132,6 +135,14 @@ const GameScreen = () =>{
         setModalCharacter(character)
     }
 
+    const displayStatusEffects = () => {
+        const display = modalCharacter.statusEffects.map(statusEffect => {
+            return statusEffect.effect + 'x' + statusEffect.duration
+        })
+        const finished = display.join(", ")
+        return <p>status: {finished}</p>
+    }
+
     return (
         <div>
             <p>GameScreen</p>
@@ -181,7 +192,8 @@ const GameScreen = () =>{
                 <p>{modalCharacter.name}</p>
                 <p>Attack: {modalCharacter.attackPoints}</p>
                 <p>Health: {modalCharacter.healthPoints}</p>
-                <p>status: {modalCharacter.statusEffects[0]}</p>
+                {/* <p>status: {modalCharacter.statusEffects[0] ? modalCharacter.statusEffects[0].effect : ""}</p> */}
+                {displayStatusEffects()}
             </Modal>}
         </div>
     )

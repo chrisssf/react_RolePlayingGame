@@ -30,14 +30,27 @@ MeleePlayer.prototype.attack = function (enemy){
                 break
             case("axe"):
                 if(randomNumber <= 10) damageDone = startingHealth
-                else if(randomNumber <= 20) enemy.statusEffects.push("attack down")
+                else if(randomNumber <= 100) addEffectToTarget("attack down", enemy, 2) // should be <= 20
                 break
             case("club"):
-                if(randomNumber <= 25) enemy.statusEffects.push("stun")
+                if(randomNumber <= 100) addEffectToTarget("stun", enemy, 1) // should be <= 25
                 break
         }
     }
     enemy.healthPoints = startingHealth - damageDone
+}
+
+const addEffectToTarget = (effectName, enemy, duration) => {
+    let stillToAdd = true
+    const updatedEffects = enemy.statusEffects.map(statusEffect =>{
+        if( effectName === statusEffect.effect){
+            if(duration > statusEffect.duration) statusEffect.duration = duration
+            stillToAdd = false
+        }
+        return statusEffect
+    })
+    if (stillToAdd) enemy.statusEffects.push({effect: effectName, duration: duration})
+    else enemy.statusEffects = updatedEffects
 }
 
 export default MeleePlayer

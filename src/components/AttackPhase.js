@@ -45,7 +45,6 @@ const AttackPhase = ({
 
     const displayWeaponInventory = () => {
         const weapons = playerCharacters[selectedCharacter].weapons
-        console.log(weapons)
         const displayWeaponOptions = weapons.map(weapon => {
             let equipedStyle = false
             if(playerCharacters[selectedCharacter].equipedWeapon && playerCharacters[selectedCharacter].equipedWeapon.name === weapon.name) equipedStyle = true
@@ -81,7 +80,7 @@ const AttackPhase = ({
                     <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use characters movement for this turn</p>
                 </div>
 
-                {selectedCharacter && <Modal
+                {selectedCharacter === "meleePlayer" && <Modal
                 className="weapon-select-modal-container"
                 appElement={document.getElementById('root')}
                 isOpen={weaponChangeModalIsOpen}
