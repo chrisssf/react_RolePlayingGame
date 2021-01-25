@@ -24,10 +24,17 @@ const GameScreen = () =>{
     const sword = new MeleeWeapon("sword-5", 5, "sword")
     const club = new MeleeWeapon("club-6", 6, "club")
     const axe = new MeleeWeapon("axe-4", 4, "axe")
-    const fireball = new Spell("fireball", 3, "stun", 100, 3)
+    const fireball = new Spell("fireball", 3, "burn", 10, 3) // no logic for burn yet
+    const armourBreak = new Spell("armour break", 0, "armour down", 100, 3)
+    const attackBreak = new Spell("attack break", 0, "attack down", 100, 3) // no logic for attack down yet
+    const freeze = new Spell("freeze", 0, "frozen", 70 , 1)
     // ken.weapons = ken.weapons.push(sword)
     // ken.weapons = ken.weapons.push(club)
     // ken.weapons = ken.weapons.push(axe)
+    matt.spells.push(fireball)
+    matt.spells.push(armourBreak)
+    matt.spells.push(attackBreak)
+    matt.spells.push(freeze)
     ken.weapons.push(sword)
     ken.weapons.push(club)
     ken.weapons.push(axe)

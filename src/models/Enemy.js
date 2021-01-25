@@ -23,7 +23,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
     let cantAct = false
     let attackDown = false
     enemyCharacters[this.name].statusEffects.forEach(statusEffect => {
-        if(statusEffect.effect === "freeze" || statusEffect.effect === "stun") cantAct = true
+        if(statusEffect.effect === "frozen" || statusEffect.effect === "stun") cantAct = true
         else if (statusEffect.effect === "attack down" ) attackDown = true
     })
 

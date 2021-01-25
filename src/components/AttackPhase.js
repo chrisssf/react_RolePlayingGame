@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './AttackPhase.css'
+import EquipModal from './EquipModal.js'
 import ReactDOM from 'react-dom'
 import Modal from 'react-modal'
-import swordImage from '../assets/sword.png'
-import WeaponImages from '../assets/WeaponImages.js'
+// import swordImage from '../assets/sword.png'
+// import WeaponImages from '../assets/WeaponImages.js'
 
 const AttackPhase = ({ 
     selectedCharacter,
@@ -20,6 +21,8 @@ const AttackPhase = ({
     setUsedCharacters }) =>{
 
     const [ weaponChangeModalIsOpen, setWeaponChangeModalIsOpen ] = useState(false)
+    const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
+
     const [ equipedWeapon, setEquipedWeapon ] = useState(playerCharacters[selectedCharacter].equipedWeapon)
 
     const handleFinishedCharacterAttack = () => {
@@ -35,8 +38,9 @@ const AttackPhase = ({
         setAttackableSquares([])
     }
 
-    const handleChangeWeapon = () => {
-        setWeaponChangeModalIsOpen(true)
+    const handleChangeEquipped = () => {
+        // setWeaponChangeModalIsOpen(true)
+        setEquipModalIsOpen(true)
     }
 
     const handleUseCurrentSpell = () => {
@@ -74,13 +78,24 @@ const AttackPhase = ({
                 <div>
                     <p>Currently Attacking with {playerCharacters[selectedCharacter].type}</p> 
                     <button onClick={() => handleFinishedCharacterAttack()}>End {playerCharacters[selectedCharacter].type}'s turn without attacking </button>
-                    {selectedCharacter === "meleePlayer" && <button onClick={() => handleChangeWeapon()}>Change Equiped Weapon</button>}
-                    {selectedCharacter === "magicPlayer" && <button onClick={() => handleUseCurrentSpell()}>Use Spell</button>}
+                    {selectedCharacter === "meleePlayer" && <button onClick={() => handleChangeEquipped()}>Change Equiped Weapon</button>}
+                    {selectedCharacter === "magicPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equiped  Spell</button>}
                     <button onClick={() => handleCancel()}>Back</button>
                     <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use characters movement for this turn</p>
                 </div>
+            {console.log("equipmentType111111", selectedCharacter)}
 
-                {selectedCharacter === "meleePlayer" && <Modal
+                {selectedCharacter && <EquipModal 
+                    equipModalIsOpen={equipModalIsOpen} 
+                    setEquipModalIsOpen={setEquipModalIsOpen}
+                    playerCharacters={playerCharacters}
+                    setPlayerCharacters={setPlayerCharacters}
+                    selectedCharacter={selectedCharacter}
+                />}
+
+
+
+                {/* {selectedCharacter === "meleePlayer" && <Modal
                 className="weapon-select-modal-container"
                 appElement={document.getElementById('root')}
                 isOpen={weaponChangeModalIsOpen}
@@ -101,7 +116,7 @@ const AttackPhase = ({
                 </div>
                 <button className="weapon-select-modal-button" onClick={() => handleEquipWeapon(null)}>Unequip Weapon</button>
                 <button className="weapon-select-modal-button" onClick={() => setWeaponChangeModalIsOpen(false)}>Confirm</button>
-            </Modal>}
+            </Modal>} */}
         </div>
     )
 
