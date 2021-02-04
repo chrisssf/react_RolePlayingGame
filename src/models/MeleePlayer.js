@@ -3,7 +3,7 @@ import Character from './Character.js'
 function MeleePlayer(name, attackPoints, healthPoints, position, type) {
     Character.call(this, name, attackPoints, healthPoints, position)
     this.type = type
-    this.equipedWeapon  = null
+    this.equippedWeapon  = null
     this.weapons = []
     this.ultimateCharge = 0
 
@@ -21,10 +21,10 @@ MeleePlayer.prototype.attack = function (enemy){
     let damageDone = this.attackPoints
     const startingHealth = enemy.healthPoints;
 
-    if(this.equipedWeapon) {
-        damageDone += this.equipedWeapon.attackPower
+    if(this.equippedWeapon) {
+        damageDone += this.equippedWeapon.attackPower
         const randomNumber = Math.floor(Math.random() * 100) + 1
-        switch(this.equipedWeapon.type){
+        switch(this.equippedWeapon.type){
             case("sword"):
                 if(randomNumber <= 25) damageDone *= 2
                 break
@@ -37,6 +37,9 @@ MeleePlayer.prototype.attack = function (enemy){
                 break
         }
     }
+    enemy.statusEffects.forEach(statusEffect => {
+        if(statusEffect.effect === "armour down" ) damageDone *= 2
+    })
     enemy.healthPoints = startingHealth - damageDone
 }
 

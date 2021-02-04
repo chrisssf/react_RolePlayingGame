@@ -18,6 +18,7 @@ const GameSquare = ({
     movableSquares, 
     attackableSquares,
     selectedCharacter,
+    setSelectedCharacter,
     playerCharacters,
     setPlayerCharacters,
     enemyCharacters,
@@ -86,20 +87,46 @@ const GameSquare = ({
         }
         if (( image === null || image === currentImage ) && movableSquares.includes(squareNumber) ) {
             setSquareStyling("movable")
-        } else if (attackableSquares.includes(squareNumber)) {
+        } else if ( attackableSquares.includes(squareNumber) && selectedCharacter === "healerPlayer" && 
+        playerCharacters["healerPlayer"]["equippedHeal"] !== null ){
+            if ( !(enemyCharacters["enemy1"]["position"] === squareNumber || 
+                    enemyCharacters["enemy2"]["position"] === squareNumber || 
+                    enemyCharacters["enemy3"]["position"] === squareNumber) 
+            ) setSquareStyling("healable")
+            else setSquareStyling("")
+        } else if (attackableSquares.includes(squareNumber) && !(
+            playerCharacters["magicPlayer"]["position"] === squareNumber ||
+            playerCharacters["healerPlayer"]["position"] === squareNumber ||
+            playerCharacters["meleePlayer"]["position"] === squareNumber )) {
+                // if (selectedCharacter === "healerPlayer" && playerCharacters["healerPlayer"]["equippedHeal"] !== null) { 
+                    setSquareStyling("attackable")
+                // }
+        } else if ( attackableSquares.includes(squareNumber) && 
+            ( selectedCharacter === "healerPlayer" && playerCharacters["healerPlayer"]["equippedHeal"] === null)
+            && !(
+                playerCharacters["magicPlayer"]["position"] === squareNumber ||
+                playerCharacters["healerPlayer"]["position"] === squareNumber ||
+                playerCharacters["meleePlayer"]["position"] === squareNumber )) {
             setSquareStyling("attackable")
         } else {
             setSquareStyling("")
         }
-    }, [movableSquares, attackableSquares])
+        if (selectedCharacter === "healerPlayer" && 
+        playerCharacters["healerPlayer"]["equippedHeal"] !== null && 
+        playerCharacters["healerPlayer"]["position"] === squareNumber){
+            setSquareStyling("healable")
+        }
+    }, [movableSquares, attackableSquares, playerCharacters, selectedCharacter])
 
+    
     const handleClickSquare = () => {
         if ( squareStyling === "movable"){
             const updateableCharacter = playerCharacters[selectedCharacter]
             updateableCharacter.position = squareNumber
             setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
-
         } else if ( squareStyling === "attackable" && image !== null) {
+            setModalIsOpen(true)
+        } else if ( squareStyling === "healable" && image !== null ){
             setModalIsOpen(true)
         }
     }
@@ -108,6 +135,7 @@ const GameSquare = ({
         setModalIsOpen(false)
         playerCharacters[selectedCharacter].attack(character)
         setCurrentPhase("characterTurnSelect")
+        setSelectedCharacter(null)
         const updatedUsedCharacters = [...usedCharacters, selectedCharacter]
         setUsedCharacters(updatedUsedCharacters)
         setAttackableSquares([])
@@ -134,8 +162,11 @@ const GameSquare = ({
                     }
                 }}
                 >
-                <p>Attack {character.name} with {playerCharacters[selectedCharacter].type}?</p>
-                {selectedCharacter === "meleePlayer" && playerCharacters[selectedCharacter].equipedWeapon && <p>Current equiped Weapon is {playerCharacters[selectedCharacter].equipedWeapon.name}</p>}
+                {playerCharacters["healerPlayer"]["equippedHeal"] !== null ? <p>Heal {character.name} with {playerCharacters["healerPlayer"]["equippedHeal"].name}</p> : 
+                <p>Attack {character.name} with {playerCharacters[selectedCharacter].type}?</p>}
+                {selectedCharacter === "meleePlayer" && playerCharacters[selectedCharacter].equippedWeapon && <p>Current equipped Weapon is {playerCharacters[selectedCharacter].equippedWeapon.name}</p>}
+                {selectedCharacter === "magicPlayer" && playerCharacters[selectedCharacter].equippedSpell && <p>Current equipped Spell is {playerCharacters[selectedCharacter].equippedSpell.name}</p>}
+                {selectedCharacter === "healerPlayer" && playerCharacters[selectedCharacter].equippedHeal && <p>Current equipped heal is {playerCharacters[selectedCharacter].equippedHeal.name}</p>}
                 <p>This will end this characters turn</p>
                 <button onClick={() => handleModalAttack()}>Yes</button>
                 <button onClick={() => setModalIsOpen(false)}>No</button>

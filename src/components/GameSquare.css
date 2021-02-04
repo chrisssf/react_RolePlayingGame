@@ -28,7 +28,11 @@
     /* background-color: #ff4d4d; */
     /* background-color: #ff3333; */
     /* background-color: red; */
+}
 
+.healable {
+    background-color: lightblue;
+    outline: 1px solid black;
 }
 
 .game-square-image {

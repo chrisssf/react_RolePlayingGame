@@ -3,7 +3,7 @@ import Character from './Character.js'
 function MagicPlayer(name, attackPoints, healthPoints, position, type) {
     Character.call(this, name, attackPoints, healthPoints, position)
     this.type = type
-    this.equipedSpell  = null
+    this.equippedSpell  = null
     this.spells = []
     this.ultimateCharge = 0
 
@@ -20,20 +20,23 @@ Object.defineProperty(MagicPlayer.prototype, 'constructor', {
 MagicPlayer.prototype.attack = function (enemy) {
     let damageDone = this.attackPoints
     const startingHealth = enemy.healthPoints
-    if(this.equipedSpell) damageDone += this.equipedSpell.spellPower
+    if(this.equippedSpell) damageDone += this.equippedSpell.spellPower
     const randomNumber = Math.floor(Math.random() * 100) + 1
-    // if ( randomNumber <= this.equipedSpell.activationChance) enemy.statusEffects.push({effect: this.equipedSpell.debuffName, duration: this.equipedSpell.duration})
-    if ( randomNumber <= this.equipedSpell.activationChance) addEffectToTarget(this.equipedSpell, enemy)
-    // if ( randomNumber <= this.equipedSpell.activationChance) {
+    // if ( randomNumber <= this.equippedSpell.activationChance) enemy.statusEffects.push({effect: this.equippedSpell.debuffName, duration: this.equippedSpell.duration})
+    enemy.statusEffects.forEach(statusEffect => {
+        if(statusEffect.effect === "armour down" ) damageDone *= 2
+    })
+    if ( randomNumber <= this.equippedSpell.activationChance) addEffectToTarget(this.equippedSpell, enemy)
+    // if ( randomNumber <= this.equippedSpell.activationChance) {
     //     let stillToAdd = true
     //     const updatedEffects = enemy.statusEffects.map(statusEffect =>{
-    //         if( this.equipedSpell.effect === statusEffect.effect){
-    //             if(this.equipedSpell.duration > statusEffect.duration) statusEffect.duration = this.equipedSpell.duration
+    //         if( this.equippedSpell.effect === statusEffect.effect){
+    //             if(this.equippedSpell.duration > statusEffect.duration) statusEffect.duration = this.equippedSpell.duration
     //             stillToAdd = false
     //         }
     //         return statusEffect
     //     })
-    //     if (stillToAdd) enemy.statusEffects.push({effect: this.equipedSpell.debuffName, duration: this.equipedSpell.duration})
+    //     if (stillToAdd) enemy.statusEffects.push({effect: this.equippedSpell.debuffName, duration: this.equippedSpell.duration})
     //     else enemy.statusEffects = updatedEffects
     // }
     enemy.healthPoints = startingHealth - damageDone

@@ -4,7 +4,8 @@ import './GameBoard.css'
 import GameSquare from './GameSquare.js'
 
 const GameBoard = ({ 
-    selectedCharacter, 
+    selectedCharacter,
+    setSelectedCharacter,
     currentPhase, 
     setCurrentPhase,
     movableSquares,
@@ -27,6 +28,7 @@ const GameBoard = ({
                 squareNumber={i} 
                 setCurrentPhase={setCurrentPhase}
                 selectedCharacter={selectedCharacter}
+                setSelectedCharacter={setSelectedCharacter}
                 movableSquares={movableSquares}
                 attackableSquares={attackableSquares}
                 playerCharacters={playerCharacters}

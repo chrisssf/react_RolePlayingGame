@@ -23,7 +23,7 @@ const AttackPhase = ({
     const [ weaponChangeModalIsOpen, setWeaponChangeModalIsOpen ] = useState(false)
     const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
 
-    const [ equipedWeapon, setEquipedWeapon ] = useState(playerCharacters[selectedCharacter].equipedWeapon)
+    const [ equippedWeapon, setEquippedWeapon ] = useState(playerCharacters[selectedCharacter].equippedWeapon)
 
     const handleFinishedCharacterAttack = () => {
         setAttackableSquares([])
@@ -43,17 +43,14 @@ const AttackPhase = ({
         setEquipModalIsOpen(true)
     }
 
-    const handleUseCurrentSpell = () => {
-        console.log("spell")
-    }
 
     const displayWeaponInventory = () => {
         const weapons = playerCharacters[selectedCharacter].weapons
         const displayWeaponOptions = weapons.map(weapon => {
-            let equipedStyle = false
-            if(playerCharacters[selectedCharacter].equipedWeapon && playerCharacters[selectedCharacter].equipedWeapon.name === weapon.name) equipedStyle = true
+            let equippedStyle = false
+            if(playerCharacters[selectedCharacter].equippedWeapon && playerCharacters[selectedCharacter].equippedWeapon.name === weapon.name) equippedStyle = true
             return (
-                <div className={equipedStyle ? "weapon-select-modal-weapon equipedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipWeapon(weapon)}>
+                <div className={equippedStyle ? "weapon-select-modal-weapon equippedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipWeapon(weapon)}>
                     {/* <img src={swordImage} alt='sword' className="weapon-select-modal-image"></img>  */}
                     {/* <img src={WeaponImages[weapon.name].default} alt='sword' className="weapon-select-modal-image"></img>  */}
                     <p>{weapon.name}</p>
@@ -68,7 +65,7 @@ const AttackPhase = ({
 
     const handleEquipWeapon = (weapon) => {
         const updateableCharacter = playerCharacters[selectedCharacter]
-        updateableCharacter.equipedWeapon = weapon
+        updateableCharacter.equippedWeapon = weapon
         setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
     }
 
@@ -78,8 +75,9 @@ const AttackPhase = ({
                 <div>
                     <p>Currently Attacking with {playerCharacters[selectedCharacter].type}</p> 
                     <button onClick={() => handleFinishedCharacterAttack()}>End {playerCharacters[selectedCharacter].type}'s turn without attacking </button>
-                    {selectedCharacter === "meleePlayer" && <button onClick={() => handleChangeEquipped()}>Change Equiped Weapon</button>}
-                    {selectedCharacter === "magicPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equiped  Spell</button>}
+                    {selectedCharacter === "meleePlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Weapon</button>}
+                    {selectedCharacter === "magicPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Spell</button>}
+                    {selectedCharacter === "healerPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Heal</button>}
                     <button onClick={() => handleCancel()}>Back</button>
                     <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use characters movement for this turn</p>
                 </div>
@@ -106,10 +104,10 @@ const AttackPhase = ({
                 }}
                 >
                 <p>Change Weapon</p>
-                {playerCharacters[selectedCharacter].equipedWeapon ? 
-                    <p>Currently Equiped weapon {playerCharacters[selectedCharacter].equipedWeapon.name}</p>
+                {playerCharacters[selectedCharacter].equippedWeapon ? 
+                    <p>Currently Equipped weapon {playerCharacters[selectedCharacter].equippedWeapon.name}</p>
                 :
-                    <p>No Weapon Currently Equiped</p>
+                    <p>No Weapon Currently Equipped</p>
                 }
                 <div className="weapon-select-modal-weapons-container">
                     {displayWeaponInventory()}

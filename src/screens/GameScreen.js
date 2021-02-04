@@ -12,6 +12,7 @@ import HealerPlayer from '../models/HealerPlayer.js'
 import MeleeWeapon from '../models/MeleeWeapon.js'
 import Enemy from '../models/Enemy.js'
 import Spell from '../models/Spell.js'
+import Heal from '../models/Heal.js'
 
 const boardWidth = 5
 const boardHeight = 5
@@ -28,9 +29,10 @@ const GameScreen = () =>{
     const armourBreak = new Spell("armour break", 0, "armour down", 100, 3)
     const attackBreak = new Spell("attack break", 0, "attack down", 100, 3) // no logic for attack down yet
     const freeze = new Spell("freeze", 0, "frozen", 70 , 1)
-    // ken.weapons = ken.weapons.push(sword)
-    // ken.weapons = ken.weapons.push(club)
-    // ken.weapons = ken.weapons.push(axe)
+    const heal = new Heal("heal", 10)
+    const shield = new Heal("shield", 10, "shield", 2)
+    peter.heals.push(heal)
+    peter.heals.push(shield)
     matt.spells.push(fireball)
     matt.spells.push(armourBreak)
     matt.spells.push(attackBreak)
@@ -38,8 +40,9 @@ const GameScreen = () =>{
     ken.weapons.push(sword)
     ken.weapons.push(club)
     ken.weapons.push(axe)
-    matt.equipedSpell = fireball
-    // ken.equipedWeapon = sword
+    matt.equippedSpell = fireball
+    // peter.equippedHeal = heal
+    // ken.equippedWeapon = sword
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -154,7 +157,8 @@ const GameScreen = () =>{
         <div>
             <p>GameScreen</p>
             <GameBoard 
-                selectedCharacter={selectedCharacter} 
+                selectedCharacter={selectedCharacter}
+                setSelectedCharacter={setSelectedCharacter}
                 currentPhase={currentPhase}
                 setCurrentPhase={setCurrentPhase}
                 movableSquares={movableSquares}

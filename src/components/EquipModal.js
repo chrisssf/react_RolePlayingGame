@@ -37,10 +37,10 @@ const EquipModal = ({
 
         const items = playerCharacters[selectedCharacter][itemType]
         const displayItemOptions = items.map(item => {
-            let equipedStyle = false
-            if(playerCharacters[selectedCharacter]["equiped" + equipmentType] && playerCharacters[selectedCharacter]["equiped" + equipmentType].name === item.name) equipedStyle = true
+            let equippedStyle = false
+            if(playerCharacters[selectedCharacter]["equipped" + equipmentType] && playerCharacters[selectedCharacter]["equipped" + equipmentType].name === item.name) equippedStyle = true
             return (
-                <div className={equipedStyle ? "weapon-select-modal-weapon equipedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipItem(item)}>
+                <div className={equippedStyle ? "weapon-select-modal-weapon equippedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipItem(item)}>
                     {/* <img src={swordImage} alt='sword' className="weapon-select-modal-image"></img>  */}
                     {/* <img src={WeaponImages[weapon.name].default} alt='sword' className="weapon-select-modal-image"></img>  */}
                     <p>{item.name}</p>
@@ -58,7 +58,7 @@ const EquipModal = ({
 
     const handleEquipItem = (item) => {
         const updateableCharacter = playerCharacters[selectedCharacter]
-        updateableCharacter["equiped" + equipmentType] = item
+        updateableCharacter["equipped" + equipmentType] = item
         setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
     }
     
@@ -76,10 +76,10 @@ const EquipModal = ({
                 }}
                 >
                 <p>Change {equipmentType}</p>
-                {playerCharacters[selectedCharacter]["equiped" + equipmentType] ? 
-                    <p>Currently Equiped {equipmentType} {playerCharacters[selectedCharacter]["equiped" + equipmentType].name}</p>
+                {playerCharacters[selectedCharacter]["equipped" + equipmentType] ? 
+                    <p>Currently Equipped {equipmentType} {playerCharacters[selectedCharacter]["equipped" + equipmentType].name}</p>
                 :
-                    <p>No {equipmentType} Currently Equiped</p>
+                    <p>No {equipmentType} Currently Equipped</p>
                 }
                 <div className="weapon-select-modal-weapons-container">
                     {displayItemsInventory()}
