@@ -14,6 +14,7 @@ const width = window.innerWidth
 
 const GameSquare = ({ 
     squareNumber, 
+    currentPhase,
     setCurrentPhase,
     movableSquares, 
     attackableSquares,
@@ -48,10 +49,10 @@ const GameSquare = ({
 //test end here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     useEffect(() => {
-        if (playerCharacters["magicPlayer"]["position"] === squareNumber) {
+        if (playerCharacters["magicPlayer"]["position"] === squareNumber && playerCharacters["magicPlayer"]["healthPoints"] > 0 ) {
             setCharacter(playerCharacters["magicPlayer"])
             setImage(mageImage)
-        } else if (playerCharacters["meleePlayer"]["position"] === squareNumber) {
+        } else if (playerCharacters["meleePlayer"]["position"] === squareNumber && playerCharacters["meleePlayer"]["healthPoints"] > 0) {
             setCharacter(playerCharacters["meleePlayer"])
             setImage(knightImage)
         } else if (playerCharacters["healerPlayer"]["position"] === squareNumber) {
@@ -60,13 +61,13 @@ const GameSquare = ({
         } else {
             setImage(null)
         }
-        if (enemyCharacters["enemy1"]["position"] === squareNumber){
+        if (enemyCharacters["enemy1"]["position"] === squareNumber && enemyCharacters["enemy1"]["healthPoints"] > 0 ){
             setCharacter(enemyCharacters["enemy1"])
             setImage(orcImage)
-        } else if (enemyCharacters["enemy2"]["position"] === squareNumber){
+        } else if (enemyCharacters["enemy2"]["position"] === squareNumber && enemyCharacters["enemy2"]["healthPoints"] > 0 ){
             setCharacter(enemyCharacters["enemy2"])
             setImage(orcImage)
-        } else if (enemyCharacters["enemy3"]["position"] === squareNumber){
+        } else if (enemyCharacters["enemy3"]["position"] === squareNumber && enemyCharacters["enemy3"]["healthPoints"] > 0 ){
             setCharacter(enemyCharacters["enemy3"])
             setImage(orcImage)
         } 
@@ -112,13 +113,14 @@ const GameSquare = ({
             setSquareStyling("")
         }
         if (selectedCharacter === "healerPlayer" && 
-        playerCharacters["healerPlayer"]["equippedHeal"] !== null && 
-        playerCharacters["healerPlayer"]["position"] === squareNumber){
+            playerCharacters["healerPlayer"]["equippedHeal"] !== null && 
+            playerCharacters["healerPlayer"]["position"] === squareNumber && 
+            currentPhase === "playerAttack"){
             setSquareStyling("healable")
-        }
-    }, [movableSquares, attackableSquares, playerCharacters, selectedCharacter])
+        } 
+    }, [movableSquares, attackableSquares, playerCharacters, currentPhase])
 
-    
+
     const handleClickSquare = () => {
         if ( squareStyling === "movable"){
             const updateableCharacter = playerCharacters[selectedCharacter]

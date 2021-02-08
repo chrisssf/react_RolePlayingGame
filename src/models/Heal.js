@@ -1,8 +1,8 @@
-function Heal(name, healPower, buffName, duration){
+function Heal(name, healPower, effectName, duration){
     this.name = name
     this.healPower = healPower
     this.level = 1
-    this.buffName = buffName
+    this.effectName = effectName
     this.duration = duration
 }
 

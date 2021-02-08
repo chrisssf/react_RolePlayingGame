@@ -30,10 +30,12 @@ MeleePlayer.prototype.attack = function (enemy){
                 break
             case("axe"):
                 if(randomNumber <= 10) damageDone = startingHealth
-                else if(randomNumber <= 100) addEffectToTarget("attack down", enemy, 2) // should be <= 20
+                // else if(randomNumber <= 100) addEffectToTarget("attack down", enemy, 2) // should be <= 20
+                else if(randomNumber <= 100) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 20
                 break
             case("club"):
-                if(randomNumber <= 100) addEffectToTarget("stun", enemy, 1) // should be <= 25
+                // if(randomNumber <= 100) addEffectToTarget("stun", enemy, 1) // should be <= 25
+                if(randomNumber <= 100) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 25
                 break
         }
     }

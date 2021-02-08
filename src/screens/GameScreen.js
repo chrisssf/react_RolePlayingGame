@@ -43,6 +43,8 @@ const GameScreen = () =>{
     matt.equippedSpell = fireball
     // peter.equippedHeal = heal
     // ken.equippedWeapon = sword
+    const test = new MeleeWeapon("test", 10, "axe")
+    console.log("test", test);
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -51,8 +53,8 @@ const GameScreen = () =>{
     }
 
     const enemy1 = new Enemy("enemy1", 1, 100, 10)
-    const enemy2 = new Enemy("enemy2", 1, 100, 15)
-    const enemy3 = new Enemy("enemy3", 1, 100, 20)
+    const enemy2 = new Enemy("enemy2", 100, 100, 15)
+    const enemy3 = new Enemy("enemy3", 120, 100, 20)
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -86,15 +88,16 @@ const GameScreen = () =>{
         let timeout3 = 0
 
         if (currentPhase === "enemyMovement") {
-            timeout = enemy1.takeTurn(playerCharacters, enemyCharacters, setEnemyCharacters)
+            timeout = enemy1.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
             setTimeout(() => {
-                timeout2 = enemy2.takeTurn(playerCharacters, enemyCharacters, setEnemyCharacters)
+                timeout2 = enemy2.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
                 setTimeout(() => {
-                    timeout3 = enemy3.takeTurn(playerCharacters, enemyCharacters, setEnemyCharacters)
+                    timeout3 = enemy3.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
                     setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
                 }, (timeout2))
             }, timeout)
         }
+        console.log("currentPhase", currentPhase)
     }, [currentPhase])
 
 

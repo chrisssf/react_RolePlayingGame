@@ -23,6 +23,7 @@ HealerPlayer.prototype.attack = function (target){
         const startingHealth = target.healthPoints
         const newHealth = startingHealth + this.equippedHeal.healPower
         target.healthPoints = newHealth
+        if ( this.equippedHeal.effectName) Character.prototype.addEffectToTarget.call(this, this.equippedHeal, target)
     } else Character.prototype.attack.call(this, target)
 }
 

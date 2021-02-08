@@ -47,7 +47,7 @@ const EquipModal = ({
                     <img src={require('../assets/' + item.name + '.png').default} alt={item.name} className="weapon-select-modal-image"></img> 
                     { itemType === "weapons" && <p>Damage: {item.attackPower}</p>}
                     { itemType === "spells" && <p>Damage: {item.spellPower}</p>}
-                    { itemType === "spells" && <p>Effect: {item.debuffName} with {item.activationChance}% chance for {item.duration} turns</p>}
+                    { itemType === "spells" && <p>Effect: {item.effectName} with {item.activationChance}% chance for {item.duration} turns</p>}
                     {/* { itemType === "heals" && <p>Damage: {item.attackPower}</p>} */}
                     {/* <button onClick={() => handleEquipItem(item)}>Equip</button> */}
                 </div>

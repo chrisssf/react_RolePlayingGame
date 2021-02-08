@@ -26,6 +26,7 @@ const GameBoard = ({
             gameSquares.push(<GameSquare 
                 key={i} 
                 squareNumber={i} 
+                currentPhase={currentPhase}
                 setCurrentPhase={setCurrentPhase}
                 selectedCharacter={selectedCharacter}
                 setSelectedCharacter={setSelectedCharacter}

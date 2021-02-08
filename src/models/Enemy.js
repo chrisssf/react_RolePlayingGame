@@ -18,7 +18,7 @@ const boardWidth = 5
 
 // when setting EnemyCharacters, dont get the character from state, change it using "this." then 
 // set using this.name: this   !!!!!!!!!!!!!!!!!!! a decent amount of refactoring would be required for this!
-Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemyCharacters){
+Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters){
 
     let cantAct = false
     let attackDown = false
@@ -57,6 +57,8 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
 
         let finalPosition = this.position
         if(moves.length <=3 ){
+            // this is to attack after moving
+            finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
             moves.forEach((move, index) => {
                 setTimeout(() => {
                     const updatableEnemy = enemyCharacters[this.name]
@@ -67,8 +69,8 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
         }
         console.log("STATUS", enemyCharacters[this.name].statusEffects)
     
-        // this is to attack after moving
-        finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        // // this is to attack after moving
+        // finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     
         const currentRow = Math.ceil(finalPosition / boardWidth)
         const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)
@@ -82,13 +84,21 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
             // updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "attack down")
             // setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
         }
-
+        console.log("FIANL", finalPosition);
         if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
             (playerCharacters.meleePlayer.position === finalPosition - 1 && currentRow === meleePlayerRow) ||
             playerCharacters.meleePlayer.position === finalPosition + 5 ||
             playerCharacters.meleePlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
+                    console.log("healerHPmeleePlayer", playerCharacters.meleePlayer);
                     this.attack(playerCharacters.meleePlayer)
+                    if (playerCharacters.meleePlayer.healthPoints <= 0) {
+                        const updateableCharacter = playerCharacters.meleePlayer
+                        updateableCharacter.position = 100
+                        setPlayerCharacters(prevState => ({...prevState, ["meleePlayer"]: updateableCharacter }))
+                    }
+                    console.log("healerHP2meleePlayer", playerCharacters.meleePlayer);
+
                 }, 1000 * moves.length)
             }
         else if((playerCharacters.magicPlayer.position === finalPosition + 1 && currentRow === magicPlayerRow) || 
@@ -97,6 +107,11 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
             playerCharacters.magicPlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
                     this.attack(playerCharacters.magicPlayer)
+                    if (playerCharacters.magicPlayer.healthPoints <= 0) {
+                        const updateableCharacter = playerCharacters.magicPlayer
+                        updateableCharacter.position = 100
+                        setPlayerCharacters(prevState => ({...prevState, ["magicPlayer"]: updateableCharacter }))
+                    }
                 }, 1000 * moves.length)
             }
         else if((playerCharacters.healerPlayer.position === finalPosition + 1 && currentRow === healerPlayerRow) || 
@@ -104,7 +119,14 @@ Enemy.prototype.takeTurn = function (playerCharacters, enemyCharacters, setEnemy
             playerCharacters.healerPlayer.position === finalPosition + 5 ||
             playerCharacters.healerPlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
+                    console.log("healerHP", playerCharacters.healerPlayer.healthPoints);
                     this.attack(playerCharacters.healerPlayer)
+                    if (playerCharacters.healerPlayer.healthPoints <= 0) {
+                        const updateableCharacter = playerCharacters.healerPlayer
+                        updateableCharacter.position = 100
+                        setPlayerCharacters(prevState => ({...prevState, ["healerPlayer"]: updateableCharacter }))
+                    }
+                    console.log("healerHP2", playerCharacters.healerPlayer.healthPoints);
                 }, 1000 * moves.length)
             }
         

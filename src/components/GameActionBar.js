@@ -50,6 +50,7 @@ const GameActionBar = ( {
                 playerCharacters={playerCharacters} 
                 setSelectedCharacter={setSelectedCharacter}
                 usedCharacters={usedCharacters}
+                setUsedCharacters={setUsedCharacters}
                 setCurrentPhase={setCurrentPhase}
                 calculateMovementLocations={calculateMovementLocations}
             />}
