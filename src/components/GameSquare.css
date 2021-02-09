@@ -45,3 +45,13 @@
 .blah {
     left: 30px
   }
+
+.attack-modal-container {
+    width: 50%;
+    background-color: white;
+    position: fixed;
+    bottom: 15%;
+    left: 25%;
+    padding: 20px;
+    /* opacity: 100%; */
+}

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import ReactDOM from 'react-dom'
-import Modal from 'react-modal'
+// import ReactDOM from 'react-dom'
+// import Modal from 'react-modal'
 
 import './GameScreen.css'
-import GameBoard from '../components/GameBoard'
-import GameActionBar from '../components/GameActionBar'
+import GameBoard from '../components/GameBoard.js'
+import GameActionBar from '../components/GameActionBar.js'
+import CharacterInfoModal from '../components/CharacterInfoModal.js'
 
 import MeleePlayer from '../models/MeleePlayer.js'
 import MagicPlayer from '../models/MagicPlayer.js'
@@ -175,6 +176,7 @@ const GameScreen = () =>{
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
                 setAttackableSquares={setAttackableSquares}
+                displayStatusEffects={displayStatusEffects}
             />
             <GameActionBar 
                 selectedCharacter={selectedCharacter}
@@ -192,7 +194,14 @@ const GameScreen = () =>{
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
             />
-            {modalCharacter && <Modal
+            {modalCharacter && 
+            <CharacterInfoModal
+                modalIsOpen={modalIsOpen}
+                setModalIsOpen={setModalIsOpen}
+                modalCharacter={modalCharacter}
+                displayStatusEffects={displayStatusEffects}
+            />}
+            {/* {modalCharacter && <Modal
                 className="modal-container"
                 appElement={document.getElementById('root')}
                 isOpen={modalIsOpen}
@@ -208,9 +217,9 @@ const GameScreen = () =>{
                 <p>{modalCharacter.name}</p>
                 <p>Attack: {modalCharacter.attackPoints}</p>
                 <p>Health: {modalCharacter.healthPoints}</p>
-                {/* <p>status: {modalCharacter.statusEffects[0] ? modalCharacter.statusEffects[0].effect : ""}</p> */}
+                <p>status: {modalCharacter.statusEffects[0] ? modalCharacter.statusEffects[0].effect : ""}</p>
                 {displayStatusEffects()}
-            </Modal>}
+            </Modal>} */}
         </div>
     )
 }

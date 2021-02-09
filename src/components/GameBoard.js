@@ -17,7 +17,8 @@ const GameBoard = ({
     handleImageClick,
     usedCharacters,
     setUsedCharacters,
-    setAttackableSquares }) => {
+    setAttackableSquares,
+    displayStatusEffects }) => {
 
 
     const fillGameBoard = () => {
@@ -41,6 +42,7 @@ const GameBoard = ({
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
                 setAttackableSquares={setAttackableSquares}
+                displayStatusEffects={displayStatusEffects}
             />)
         }   
         return gameSquares  

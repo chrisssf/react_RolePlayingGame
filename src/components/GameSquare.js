@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom'
 import Modal from 'react-modal'
 import './GameSquare.css'
+import CharacterInfoModal from '../components/CharacterInfoModal.js'
 import mageImage from '../assets/mage.png'
 import knightImage from '../assets/knight.png'
 import healerImage from '../assets/healer.png'
@@ -27,7 +28,8 @@ const GameSquare = ({
     handleImageClick,
     usedCharacters,
     setUsedCharacters,
-    setAttackableSquares
+    setAttackableSquares,
+    displayStatusEffects
  }) =>{
 
     const [ image, setImage ] = useState(null)
@@ -156,8 +158,8 @@ const GameSquare = ({
                     // <p></p>
                 }
             </div>
-            {character && selectedCharacter && <Modal
-                className="modal-container"
+            {/* {character && selectedCharacter && <Modal
+                className="attack-modal-container"
                 appElement={document.getElementById('root')}
                 isOpen={modalIsOpen}
                 style={{
@@ -174,7 +176,18 @@ const GameSquare = ({
                 <p>This will end this characters turn</p>
                 <button onClick={() => handleModalAttack()}>Yes</button>
                 <button onClick={() => setModalIsOpen(false)}>No</button>
-            </Modal>}
+            </Modal>} */}
+            
+            {character && selectedCharacter &&
+            <CharacterInfoModal
+                character={character}
+                modalIsOpen={modalIsOpen}
+                setModalIsOpen={setModalIsOpen}
+                playerCharacters={playerCharacters}
+                selectedCharacter={selectedCharacter}
+                handleModalAttack={handleModalAttack}
+                displayStatusEffects={displayStatusEffects}
+            />}
         </>
     )
 }
