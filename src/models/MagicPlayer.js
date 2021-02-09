@@ -6,6 +6,8 @@ function MagicPlayer(name, attackPoints, healthPoints, position, type) {
     this.equippedSpell  = null
     this.spells = []
     this.ultimateCharge = 0
+    this.id = "magicPlayer"
+
 
     // this.statusEffects = []
 }
@@ -17,18 +19,22 @@ Object.defineProperty(MagicPlayer.prototype, 'constructor', {
     writable: true 
 });
 
-MagicPlayer.prototype.attack = function (enemy) {
+MagicPlayer.prototype.attack = function (enemy, setEnemyCharacters) {
     let damageDone = this.attackPoints
     const startingHealth = enemy.healthPoints
     if(this.equippedSpell) damageDone += this.equippedSpell.spellPower
     const randomNumber = Math.floor(Math.random() * 100) + 1
     // if ( randomNumber <= this.equippedSpell.activationChance) enemy.statusEffects.push({effect: this.equippedSpell.effectName, duration: this.equippedSpell.duration})
-    enemy.statusEffects.forEach(statusEffect => {
-        if(statusEffect.effect === "armour down" ) damageDone *= 2
-    })
+    // enemy.statusEffects.forEach(statusEffect => {
+    //     if(statusEffect.effect === "armour down" ) damageDone *= 2
+    // })
     // if ( randomNumber <= this.equippedSpell.activationChance) addEffectToTarget(this.equippedSpell, enemy)
-    if ( randomNumber <= this.equippedSpell.activationChance) Character.prototype.addEffectToTarget.call(this, this.equippedSpell, enemy)
-    enemy.healthPoints = startingHealth - damageDone
+    let spellActivationChance = 0
+    this.equippedSpell ? spellActivationChance = this.equippedSpell.activationChance : spellActivationChance = 0
+    if ( randomNumber <= spellActivationChance) Character.prototype.addEffectToTarget.call(this, this.equippedSpell, enemy)
+    // enemy.healthPoints = startingHealth - damageDone
+    Character.prototype.attack.call(this, enemy, setEnemyCharacters, damageDone)
+
 }
 
 

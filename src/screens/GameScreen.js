@@ -52,9 +52,9 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("enemy1", 1, 100, 10)
-    const enemy2 = new Enemy("enemy2", 100, 100, 15)
-    const enemy3 = new Enemy("enemy3", 120, 100, 20)
+    const enemy1 = new Enemy("ORCenemy1", 1, 100, 10, "enemy1")
+    const enemy2 = new Enemy("ORCenemy2", 1, 100, 15, "enemy2")
+    const enemy3 = new Enemy("ORCenemy3", 1, 100, 20, "enemy3")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -97,6 +97,7 @@ const GameScreen = () =>{
                 }, (timeout2))
             }, timeout)
         }
+        console.log("playerssssss", playerCharacters);
         console.log("currentPhase", currentPhase)
     }, [currentPhase])
 
@@ -169,6 +170,7 @@ const GameScreen = () =>{
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
                 enemyCharacters={enemyCharacters}
+                setEnemyCharacters={setEnemyCharacters}
                 handleImageClick={handleImageClick}
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}

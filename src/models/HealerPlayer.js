@@ -7,6 +7,7 @@ function HealerPlayer(name, attackPoints, healthPoints, position, type) {
     this.equippedHeal  = null
     this.heals = []
     this.ultimateCharge = 0
+    this.id = "healerPlayer"
 
     // this.statusEffects = []
 }
@@ -18,13 +19,13 @@ Object.defineProperty(HealerPlayer.prototype, 'constructor', {
     writable: true 
 });
 
-HealerPlayer.prototype.attack = function (target){
+HealerPlayer.prototype.attack = function (target, setEnemy){
     if ( this.equippedHeal !== null ) {
         const startingHealth = target.healthPoints
         const newHealth = startingHealth + this.equippedHeal.healPower
         target.healthPoints = newHealth
         if ( this.equippedHeal.effectName) Character.prototype.addEffectToTarget.call(this, this.equippedHeal, target)
-    } else Character.prototype.attack.call(this, target)
+    } else Character.prototype.attack.call(this, target, setEnemy)
 }
 
 export default HealerPlayer

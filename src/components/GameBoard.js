@@ -13,6 +13,7 @@ const GameBoard = ({
     playerCharacters,
     setPlayerCharacters,
     enemyCharacters,
+    setEnemyCharacters,
     handleImageClick,
     usedCharacters,
     setUsedCharacters,
@@ -35,6 +36,7 @@ const GameBoard = ({
                 playerCharacters={playerCharacters}
                 setPlayerCharacters={setPlayerCharacters}
                 enemyCharacters={enemyCharacters}
+                setEnemyCharacters={setEnemyCharacters}
                 handleImageClick={handleImageClick}
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}

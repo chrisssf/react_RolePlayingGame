@@ -7,10 +7,22 @@ function Character(name, attackPoints, healthPoints, position) {
     this.statusEffects = []
 }
 
-Character.prototype.attack = function (enemy){
+Character.prototype.attack = function (enemy, setEnemy, modifiedDamage = 0){
     const startingHealth = enemy.healthPoints
-    const newHealth = startingHealth - this.attackPoints
-    enemy.healthPoints = newHealth
+    // let newHealth = 0
+    // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage
+    // enemy.healthPoints = newHealth
+
+    let damageDone = 0
+    modifiedDamage === 0 ? damageDone = this.attackPoints : damageDone = modifiedDamage
+    enemy.statusEffects.forEach(statusEffect => {
+        if(statusEffect.effect === "armour down" ) damageDone *= 2
+    })
+    enemy.healthPoints = startingHealth - damageDone
+    if ( enemy.healthPoints <= 0) {
+        enemy.position = 100
+        setEnemy(prevState => ({...prevState, [enemy.id]: enemy }))
+    }
 }
 
 Character.prototype.addEffectToTarget = function (item, target) {

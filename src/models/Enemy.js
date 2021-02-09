@@ -1,7 +1,8 @@
 import Character from './Character.js'
 
-function Enemy(name, attackPoints, healthPoints, position) {
+function Enemy(name, attackPoints, healthPoints, position, id) {
     Character.call(this, name, attackPoints, healthPoints, position)
+    this.id = id
 
     // this.statusEffects = []
 }
@@ -17,29 +18,29 @@ const boardHeight = 5
 const boardWidth = 5
 
 // when setting EnemyCharacters, dont get the character from state, change it using "this." then 
-// set using this.name: this   !!!!!!!!!!!!!!!!!!! a decent amount of refactoring would be required for this!
+// set using this.id: this   !!!!!!!!!!!!!!!!!!! a decent amount of refactoring would be required for this!
 Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters){
 
     let cantAct = false
     let attackDown = false
-    enemyCharacters[this.name].statusEffects.forEach(statusEffect => {
+    enemyCharacters[this.id].statusEffects.forEach(statusEffect => { //here!
         if(statusEffect.effect === "frozen" || statusEffect.effect === "stun") cantAct = true
         else if (statusEffect.effect === "attack down" ) attackDown = true
     })
 
     //old code
-    // if(enemyCharacters[this.name].statusEffects.includes("stun")){
-    //     const updatableEnemy = enemyCharacters[this.name]
+    // if(enemyCharacters[this.id].statusEffects.includes("stun")){   //here!
+    //     const updatableEnemy = enemyCharacters[this.id]   //here!
     //     updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "stun")
-    //     setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+    //     setEnemyCharacters(prevState => ({...prevState, [this.id]: updatableEnemy}))   //here!
     //     console.log("STUNNNNNEEEEDDDDDD!!!!!!");
     if(cantAct) {
-        console.log("stuned", enemyCharacters[this.name].statusEffects)
-        updateStatusEffects(this.name, enemyCharacters, setEnemyCharacters)
+        console.log("stuned", enemyCharacters[this.id].statusEffects)   //here!
+        updateStatusEffects(this.id, enemyCharacters, setEnemyCharacters)   //here!
     } else {
         const playerCharacterPositions = getPlayerPositions(playerCharacters)
         let enemyCharacterPositions = getEnemyPositions(enemyCharacters)
-        enemyCharacterPositions = enemyCharacterPositions.filter(item => item !== enemyCharacters[this.name].position)
+        enemyCharacterPositions = enemyCharacterPositions.filter(item => item !== enemyCharacters[this.id].position)   //here!
         const allCharacterPositions = [...playerCharacterPositions, ...enemyCharacterPositions]
         // checks, can delete these when done!!!!
         console.log("player positions in enemy", playerCharacterPositions)
@@ -49,7 +50,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
         const attackablePositions = getAttackablePositions(playerCharacterPositions, allCharacterPositions)
         console.log("attackable positions = ", attackablePositions)
 
-        const possibleAttackPaths = getPossibleAttackPaths(attackablePositions, enemyCharacters[this.name].position)
+        const possibleAttackPaths = getPossibleAttackPaths(attackablePositions, enemyCharacters[this.id].position)   //here!
         console.log("possibleAttackPaths", possibleAttackPaths)
 
         const moves = getPathToClosestAttackablePosition(possibleAttackPaths)
@@ -58,31 +59,31 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
         let finalPosition = this.position
         if(moves.length <=3 ){
             // this is to attack after moving
-            finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+            finalPosition = enemyCharacters[this.id].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)   //here!
             moves.forEach((move, index) => {
                 setTimeout(() => {
-                    const updatableEnemy = enemyCharacters[this.name]
+                    const updatableEnemy = enemyCharacters[this.id]   //here!
                     updatableEnemy.position += move
-                    setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+                    setEnemyCharacters(prevState => ({...prevState, [this.id]: updatableEnemy}))   //here!
                 }, 1000 * (index + 1))
             })
         }
-        console.log("STATUS", enemyCharacters[this.name].statusEffects)
+        console.log("STATUS", enemyCharacters[this.id].statusEffects)   //here!
     
         // // this is to attack after moving
-        // finalPosition = enemyCharacters[this.name].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+        // finalPosition = enemyCharacters[this.id].position + moves.reduce((accumulator, currentValue) => accumulator + currentValue, 0)   //here!
     
         const currentRow = Math.ceil(finalPosition / boardWidth)
         const meleePlayerRow = Math.ceil(playerCharacters.meleePlayer.position / boardWidth)
         const magicPlayerRow = Math.ceil(playerCharacters.magicPlayer.position / boardWidth)
         const healerPlayerRow = Math.ceil(playerCharacters.healerPlayer.position / boardWidth)
 
-        // if(enemyCharacters[this.name].statusEffects.includes("attack down")){
+        // if(enemyCharacters[this.id].statusEffects.includes("attack down")){   //here!
         if(attackDown){
             this.attackPoints = this.attackPoints / 2
-            // const updatableEnemy = enemyCharacters[this.name]
+            // const updatableEnemy = enemyCharacters[this.id]   //here!
             // updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "attack down")
-            // setEnemyCharacters(prevState => ({...prevState, [this.name]: updatableEnemy}))
+            // setEnemyCharacters(prevState => ({...prevState, [this.id]: updatableEnemy}))   //here!
         }
         console.log("FIANL", finalPosition);
         if((playerCharacters.meleePlayer.position === finalPosition + 1 && currentRow === meleePlayerRow) || 
@@ -91,7 +92,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
             playerCharacters.meleePlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
                     console.log("healerHPmeleePlayer", playerCharacters.meleePlayer);
-                    this.attack(playerCharacters.meleePlayer)
+                    this.attack(playerCharacters.meleePlayer, setPlayerCharacters)
                     if (playerCharacters.meleePlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.meleePlayer
                         updateableCharacter.position = 100
@@ -106,7 +107,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
             playerCharacters.magicPlayer.position === finalPosition + 5 ||
             playerCharacters.magicPlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
-                    this.attack(playerCharacters.magicPlayer)
+                    this.attack(playerCharacters.magicPlayer, setPlayerCharacters)
                     if (playerCharacters.magicPlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.magicPlayer
                         updateableCharacter.position = 100
@@ -120,7 +121,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
             playerCharacters.healerPlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
                     console.log("healerHP", playerCharacters.healerPlayer.healthPoints);
-                    this.attack(playerCharacters.healerPlayer)
+                    this.attack(playerCharacters.healerPlayer, setPlayerCharacters)
                     if (playerCharacters.healerPlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.healerPlayer
                         updateableCharacter.position = 100
@@ -130,7 +131,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
                 }, 1000 * moves.length)
             }
         
-        updateStatusEffects(this.name, enemyCharacters, setEnemyCharacters)
+        updateStatusEffects(this.id, enemyCharacters, setEnemyCharacters)   //here!
         return moves.length * 1000
     }
 }

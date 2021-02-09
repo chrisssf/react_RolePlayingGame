@@ -6,6 +6,8 @@ function MeleePlayer(name, attackPoints, healthPoints, position, type) {
     this.equippedWeapon  = null
     this.weapons = []
     this.ultimateCharge = 0
+    this.id = "meleePlayer"
+
 
     // this.statusEffects = []
 }
@@ -17,7 +19,7 @@ Object.defineProperty(MeleePlayer.prototype, 'constructor', {
     writable: true 
 });
 
-MeleePlayer.prototype.attack = function (enemy){
+MeleePlayer.prototype.attack = function (enemy, setEnemyCharacters){
     let damageDone = this.attackPoints
     const startingHealth = enemy.healthPoints;
 
@@ -39,23 +41,28 @@ MeleePlayer.prototype.attack = function (enemy){
                 break
         }
     }
-    enemy.statusEffects.forEach(statusEffect => {
-        if(statusEffect.effect === "armour down" ) damageDone *= 2
-    })
-    enemy.healthPoints = startingHealth - damageDone
+    // enemy.statusEffects.forEach(statusEffect => {
+    //     if(statusEffect.effect === "armour down" ) damageDone *= 2
+    // })
+    // enemy.healthPoints = startingHealth - damageDone
+    // if ( enemy.healthPoints <= 0) {
+    //     enemy.position = 100
+    //     setEnemyCharacters(prevState => ({...prevState, [enemy.id]: enemy }))   //here!
+    // }
+    Character.prototype.attack.call(this, enemy, setEnemyCharacters, damageDone)
 }
 
-const addEffectToTarget = (effectName, enemy, duration) => {
-    let stillToAdd = true
-    const updatedEffects = enemy.statusEffects.map(statusEffect =>{
-        if( effectName === statusEffect.effect){
-            if(duration > statusEffect.duration) statusEffect.duration = duration
-            stillToAdd = false
-        }
-        return statusEffect
-    })
-    if (stillToAdd) enemy.statusEffects.push({effect: effectName, duration: duration})
-    else enemy.statusEffects = updatedEffects
-}
+// const addEffectToTarget = (effectName, enemy, duration) => {
+//     let stillToAdd = true
+//     const updatedEffects = enemy.statusEffects.map(statusEffect =>{
+//         if( effectName === statusEffect.effect){
+//             if(duration > statusEffect.duration) statusEffect.duration = duration
+//             stillToAdd = false
+//         }
+//         return statusEffect
+//     })
+//     if (stillToAdd) enemy.statusEffects.push({effect: effectName, duration: duration})
+//     else enemy.statusEffects = updatedEffects
+// }
 
 export default MeleePlayer

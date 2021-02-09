@@ -23,6 +23,7 @@ const GameSquare = ({
     playerCharacters,
     setPlayerCharacters,
     enemyCharacters,
+    setEnemyCharacters,
     handleImageClick,
     usedCharacters,
     setUsedCharacters,
@@ -49,10 +50,10 @@ const GameSquare = ({
 //test end here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
     useEffect(() => {
-        if (playerCharacters["magicPlayer"]["position"] === squareNumber && playerCharacters["magicPlayer"]["healthPoints"] > 0 ) {
+        if (playerCharacters["magicPlayer"]["position"] === squareNumber) {
             setCharacter(playerCharacters["magicPlayer"])
             setImage(mageImage)
-        } else if (playerCharacters["meleePlayer"]["position"] === squareNumber && playerCharacters["meleePlayer"]["healthPoints"] > 0) {
+        } else if (playerCharacters["meleePlayer"]["position"] === squareNumber) {
             setCharacter(playerCharacters["meleePlayer"])
             setImage(knightImage)
         } else if (playerCharacters["healerPlayer"]["position"] === squareNumber) {
@@ -61,13 +62,14 @@ const GameSquare = ({
         } else {
             setImage(null)
         }
-        if (enemyCharacters["enemy1"]["position"] === squareNumber && enemyCharacters["enemy1"]["healthPoints"] > 0 ){
+        // since adding id this could now be a loop!!!!!!!!!!!.......
+        if (enemyCharacters["enemy1"]["position"] === squareNumber){
             setCharacter(enemyCharacters["enemy1"])
             setImage(orcImage)
-        } else if (enemyCharacters["enemy2"]["position"] === squareNumber && enemyCharacters["enemy2"]["healthPoints"] > 0 ){
+        } else if (enemyCharacters["enemy2"]["position"] === squareNumber){
             setCharacter(enemyCharacters["enemy2"])
             setImage(orcImage)
-        } else if (enemyCharacters["enemy3"]["position"] === squareNumber && enemyCharacters["enemy3"]["healthPoints"] > 0 ){
+        } else if (enemyCharacters["enemy3"]["position"] === squareNumber){
             setCharacter(enemyCharacters["enemy3"])
             setImage(orcImage)
         } 
@@ -135,7 +137,7 @@ const GameSquare = ({
 
     const handleModalAttack = () => {
         setModalIsOpen(false)
-        playerCharacters[selectedCharacter].attack(character)
+        playerCharacters[selectedCharacter].attack(character, setEnemyCharacters)
         setCurrentPhase("characterTurnSelect")
         setSelectedCharacter(null)
         const updatedUsedCharacters = [...usedCharacters, selectedCharacter]
