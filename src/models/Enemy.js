@@ -34,9 +34,11 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
     //     updatableEnemy.statusEffects = updatableEnemy.statusEffects.filter(item => item !== "stun")
     //     setEnemyCharacters(prevState => ({...prevState, [this.id]: updatableEnemy}))   //here!
     //     console.log("STUNNNNNEEEEDDDDDD!!!!!!");
-    if(cantAct) {
-        console.log("stuned", enemyCharacters[this.id].statusEffects)   //here!
-        updateStatusEffects(this.id, enemyCharacters, setEnemyCharacters)   //here!
+    if(cantAct || enemyCharacters[this.id].healthPoints <= 0 ) {
+        if (cantAct){
+            console.log("stuned", enemyCharacters[this.id].statusEffects)   //here!
+            updateStatusEffects(this.id, enemyCharacters, setEnemyCharacters)   //here!
+        } else console.log("Enemy Dead")
     } else {
         const playerCharacterPositions = getPlayerPositions(playerCharacters)
         let enemyCharacterPositions = getEnemyPositions(enemyCharacters)
