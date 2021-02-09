@@ -150,8 +150,8 @@ const GameScreen = () =>{
         setModalCharacter(character)
     }
 
-    const displayStatusEffects = () => {
-        const display = modalCharacter.statusEffects.map(statusEffect => {
+    const displayStatusEffects = (clickedCharacter) => {
+        const display = clickedCharacter.statusEffects.map(statusEffect => {
             return statusEffect.effect + 'x' + statusEffect.duration
         })
         const finished = display.join(", ")
