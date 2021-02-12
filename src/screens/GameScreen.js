@@ -31,7 +31,7 @@ const GameScreen = () =>{
     const attackBreak = new Spell("attack break", 0, "attack down", 100, 3) // no logic for attack down yet
     const freeze = new Spell("freeze", 0, "frozen", 70 , 1)
     const heal = new Heal("heal", 10)
-    const shield = new Heal("shield", 10, "shield", 2)
+    const shield = new Heal("shield", 0, "shield", 20)
     peter.heals.push(heal)
     peter.heals.push(shield)
     matt.spells.push(fireball)
@@ -55,7 +55,7 @@ const GameScreen = () =>{
 
     const enemy1 = new Enemy("ORCenemy1", 1, 100, 10, "enemy1")
     const enemy2 = new Enemy("ORCenemy2", 1, 100, 15, "enemy2")
-    const enemy3 = new Enemy("ORCenemy3", 1, 1, 20, "enemy3")
+    const enemy3 = new Enemy("ORCenemy3", 30, 1, 20, "enemy3")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,

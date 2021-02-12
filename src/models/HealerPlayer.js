@@ -22,7 +22,8 @@ Object.defineProperty(HealerPlayer.prototype, 'constructor', {
 HealerPlayer.prototype.attack = function (target, setEnemy){
     if ( this.equippedHeal !== null ) {
         const startingHealth = target.healthPoints
-        const newHealth = startingHealth + this.equippedHeal.healPower
+        let newHealth = startingHealth + this.equippedHeal.healPower
+        if ( newHealth > target.maxHealthPoints) newHealth = target.maxHealthPoints
         target.healthPoints = newHealth
         if ( this.equippedHeal.effectName) Character.prototype.addEffectToTarget.call(this, this.equippedHeal, target)
     } else Character.prototype.attack.call(this, target, setEnemy)

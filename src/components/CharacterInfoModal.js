@@ -55,7 +55,7 @@ const CharacterInfoModal = ({
 
             <p>{clickedCharacter.name}</p>
             <p>Attack: {clickedCharacter.attackPoints}</p>
-            <p>Health: {clickedCharacter.healthPoints}</p>
+            <p>Health: {clickedCharacter.healthPoints} / {clickedCharacter.maxHealthPoints}</p>
             {/* <p>status: {modalCharacter.statusEffects[0] ? modalCharacter.statusEffects[0].effect : ""}</p> */}
             {displayStatusEffects(clickedCharacter)}
         </Modal>

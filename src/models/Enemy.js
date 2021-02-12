@@ -210,17 +210,17 @@ const getPathToClosestAttackablePosition = (possibleAttackPaths) => {
     return pathToClosestAttackablePosition
 }
 
-const updateStatusEffects = (name, enemyCharacters, setEnemyCharacters) => {
+const updateStatusEffects = (id, enemyCharacters, setEnemyCharacters) => {
     const updatedStatusEffects = []
-    enemyCharacters[name].statusEffects.forEach(statusEffect => {
+    enemyCharacters[id].statusEffects.forEach(statusEffect => {
         statusEffect.duration -= 1
         if (statusEffect.duration > 0) updatedStatusEffects.push(statusEffect)
     })
-    const updatableEnemy = enemyCharacters[name]
+    const updatableEnemy = enemyCharacters[id]
     updatableEnemy.statusEffects = updatedStatusEffects
     console.log("updatedStatusEffects", updatedStatusEffects);
     console.log("updatableEnemy", updatableEnemy);
-    setEnemyCharacters(prevState => ({...prevState, [name]: updatableEnemy}))
+    setEnemyCharacters(prevState => ({...prevState, [id]: updatableEnemy}))
 }
 
 export default Enemy

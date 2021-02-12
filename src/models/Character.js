@@ -5,23 +5,37 @@ function Character(name, attackPoints, healthPoints, position) {
     this.position = position
     this.isAlive = true
     this.statusEffects = []
+    this.maxHealthPoints = healthPoints
 }
 
-Character.prototype.attack = function (enemy, setEnemy, modifiedDamage = 0){
-    const startingHealth = enemy.healthPoints
+Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
+    const startingHealth = target.healthPoints
     // let newHealth = 0
     // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage
-    // enemy.healthPoints = newHealth
-
+    // target.healthPoints = newHealth
+    console.log("THIS", this);
     let damageDone = 0
     modifiedDamage === 0 ? damageDone = this.attackPoints : damageDone = modifiedDamage
-    enemy.statusEffects.forEach(statusEffect => {
+    target.statusEffects.forEach(statusEffect => {
         if(statusEffect.effect === "armour down" ) damageDone *= 2
+        if(statusEffect.effect === "shield" ) {
+            const damageAfterShield = statusEffect.duration - damageDone
+            if (damageAfterShield > 0 ) {
+                statusEffect.duration = damageAfterShield
+                damageDone = 0
+            }
+            else {
+                damageDone = 0 - damageAfterShield
+                const statusEffectsWithoutShield = target.statusEffects.filter(filterEffect => filterEffect.effect !== "shield")
+                target.statusEffects = statusEffectsWithoutShield
+                setTarget(prevState => ({...prevState, [target.id]: target }))
+            }
+        }
     })
-    enemy.healthPoints = startingHealth - damageDone
-    if ( enemy.healthPoints <= 0) {
-        enemy.position = 100
-        setEnemy(prevState => ({...prevState, [enemy.id]: enemy }))
+    target.healthPoints = startingHealth - damageDone
+    if ( target.healthPoints <= 0) {
+        target.position = 100
+        setTarget(prevState => ({...prevState, [target.id]: target }))
     }
 }
 
