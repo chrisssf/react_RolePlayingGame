@@ -44,8 +44,6 @@ const GameScreen = () =>{
     matt.equippedSpell = fireball
     // peter.equippedHeal = heal
     // ken.equippedWeapon = sword
-    const test = new MeleeWeapon("test", 10, "axe")
-    console.log("test", test);
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -53,9 +51,9 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("ORCenemy1", 1, 100, 10, "enemy1")
-    const enemy2 = new Enemy("ORCenemy2", 1, 100, 15, "enemy2")
-    const enemy3 = new Enemy("ORCenemy3", 30, 1, 20, "enemy3")
+    const enemy1 = new Enemy("ORCenemy1", 10, 5, 10, "enemy1")
+    const enemy2 = new Enemy("ORCenemy2", 10, 5, 15, "enemy2")
+    const enemy3 = new Enemy("ORCenemy3", 10, 5, 20, "enemy3")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -100,6 +98,12 @@ const GameScreen = () =>{
         }
         console.log("playerssssss", playerCharacters);
         console.log("currentPhase", currentPhase)
+
+        if ( playerCharacters.meleePlayer.healthPoints <= 0 && playerCharacters.magicPlayer.healthPoints <= 0 && playerCharacters.healerPlayer.healthPoints <= 0 ){
+            console.log("GAME OVER!!!")
+        } else if ( enemyCharacters.enemy1.healthPoints <= 0 && enemyCharacters.enemy2.healthPoints <= 0 && enemyCharacters.enemy3.healthPoints <= 0 ){
+            console.log("YOU WIN!!!")
+        }
     }, [currentPhase])
 
 
