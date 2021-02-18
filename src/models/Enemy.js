@@ -98,7 +98,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
                     if (playerCharacters.meleePlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.meleePlayer
                         updateableCharacter.position = 100
-                        setPlayerCharacters(prevState => ({...prevState, ["meleePlayer"]: updateableCharacter }))
+                        setPlayerCharacters(prevState => ({...prevState, "meleePlayer": updateableCharacter }))
                     }
                     console.log("healerHP2meleePlayer", playerCharacters.meleePlayer);
 
@@ -113,7 +113,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
                     if (playerCharacters.magicPlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.magicPlayer
                         updateableCharacter.position = 100
-                        setPlayerCharacters(prevState => ({...prevState, ["magicPlayer"]: updateableCharacter }))
+                        setPlayerCharacters(prevState => ({...prevState, "magicPlayer": updateableCharacter }))
                     }
                 }, 1000 * moves.length)
             }
@@ -127,7 +127,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
                     if (playerCharacters.healerPlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.healerPlayer
                         updateableCharacter.position = 100
-                        setPlayerCharacters(prevState => ({...prevState, ["healerPlayer"]: updateableCharacter }))
+                        setPlayerCharacters(prevState => ({...prevState, "healerPlayer": updateableCharacter }))
                     }
                     console.log("healerHP2", playerCharacters.healerPlayer.healthPoints);
                 }, 1000 * moves.length)

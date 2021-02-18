@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
-import ReactDOM from 'react-dom'
-import Modal from 'react-modal'
+import React, { useState, useEffect } from 'react';
+// import ReactDOM from 'react-dom'
+// import Modal from 'react-modal'
 import './GameSquare.css'
 import CharacterInfoModal from '../components/CharacterInfoModal.js'
 import mageImage from '../assets/mage.png'
@@ -89,6 +89,8 @@ const GameSquare = ({
             case "healerPlayer":
                 currentImage = healerImage
                 break
+            default:
+                currentImage = null
         }
         if (( image === null || image === currentImage ) && movableSquares.includes(squareNumber) ) {
             setSquareStyling("movable")

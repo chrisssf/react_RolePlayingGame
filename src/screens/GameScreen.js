@@ -52,8 +52,8 @@ const GameScreen = () =>{
     }
 
     const enemy1 = new Enemy("ORCenemy1", 10, 5, 10, "enemy1")
-    const enemy2 = new Enemy("ORCenemy2", 10, 5, 15, "enemy2")
-    const enemy3 = new Enemy("ORCenemy3", 10, 5, 20, "enemy3")
+    const enemy2 = new Enemy("ORCenemy2", 1000, 5, 15, "enemy2")
+    const enemy3 = new Enemy("ORCenemy3", 1000, 5, 20, "enemy3")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,

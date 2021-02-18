@@ -21,7 +21,7 @@ Object.defineProperty(MagicPlayer.prototype, 'constructor', {
 
 MagicPlayer.prototype.attack = function (enemy, setEnemyCharacters) {
     let damageDone = this.attackPoints
-    const startingHealth = enemy.healthPoints
+    // const startingHealth = enemy.healthPoints
     if(this.equippedSpell) damageDone += this.equippedSpell.spellPower
     const randomNumber = Math.floor(Math.random() * 100) + 1
     // if ( randomNumber <= this.equippedSpell.activationChance) enemy.statusEffects.push({effect: this.equippedSpell.effectName, duration: this.equippedSpell.duration})
@@ -38,18 +38,18 @@ MagicPlayer.prototype.attack = function (enemy, setEnemyCharacters) {
 }
 
 
-const updateStatusEffects = (name, enemyCharacters, setEnemyCharacters) => {
-    const updatedStatusEffects = []
-    enemyCharacters[name].statusEffects.forEach(statusEffect => {
-        statusEffect.duration -= 1
-        if (statusEffect.duration > 0) updatedStatusEffects.push(statusEffect)
-    })
-    const updatableEnemy = enemyCharacters[name]
-    updatableEnemy.statusEffects = updatedStatusEffects
-    console.log("updatedStatusEffects", updatedStatusEffects);
-    console.log("updatableEnemy", updatableEnemy);
-    setEnemyCharacters(prevState => ({...prevState, [name]: updatableEnemy}))
-}
+// const updateStatusEffects = (name, enemyCharacters, setEnemyCharacters) => {
+//     const updatedStatusEffects = []
+//     enemyCharacters[name].statusEffects.forEach(statusEffect => {
+//         statusEffect.duration -= 1
+//         if (statusEffect.duration > 0) updatedStatusEffects.push(statusEffect)
+//     })
+//     const updatableEnemy = enemyCharacters[name]
+//     updatableEnemy.statusEffects = updatedStatusEffects
+//     console.log("updatedStatusEffects", updatedStatusEffects);
+//     console.log("updatableEnemy", updatableEnemy);
+//     setEnemyCharacters(prevState => ({...prevState, [name]: updatableEnemy}))
+// }
 
 // const addEffectToTarget = (spell, enemy) => {
 //     let stillToAdd = true

@@ -1,4 +1,3 @@
-import CharacterTurnSelect from '../components/CharacterTurnSelect.js'
 import Character from './Character.js'
 
 function HealerPlayer(name, attackPoints, healthPoints, position, type) {

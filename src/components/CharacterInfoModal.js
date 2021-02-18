@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom'
+import React from 'react';
+// import ReactDOM from 'react-dom'    ----->DONT KNOW IF THIS IS NEEDED!!!
 import Modal from 'react-modal'
 
 const CharacterInfoModal = ({

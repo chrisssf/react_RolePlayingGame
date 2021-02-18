@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import './AttackPhase.css'
 import EquipModal from './EquipModal.js'
-import ReactDOM from 'react-dom'
-import Modal from 'react-modal'
+// import ReactDOM from 'react-dom'
+// import Modal from 'react-modal'
 // import swordImage from '../assets/sword.png'
 // import WeaponImages from '../assets/WeaponImages.js'
 
@@ -20,10 +20,10 @@ const AttackPhase = ({
     usedCharacters,
     setUsedCharacters }) =>{
 
-    const [ weaponChangeModalIsOpen, setWeaponChangeModalIsOpen ] = useState(false)
+    // const [ weaponChangeModalIsOpen, setWeaponChangeModalIsOpen ] = useState(false)
     const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
 
-    const [ equippedWeapon, setEquippedWeapon ] = useState(playerCharacters[selectedCharacter].equippedWeapon)
+    // const [ equippedWeapon, setEquippedWeapon ] = useState(playerCharacters[selectedCharacter].equippedWeapon)
 
     const handleFinishedCharacterAttack = () => {
         setAttackableSquares([])
@@ -43,31 +43,30 @@ const AttackPhase = ({
         setEquipModalIsOpen(true)
     }
 
-
-    const displayWeaponInventory = () => {
-        const weapons = playerCharacters[selectedCharacter].weapons
-        const displayWeaponOptions = weapons.map(weapon => {
-            let equippedStyle = false
-            if(playerCharacters[selectedCharacter].equippedWeapon && playerCharacters[selectedCharacter].equippedWeapon.name === weapon.name) equippedStyle = true
-            return (
-                <div className={equippedStyle ? "weapon-select-modal-weapon equippedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipWeapon(weapon)}>
-                    {/* <img src={swordImage} alt='sword' className="weapon-select-modal-image"></img>  */}
-                    {/* <img src={WeaponImages[weapon.name].default} alt='sword' className="weapon-select-modal-image"></img>  */}
-                    <p>{weapon.name}</p>
-                    <img src={require('../assets/' + weapon.name + '.png').default} alt={weapon.name} className="weapon-select-modal-image"></img> 
-                    <p>Damage: {weapon.attackPower}</p>
-                    {/* <button onClick={() => handleEquipWeapon(weapon)}>Equip</button> */}
-                </div>
-            )
-        })
-        return displayWeaponOptions
-    }
-
-    const handleEquipWeapon = (weapon) => {
-        const updateableCharacter = playerCharacters[selectedCharacter]
-        updateableCharacter.equippedWeapon = weapon
-        setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
-    }
+    // MOVED TO EQUIP MODAL!!!
+    // const displayWeaponInventory = () => {
+    //     const weapons = playerCharacters[selectedCharacter].weapons
+    //     const displayWeaponOptions = weapons.map(weapon => {
+    //         let equippedStyle = false
+    //         if(playerCharacters[selectedCharacter].equippedWeapon && playerCharacters[selectedCharacter].equippedWeapon.name === weapon.name) equippedStyle = true
+    //         return (
+    //             <div className={equippedStyle ? "weapon-select-modal-weapon equippedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipWeapon(weapon)}>
+    //                 {/* <img src={swordImage} alt='sword' className="weapon-select-modal-image"></img>  */}
+    //                 {/* <img src={WeaponImages[weapon.name].default} alt='sword' className="weapon-select-modal-image"></img>  */}
+    //                 <p>{weapon.name}</p>
+    //                 <img src={require('../assets/' + weapon.name + '.png').default} alt={weapon.name} className="weapon-select-modal-image"></img> 
+    //                 <p>Damage: {weapon.attackPower}</p>
+    //                 {/* <button onClick={() => handleEquipWeapon(weapon)}>Equip</button> */}
+    //             </div>
+    //         )
+    //     })
+    //     return displayWeaponOptions
+    // }
+    // const handleEquipWeapon = (weapon) => {
+    //     const updateableCharacter = playerCharacters[selectedCharacter]
+    //     updateableCharacter.equippedWeapon = weapon
+    //     setPlayerCharacters(prevState => ({...prevState, [selectedCharacter]: updateableCharacter }))
+    // }
 
     return (
         <div>

@@ -39,6 +39,8 @@ MeleePlayer.prototype.attack = function (enemy, setEnemyCharacters){
                 // if(randomNumber <= 100) addEffectToTarget("stun", enemy, 1) // should be <= 25
                 if(randomNumber <= 100) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 25
                 break
+            default:
+                console.log("no matching weapon");
         }
     }
     // enemy.statusEffects.forEach(statusEffect => {

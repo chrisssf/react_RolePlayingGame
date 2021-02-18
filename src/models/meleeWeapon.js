@@ -23,6 +23,8 @@ function MeleeWeapon(name, attackPower, type, effectName, activationChance){
             defaultActivationChance = 25
             defaultDuration = 0
             break
+        default:
+            console.log("no matching weapon type");
     }
     
     this.effectName = effectName || defaultEffect
