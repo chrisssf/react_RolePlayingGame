@@ -20,7 +20,7 @@ const boardHeight = 5
 
 const GameScreen = () =>{
 
-    const ken = new MeleePlayer("ken", 30, 100, 11, "Knight")
+    const ken = new MeleePlayer("ken", 30, 100, 11, "knight")
     const matt = new MagicPlayer("matt", 20, 100, 6, "mage")
     const peter = new HealerPlayer("peter", 10, 100, 16, "priest")
     const sword = new MeleeWeapon("sword-5", 5, "sword")
@@ -51,9 +51,9 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("ORCenemy1", 10, 5, 10, "enemy1")
-    const enemy2 = new Enemy("ORCenemy2", 1000, 5, 15, "enemy2")
-    const enemy3 = new Enemy("ORCenemy3", 1000, 5, 20, "enemy3")
+    const enemy1 = new Enemy("ORCenemy1", 10, 5, 10, "enemy1", "orc")
+    const enemy2 = new Enemy("ORCenemy2", 1000, 5, 15, "enemy2", "orc")
+    const enemy3 = new Enemy("ORCenemy3", 1000, 5, 20, "enemy3", "orc")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,

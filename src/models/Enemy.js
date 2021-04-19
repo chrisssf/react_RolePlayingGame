@@ -1,8 +1,9 @@
 import Character from './Character.js'
 
-function Enemy(name, attackPoints, healthPoints, position, id) {
+function Enemy(name, attackPoints, healthPoints, position, id, type) {
     Character.call(this, name, attackPoints, healthPoints, position)
     this.id = id
+    this.type = type
 
     // this.statusEffects = []
 }
@@ -94,6 +95,24 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
             playerCharacters.meleePlayer.position === finalPosition - 5 ) {
                 setTimeout(() => { 
                     console.log("healerHPmeleePlayer", playerCharacters.meleePlayer);
+
+                    // getElementTesting HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+                    // document.getElementById(playerCharacters.meleePlayer.position).style.backgroundColor = "yellow"
+                    // let element = document.getElementById(playerCharacters.meleePlayer.position)
+                    // document.getElementById(playerCharacters.meleePlayer.position).classList.toggle("hidden")
+                    // document.getElementById(playerCharacters.meleePlayer.position).classList.toggle("left")
+                    // document.getElementById(playerCharacters.meleePlayer.position).classList.toggle("hidden")
+
+                    // element.classList.toggle("attack-left")
+                    // element.classList.toggle("hidden")
+                    // setTimeout(() => {
+                    //     element.classList.toggle("left")
+                    //     element.classList.toggle("hidden")
+                    // }, 501)
+
+                    // getElementTesting HERE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! FINISH!!!!!!
+                    
                     this.attack(playerCharacters.meleePlayer, setPlayerCharacters)
                     if (playerCharacters.meleePlayer.healthPoints <= 0) {
                         const updateableCharacter = playerCharacters.meleePlayer

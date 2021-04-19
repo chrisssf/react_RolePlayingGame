@@ -27,46 +27,101 @@
 
   .container-container{
     width: 200px;
+    height: 200px;
     margin: auto;
+    position: relative;
     
-    /* background-color: yellow; */
+    border: 1px solid black;
+
+    background-color: yellow;
+  }
+
+  /* old way didnt have this....................... */
+  .test-background-image-container {
+    /* width: 100%;
+    height: 100%; */
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    /* border: 1px solid black; */
+    background-color: yellow;
+
+
   }
     
   .test-image-container {
-    margin: 200px auto 200px auto;
+    /* old way ........... */
+    /* margin: 200px auto 200px auto;
     position: relative;
-    width: 200px;
+    width: 200px; */
+    /* to here.................. */
+
+
     /* border: 1px solid black; */
+    background-color: yellow;
+
     
     /* transform: rotate(36deg); */
 
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10
   }
 
   .test-image {
-    position: relative;
-    width: 200px;
+    /* position: relative; */
+    /* width: 200px; */
     /* transform: rotate(36deg); */
     /* background-color: yellow; */
+
+    /* width: 100%;
+    height: 100%; */
+    position: relative;
+    /* margin-right: 100px; */
+    /* border: 1px solid black; */
+
+    /* top: 0;
+    left: 0; */
+    height: 120%;
+    z-index: 10
+  }
+
+  .test-background-image {
+    /* position: relative; */
+    /* width: 200px; */
+    height: 150px;
+    /* transform: rotate(36deg); */
+    /* background-color: yellow; */
+
+
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 
   .right {
     /* left: 100px */
+    transform: rotate(90deg);
     animation-name: rightAttackAnimation;
     animation-duration: 500ms;
   }
 
   .up {
-    transform: rotate(-90deg);
+    /* transform: rotate(-90deg); */
     animation-name: upAttackAnimation;
     animation-duration: 500ms;
   }
   .down {
-    transform: rotate(90deg);
+    transform: rotate(180deg);
     animation-name: downAttackAnimation;
     animation-duration: 500ms;
   }
   .left {
-    transform: rotate(180deg);
+    /* transform: rotate(-90deg); */
     animation-name: leftAttackAnimation;
     animation-duration: 500ms;
   }
@@ -76,28 +131,49 @@
     visibility: hidden;
   }
 
-  @keyframes rightAttackAnimation {
-    0%{ left: 0px }
-    50%{ left: 200px }
-    100%{ left: 0px }
+  .attack-left {
+    /* transform: rotate(-90deg); */
+    animation-name: leftAttackAnimation;
+    animation-duration: 500ms;
+
+    height: 80%;
+    /* position: relative; */
+    position: absolute;
+    top: 8px;
+    /* left: 5px; */
   }
 
+  @keyframes rightAttackAnimation {
+    0%{ left: -100px }
+    50%{ left: 0px}
+    100%{ left: -100px }
+  }
+
+  /* @keyframes rightAttackAnimation {
+    0%{ left: -100px }
+    45%{ left: 0px}
+    46%{ left: 0px; background-color: yellow;}
+    54%{ left: 0px; background-color: yellow;}
+    55%{ left: 0px; background-color: none;}
+    100%{ left: -100px; background-color: none}
+  } */
+
   @keyframes leftAttackAnimation {
-    0%{ right: 0px }
-    50%{ right: 200px }
-    100%{ right: 0px }
+    0%{ right: -100px }
+    50%{ right: 0px }
+    100%{ right: -100px }
   }
 
   @keyframes upAttackAnimation {
-    0%{ bottom: 0px }
-    50%{ bottom: 200px }
-    100%{ bottom: 0px }
+    0%{ bottom: -100px }
+    50%{ bottom: 0px }
+    100%{ bottom: -100px }
   }
 
   @keyframes downAttackAnimation {
-    0%{ top: 0px }
-    50%{ top: 200px }
-    100%{ top: 0px }
+    0%{ top: -100px }
+    50%{ top: 0px }
+    100%{ top: -100px }
   }
 
   

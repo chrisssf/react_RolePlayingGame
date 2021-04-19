@@ -9,6 +9,44 @@ function Character(name, attackPoints, healthPoints, position) {
 }
 
 Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
+    console.log("TARGET", target);
+    console.log("THIS", this);
+
+
+
+    let equippedType = ""
+    let attackerIsPlayer = true
+    switch (this.id) {
+        case "meleePlayer":
+            equippedType = "equippedWeapon"
+            break
+        case "magicPlayer":
+            equippedType = "equippedSpell"
+            break
+        case "healerPlayer":
+            equippedType = "equippedHeal"
+            break
+        default:
+            equippedType = ""
+            attackerIsPlayer = false
+    }
+
+    const targetElement = document.getElementById(target.position)
+
+    if (this[equippedType] !== null && attackerIsPlayer) {
+        targetElement.src = require('../assets/' + this[equippedType].name + '.png').default 
+    } else {
+        targetElement.src = require('../assets/' + this.type + '.png').default 
+    }
+
+    targetElement.classList.toggle("hidden")
+    targetElement.classList.toggle("attack-left")
+    setTimeout(() => {
+        targetElement.classList.toggle("attack-left")
+        targetElement.classList.toggle("hidden")
+    }, 501)
+
+
     const startingHealth = target.healthPoints
     // let newHealth = 0
     // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage

@@ -4,8 +4,8 @@ import CharacterTurnSelect from './CharacterTurnSelect.js'
 import MovementPhase from './MovementPhase.js'
 import AttackPhase from './AttackPhase.js'
 
-import sword from '../assets/fireball.png'
-import background from '../assets/mage.png'
+import sword from '../assets/axe.png'
+import background from '../assets/knight.png'
 
 const GameActionBar = ( { 
     selectedCharacter,
@@ -132,16 +132,24 @@ const GameActionBar = ( {
             <div className="box" ref={testBox} onClick={() => test()}></div>
             {/* <div className="box transform" ref={testBox} onClick={() => test()}></div> */}
             <input type="button" id="button" value="Click Me" onClick={() => test()}></input>
-            {/* end of testing  */}
             <input type="button" id="button" value="UP" onClick={() => up()}></input>
             <input type="button" id="button" value="DOWN" onClick={() => down()}></input>
             <input type="button" id="button" value="LEFT" onClick={() => left()}></input>
             <input type="button" id="button" value="RIGHT" onClick={() => right()}></input>
-            <div className="container-container" style={{ backgroundImage: `url(${background})`, backgroundSize: "cover" }}>
+            {/* <div className="container-container" style={{ backgroundImage: `url(${background})`, backgroundSize: "cover" }}> */}
+            <div className="container-container">
+                {/* <div className="test-background-image-container">
+                    <img src={background} alt={"image"}  className="test-background-image" onClick={() => test()}></img> 
+                </div>
                 <div ref={testImage} className="test-image-container hidden">
                     <img src={sword} alt={"image"}  className="test-image" onClick={() => test()}></img> 
-                </div>
+                </div> */}
+                <img src={background} alt={"image"}  className="test-background-image" onClick={() => test()}></img> 
+                <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden" onClick={() => test()}></img> 
+
             </div>
+            {/* end of testing  */}
+
         </div>
     )
 }

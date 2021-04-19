@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import './GameBoard.css'
 
 import GameSquare from './GameSquare.js'
@@ -21,11 +21,15 @@ const GameBoard = ({
     displayStatusEffects }) => {
 
 
+    const myRefs = useRef([])
+
     const fillGameBoard = () => {
 
         const gameSquares = []
         for ( let i = 1; i < 26; i++ ) {
             gameSquares.push(<GameSquare 
+                ref={() => (myRefs.current[i] = "bob")}
+
                 key={i} 
                 squareNumber={i} 
                 currentPhase={currentPhase}
