@@ -18,7 +18,7 @@ const CharacterInfoModal = ({
         let sectionToDisplay = null
         if ( character ) {
             sectionToDisplay = <> 
-                {playerCharacters["healerPlayer"]["equippedHeal"] !== null ? <p>Heal {character.name} with {playerCharacters["healerPlayer"]["equippedHeal"].name}</p> : 
+                {selectedCharacter === "healerPlayer" && playerCharacters["healerPlayer"]["equippedHeal"] !== null ? <p>Heal {character.name} with {playerCharacters["healerPlayer"]["equippedHeal"].name}</p> : 
                 <p>Attack {character.name} with {playerCharacters[selectedCharacter].type}?</p>}
                 {selectedCharacter === "meleePlayer" && playerCharacters[selectedCharacter].equippedWeapon && <p>Current equipped Weapon is {playerCharacters[selectedCharacter].equippedWeapon.name}</p>}
                 {selectedCharacter === "magicPlayer" && playerCharacters[selectedCharacter].equippedSpell && <p>Current equipped Spell is {playerCharacters[selectedCharacter].equippedSpell.name}</p>}

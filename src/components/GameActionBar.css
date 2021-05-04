@@ -143,6 +143,48 @@
     /* left: 5px; */
   }
 
+  .attack-right {
+    /* transform: rotate(-90deg); */
+    animation-name: rightAttackAnimation;
+    animation-duration: 500ms;
+
+    height: 80%;
+    /* position: relative; */
+    position: absolute;
+    top: 8px;
+    /* left: 5px; */
+  }
+
+  .attack-down {
+    /* transform: rotate(-90deg); */
+    animation-name: downAttackAnimation;
+    animation-duration: 500ms;
+
+    height: 80%;
+    /* position: relative; */
+    position: absolute;
+    top: 8px;
+    /* left: 5px; */
+  }
+
+  .attack-up {
+    /* transform: rotate(-90deg); */
+    animation-name: upAttackAnimation;
+    animation-duration: 500ms;
+
+    height: 80%;
+    /* position: relative; */
+    position: absolute;
+    top: 8px;
+    /* left: 5px; */
+  }
+
+  .attack-image {
+    height: 80%;
+    position: relative;
+    z-index: 10
+  }
+
   @keyframes rightAttackAnimation {
     0%{ left: -100px }
     50%{ left: 0px}

@@ -299,7 +299,7 @@ const right = () => {
         <>
         {/* getElementTesting HERE!!!!!!!!!!!!!!!!!!!!!!!!!! */}
             {/* <div id={squareNumber} onClick={() => handleClickSquare()} className={width > 500 ? `bigger-square-container ${squareStyling}` : `smaller-square-container ${squareStyling}` }> */}
-            <div onClick={() => handleClickSquare()} className={width > 500 ? `bigger-square-container ${squareStyling}` : `smaller-square-container ${squareStyling}` }>
+            <div id={"square" + squareNumber} onClick={() => handleClickSquare()} className={width > 500 ? `bigger-square-container ${squareStyling}` : `smaller-square-container ${squareStyling}` }>
                 {image ? 
                     <>
                         <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
@@ -322,7 +322,7 @@ const right = () => {
                 {/* {displayImage()} */}
 
                 
-                <img src={require('../assets/' + 'orc' + '.png').default} id={squareNumber} alt={"image"}  className="test-image hidden"></img> 
+                <img src={require('../assets/' + 'orc' + '.png').default} id={squareNumber} alt={"image"}  className="attack-image hidden"></img> 
 
             </div>
             {/* {character && selectedCharacter && <Modal

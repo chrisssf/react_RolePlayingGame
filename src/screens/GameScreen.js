@@ -51,9 +51,9 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("ORCenemy1", 10, 5, 10, "enemy1", "orc")
-    const enemy2 = new Enemy("ORCenemy2", 1000, 5, 15, "enemy2", "orc")
-    const enemy3 = new Enemy("ORCenemy3", 1000, 5, 20, "enemy3", "orc")
+    const enemy1 = new Enemy("ORCenemy1", 10, 100, 10, "enemy1", "orc")
+    const enemy2 = new Enemy("ORCenemy2", 10, 100, 15, "enemy2", "orc")
+    const enemy3 = new Enemy("ORCenemy3", 10, 100, 20, "enemy3", "orc")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -150,8 +150,10 @@ const GameScreen = () =>{
     }
 
     const handleImageClick = (character) => {
-        setModalIsOpen(true)
-        setModalCharacter(character)
+        if (currentPhase !== "playerAttack") {
+            setModalIsOpen(true)
+            setModalCharacter(character)
+        }
     }
 
     const displayStatusEffects = (clickedCharacter) => {

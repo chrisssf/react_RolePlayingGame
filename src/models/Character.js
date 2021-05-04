@@ -12,39 +12,64 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     console.log("TARGET", target);
     console.log("THIS", this);
 
+    const targetElement = document.getElementById("square" + target.position)
+    const attackerElement = document.getElementById("square" + this.position)
 
-
-    let equippedType = ""
-    let attackerIsPlayer = true
-    switch (this.id) {
-        case "meleePlayer":
-            equippedType = "equippedWeapon"
-            break
-        case "magicPlayer":
-            equippedType = "equippedSpell"
-            break
-        case "healerPlayer":
-            equippedType = "equippedHeal"
-            break
-        default:
-            equippedType = ""
-            attackerIsPlayer = false
-    }
-
-    const targetElement = document.getElementById(target.position)
-
-    if (this[equippedType] !== null && attackerIsPlayer) {
-        targetElement.src = require('../assets/' + this[equippedType].name + '.png').default 
-    } else {
-        targetElement.src = require('../assets/' + this.type + '.png').default 
-    }
-
-    targetElement.classList.toggle("hidden")
-    targetElement.classList.toggle("attack-left")
     setTimeout(() => {
-        targetElement.classList.toggle("attack-left")
-        targetElement.classList.toggle("hidden")
-    }, 501)
+        targetElement.style.backgroundColor = "yellow"
+        // attackerElement.style.backgroundColor = "red"
+    }, 300)
+    setTimeout(() => {
+        targetElement.style.backgroundColor = "transparent"
+        // attackerElement.style.backgroundColor = "transparent"
+        // }, 501)
+    }, 500)
+
+    // setTimeout(() => {
+    //     targetElement.classList.toggle(attackDirection)
+    //     targetElement.classList.toggle("hidden")
+    // }, 501)
+
+
+
+    // ATTACK ANIMATION STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // let attackDirection = null
+    // if (target.position === this.position + 1 || target.position === this.position + 2) attackDirection = "attack-right" 
+    // else if (target.position === this.position - 1 || target.position === this.position - 2) attackDirection = "attack-left" 
+    // else if (target.position === this.position - 5 || target.position === this.position - 10) attackDirection = "attack-up" 
+    // else if (target.position === this.position + 5 || target.position === this.position + 10) attackDirection = "attack-down" 
+
+    // let equippedType = ""
+    // let attackerIsPlayer = true
+    // switch (this.id) {
+    //     case "meleePlayer":
+    //         equippedType = "equippedWeapon"
+    //         break
+    //     case "magicPlayer":
+    //         equippedType = "equippedSpell"
+    //         break
+    //     case "healerPlayer":
+    //         equippedType = "equippedHeal"
+    //         break
+    //     default:
+    //         equippedType = ""
+    //         attackerIsPlayer = false
+    // }
+
+    // const targetElement = document.getElementById(target.position)
+
+    // if (this[equippedType] !== null && attackerIsPlayer) {
+    //     targetElement.src = require('../assets/' + this[equippedType].name + '.png').default 
+    // } else {
+    //     targetElement.src = require('../assets/' + this.type + '.png').default 
+    // }
+
+    // targetElement.classList.toggle("hidden")
+    // targetElement.classList.toggle(attackDirection)
+    // setTimeout(() => {
+    //     targetElement.classList.toggle(attackDirection)
+    //     targetElement.classList.toggle("hidden")
+    // }, 501)
 
 
     const startingHealth = target.healthPoints
