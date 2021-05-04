@@ -13,8 +13,9 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     console.log("THIS", this);
 
     const targetElement = document.getElementById("square" + target.position)
-    const attackerElement = document.getElementById("square" + this.position)
+    // const attackerElement = document.getElementById("square" + this.position)
 
+    // VERY SIMPLIFIED ATTACK ANIMATION!!!!!!!!!!!!!!!!!!!!!!!!!!
     setTimeout(() => {
         targetElement.style.backgroundColor = "yellow"
         // attackerElement.style.backgroundColor = "red"
@@ -25,14 +26,8 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
         // }, 501)
     }, 500)
 
-    // setTimeout(() => {
-    //     targetElement.classList.toggle(attackDirection)
-    //     targetElement.classList.toggle("hidden")
-    // }, 501)
 
-
-
-    // ATTACK ANIMATION STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // MORE COMPLICATED ATTACK ANIMATION STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // let attackDirection = null
     // if (target.position === this.position + 1 || target.position === this.position + 2) attackDirection = "attack-right" 
     // else if (target.position === this.position - 1 || target.position === this.position - 2) attackDirection = "attack-left" 
