@@ -91,6 +91,15 @@
     left: 30px
   }
 
+.attack-image {
+    height: 90%;
+    background-color: yellow;
+
+    height: 80%;
+    position: relative;
+    z-index: 10
+}
+
 .attack-modal-container {
     width: 50%;
     background-color: white;

@@ -13,45 +13,73 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     console.log("THIS", this);
 
     const targetElement = document.getElementById("square" + target.position)
+    const targetImage = document.getElementById("attackImage" + target.position)
+    const targetHealthBar = document.getElementById("health" + target.position)
+
     setTimeout(() => {
 
-    const startingHealth = target.healthPoints
-    // let newHealth = 0
-    // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage
-    // target.healthPoints = newHealth
-    console.log("THIS", this);
-    let damageDone = 0
-    modifiedDamage === 0 ? damageDone = this.attackPoints : damageDone = modifiedDamage
-    target.statusEffects.forEach(statusEffect => {
-        if(statusEffect.effect === "armour down" ) damageDone *= 2
-        if(statusEffect.effect === "shield" ) {
-            const damageAfterShield = statusEffect.duration - damageDone
-            if (damageAfterShield > 0 ) {
-                statusEffect.duration = damageAfterShield
-                damageDone = 0
+        const startingHealth = target.healthPoints
+        // let newHealth = 0
+        // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage
+        // target.healthPoints = newHealth
+        console.log("THIS", this);
+        let damageDone = 0
+        modifiedDamage === 0 ? damageDone = this.attackPoints : damageDone = modifiedDamage
+        target.statusEffects.forEach(statusEffect => {
+            if(statusEffect.effect === "armour down" ) damageDone *= 2
+            if(statusEffect.effect === "shield" ) {
+                const damageAfterShield = statusEffect.duration - damageDone
+                if (damageAfterShield > 0 ) {
+                    statusEffect.duration = damageAfterShield
+                    damageDone = 0
+                }
+                else {
+                    damageDone = 0 - damageAfterShield
+                    const statusEffectsWithoutShield = target.statusEffects.filter(filterEffect => filterEffect.effect !== "shield")
+                    target.statusEffects = statusEffectsWithoutShield
+                    setTarget(prevState => ({...prevState, [target.id]: target }))
+                }
             }
-            else {
-                damageDone = 0 - damageAfterShield
-                const statusEffectsWithoutShield = target.statusEffects.filter(filterEffect => filterEffect.effect !== "shield")
-                target.statusEffects = statusEffectsWithoutShield
-                setTarget(prevState => ({...prevState, [target.id]: target }))
-            }
+        })
+        target.healthPoints = startingHealth - damageDone
+        if ( target.healthPoints <= 0) {
+            target.position = 100
+            setTarget(prevState => ({...prevState, [target.id]: target }))
         }
-    })
-    target.healthPoints = startingHealth - damageDone
-    if ( target.healthPoints <= 0) {
-        target.position = 100
-        setTarget(prevState => ({...prevState, [target.id]: target }))
-    }
 
-    // const targetElement = document.getElementById("square" + target.position)
-    const targetHealthBar = document.getElementById("health" + target.position)
-    // const attackerElement = document.getElementById("square" + this.position)
+        // VERY SIMPLIFIED ATTACK ANIMATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // const targetElement = document.getElementById("square" + target.position)
+        
+        // const attackerElement = document.getElementById("square" + this.position)
 
-    // VERY SIMPLIFIED ATTACK ANIMATION!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // setTimeout(() => {
+        let equippedType = ""
+        let attackerIsPlayer = true
+        switch (this.id) {
+            case "meleePlayer":
+                equippedType = "equippedWeapon"
+                break
+            case "magicPlayer":
+                equippedType = "equippedSpell"
+                break
+            case "healerPlayer":
+                equippedType = "equippedHeal"
+                break
+            default:
+                equippedType = ""
+                attackerIsPlayer = false
+        }
+
+        if (this[equippedType] !== null && attackerIsPlayer) {
+            targetImage.src = require('../assets/' + this[equippedType].name + '.png').default 
+        } else {
+            targetImage.src = require('../assets/' + this.type + '.png').default 
+        }
+
+
+        // setTimeout(() => {
         // targetElement.style.backgroundColor = "yellow"
-        targetElement.classList.toggle("attacked")
+        // targetElement.classList.toggle("attacked")
+        targetImage.classList.toggle("hidden")
         if (target.position <= 25) {
             targetHealthBar.value = startingHealth - damageDone
         }
@@ -59,10 +87,13 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     }, 300)
     setTimeout(() => {
         // targetElement.style.backgroundColor = "transparent"
-        targetElement.classList.toggle("attacked")
+        // targetElement.classList.toggle("attacked")
+        targetImage.classList.toggle("hidden")
         // attackerElement.style.backgroundColor = "transparent"
         // }, 501)
     }, 500)
+
+    // END - SIMPLIFIED ATTACK ANIMATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
     // MORE COMPLICATED ATTACK ANIMATION STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -103,6 +134,8 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     //     targetElement.classList.toggle(attackDirection)
     //     targetElement.classList.toggle("hidden")
     // }, 501)
+    //END -  MORE COMPLICATED ATTACK ANIMATION STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 }
 
 Character.prototype.addEffectToTarget = function (item, target) {

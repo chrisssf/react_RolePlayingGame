@@ -87,7 +87,7 @@ const GameScreen = () =>{
         let timeout3 = 0
 
         if (currentPhase === "enemyMovement") {
-            setTimeout(() => { //added this
+            setTimeout(() => { 
                 timeout = enemy1.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
                 setTimeout(() => {
                     timeout2 = enemy2.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
@@ -96,7 +96,7 @@ const GameScreen = () =>{
                         setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
                     }, (timeout2))
                 }, timeout)
-            }, 800) // and added this
+            }, 800) 
         }
         console.log("playerssssss", playerCharacters);
         console.log("currentPhase", currentPhase)

@@ -325,7 +325,7 @@ const right = () => {
                 {/* {displayImage()} */}
 
                 
-                <img src={require('../assets/' + 'orc' + '.png').default} id={squareNumber} alt={"image"}  className="attack-image hidden"></img> 
+                <img src={require('../assets/' + 'orc' + '.png').default} id={"attackImage" + squareNumber} alt={"image"}  className="attack-image hidden"></img> 
 
             </div>
             {/* {character && selectedCharacter && <Modal
