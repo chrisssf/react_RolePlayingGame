@@ -28,20 +28,22 @@ MeleePlayer.prototype.attack = function (enemy, setEnemyCharacters){
         const randomNumber = Math.floor(Math.random() * 100) + 1
         switch(this.equippedWeapon.type){
             case("sword"):
-                if(randomNumber <= 25) damageDone *= 2
+                if(randomNumber <= this.equippedWeapon.activationChance) damageDone *= 2
                 break
             case("axe"):
-                if(randomNumber <= 10) damageDone = startingHealth
+                // if(randomNumber <= 10) damageDone = startingHealth
                 // else if(randomNumber <= 100) addEffectToTarget("attack down", enemy, 2) // should be <= 20
-                else if(randomNumber <= 100) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 20
+                if(randomNumber <= this.equippedWeapon.activationChance) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 20
                 break
             case("club"):
                 // if(randomNumber <= 100) addEffectToTarget("stun", enemy, 1) // should be <= 25
-                if(randomNumber <= 100) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 25
+                if(randomNumber <= this.equippedWeapon.activationChance) Character.prototype.addEffectToTarget.call(this, this.equippedWeapon, enemy) // should be <= 25
                 break
             default:
                 console.log("no matching weapon");
         }
+        console.log("weapon chance", this.equippedWeapon.activationChance);
+        console.log("random chance", randomNumber);
     }
     // enemy.statusEffects.forEach(statusEffect => {
     //     if(statusEffect.effect === "armour down" ) damageDone *= 2

@@ -38,6 +38,10 @@ const EquipModal = ({
         const items = playerCharacters[selectedCharacter][itemType]
         const displayItemOptions = items.map(item => {
             let equippedStyle = false
+            let meleeType = ""
+            if (item.type === "axe") meleeType = "Dismember"
+            if (item.type === "sword") meleeType = "Pierce"
+            if (item.type === "club") meleeType = "Stun"
             if(playerCharacters[selectedCharacter]["equipped" + equipmentType] && playerCharacters[selectedCharacter]["equipped" + equipmentType].name === item.name) equippedStyle = true
             return (
                 <div className={equippedStyle ? "weapon-select-modal-weapon equippedStyle" : "weapon-select-modal-weapon"} onClick={() => handleEquipItem(item)}>
@@ -46,6 +50,8 @@ const EquipModal = ({
                     <p>{item.name}</p>
                     <img src={require('../assets/' + item.name + '.png').default} alt={item.name} className="weapon-select-modal-image"></img> 
                     { itemType === "weapons" && <p>Damage: {item.attackPower}</p>}
+                    { itemType === "weapons" && <p>{meleeType} Chance: {item.activationChance}%</p>}
+
                     { itemType === "spells" && <p>Damage: {item.spellPower}</p>}
                     { itemType === "spells" && <p>Effect: {item.effectName} with {item.activationChance}% chance for {item.duration} turns</p>}
                     {/* { itemType === "heals" && <p>Damage: {item.attackPower}</p>} */}
@@ -75,11 +81,17 @@ const EquipModal = ({
                     }
                 }}
                 >
-                <p>Change {equipmentType}</p>
+                <p><b><u>Change {equipmentType}</u></b></p>
+                {equipmentType === "Weapon" && <>
+                    <p>Each Weapon type has a chance to active a secondary effect...</p>
+                    <p><u>Swords</u> can <u>pierce</u> dealing <u>double damage</u></p>
+                    <p><u>Clubs</u> can <u>stun</u> for <u>1 turn</u></p>
+                    <p><u>Axes</u> can <u>dismember</u> applying <u>attack down</u> for 10 turns </p>
+                </>}
                 {playerCharacters[selectedCharacter]["equipped" + equipmentType] ? 
-                    <p>Currently Equipped {equipmentType} {playerCharacters[selectedCharacter]["equipped" + equipmentType].name}</p>
+                    <p><b>Currently Equipped {equipmentType} {playerCharacters[selectedCharacter]["equipped" + equipmentType].name}</b></p>
                 :
-                    <p>No {equipmentType} Currently Equipped</p>
+                    <p><b>No {equipmentType} Currently Equipped</b></p>
                 }
                 <div className="weapon-select-modal-weapons-container">
                     {displayItemsInventory()}

@@ -8,9 +8,10 @@ function MeleeWeapon(name, attackPower, type, effectName, activationChance){
     let defaultDuration = null
     switch (this.type) {
         case "axe":
-            const randomNumber = Math.floor(Math.random() * 4)
-            randomNumber === 0 ? defaultEffect = "instant kill" : defaultEffect = "attack down"
-            defaultActivationChance = 20
+            // const randomNumber = Math.floor(Math.random() * 4)
+            // randomNumber === 0 ? defaultEffect = "instant kill" : defaultEffect = "attack down"
+            defaultEffect = "attack down"
+            defaultActivationChance = 30
             defaultDuration = 10
             break
         case "club":
@@ -20,7 +21,7 @@ function MeleeWeapon(name, attackPower, type, effectName, activationChance){
             break
         case "sword":
             defaultEffect = "pierce"
-            defaultActivationChance = 25
+            defaultActivationChance = 20
             defaultDuration = 0
             break
         default:
