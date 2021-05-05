@@ -47,7 +47,7 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
             setTarget(prevState => ({...prevState, [target.id]: target }))
         }
 
-        // VERY SIMPLIFIED ATTACK ANIMATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // SIMPLIFIED ATTACK ANIMATION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         // const targetElement = document.getElementById("square" + target.position)
         
         // const attackerElement = document.getElementById("square" + this.position)

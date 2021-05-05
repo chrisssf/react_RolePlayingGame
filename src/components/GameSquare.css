@@ -75,13 +75,20 @@
  .health-bar::-webkit-progress-value{
     border-radius: 5px 0px 0px 5px;
     background:red;
- }
+}
 
 .health-bar::-moz-progress-bar {
     background-color: red;
     border: 0.5px solid black;
     border-radius: 5px;
-  }
+}
+
+.shield-background {
+    position: absolute;
+    bottom: 0px;
+    left: 2px;
+    height: 90%;
+}
 
 .attacked {
     background-color: yellow;
@@ -92,10 +99,13 @@
   }
 
 .attack-image {
+    /* position: absolute; */
+    bottom: -10px;
     height: 90%;
+    max-width: 100%;
     background-color: yellow;
 
-    height: 80%;
+    /* height: 80%; */
     position: relative;
     z-index: 10
 }

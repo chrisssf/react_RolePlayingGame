@@ -51,7 +51,7 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("ORCenemy1", 30, 100, 10, "enemy1", "orc")
+    const enemy1 = new Enemy("ORCenemy1", 10, 100, 10, "enemy1", "orc")
     const enemy2 = new Enemy("ORCenemy2", 30, 100, 15, "enemy2", "orc")
     const enemy3 = new Enemy("ORCenemy3", 30, 100, 20, "enemy3", "orc")
 

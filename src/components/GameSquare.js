@@ -303,6 +303,7 @@ const right = () => {
                 {image ? 
                     <>
                         <progress id={"health" + squareNumber} value={character.healthPoints} max={character.maxHealthPoints} className="health-bar"></progress>
+                        {character.statusEffects.find(x => x.effect === "shield") !== undefined && <img src={require('../assets/' + 'shield' + '.png').default} alt="shielded" className="shield-background" ></img>}
                         <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
                         {/* <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden"></img>  */}
                         
@@ -325,7 +326,9 @@ const right = () => {
                 {/* {displayImage()} */}
 
                 
-                <img src={require('../assets/' + 'orc' + '.png').default} id={"attackImage" + squareNumber} alt={"image"}  className="attack-image hidden"></img> 
+                {/* <img src={require('../assets/' + 'orc' + '.png').default} id={"attackImage" + squareNumber} alt={"image"}  className="attack-image hidden"></img>  */}
+                {/* starts with very small image as placeholder...... */}
+                <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" id={"attackImage" + squareNumber} alt={"image"}  className="attack-image hidden"></img>
 
             </div>
             {/* {character && selectedCharacter && <Modal

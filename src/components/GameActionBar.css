@@ -179,11 +179,11 @@
     /* left: 5px; */
   }
 
-  .attack-image {
+  /* .attack-image {
     height: 80%;
     position: relative;
     z-index: 10
-  }
+  } */
 
   @keyframes rightAttackAnimation {
     0%{ left: -100px }
