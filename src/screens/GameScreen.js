@@ -20,9 +20,9 @@ const boardHeight = 5
 
 const GameScreen = () =>{
 
-    const ken = new MeleePlayer("ken", 30, 100, 11, "knight")
-    const matt = new MagicPlayer("matt", 20, 100, 6, "mage")
-    const peter = new HealerPlayer("peter", 10, 100, 16, "priest")
+    const ken = new MeleePlayer("ken", 35, 100, 11, "knight")
+    const matt = new MagicPlayer("matt", 25, 100, 6, "mage")
+    const peter = new HealerPlayer("peter", 15, 100, 16, "priest")
     const sword = new MeleeWeapon("sword-5", 5, "sword")
     const club = new MeleeWeapon("club-6", 6, "club")
     const axe = new MeleeWeapon("axe-4", 4, "axe")
@@ -51,9 +51,9 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
-    const enemy1 = new Enemy("ORCenemy1", 10, 100, 10, "enemy1", "orc")
-    const enemy2 = new Enemy("ORCenemy2", 10, 100, 15, "enemy2", "orc")
-    const enemy3 = new Enemy("ORCenemy3", 10, 100, 20, "enemy3", "orc")
+    const enemy1 = new Enemy("ORCenemy1", 30, 100, 10, "enemy1", "orc")
+    const enemy2 = new Enemy("ORCenemy2", 30, 100, 15, "enemy2", "orc")
+    const enemy3 = new Enemy("ORCenemy3", 30, 100, 20, "enemy3", "orc")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -87,21 +87,25 @@ const GameScreen = () =>{
         let timeout3 = 0
 
         if (currentPhase === "enemyMovement") {
-            timeout = enemy1.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
-            setTimeout(() => {
-                timeout2 = enemy2.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
+            setTimeout(() => { //added this
+                timeout = enemy1.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
                 setTimeout(() => {
-                    timeout3 = enemy3.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
-                    setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
-                }, (timeout2))
-            }, timeout)
+                    timeout2 = enemy2.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
+                    setTimeout(() => {
+                        timeout3 = enemy3.takeTurn(playerCharacters, setPlayerCharacters, enemyCharacters, setEnemyCharacters)
+                        setTimeout(() => setCurrentPhase("characterTurnSelect"), (timeout3 + 500))
+                    }, (timeout2))
+                }, timeout)
+            }, 800) // and added this
         }
         console.log("playerssssss", playerCharacters);
         console.log("currentPhase", currentPhase)
 
         if ( playerCharacters.meleePlayer.healthPoints <= 0 && playerCharacters.magicPlayer.healthPoints <= 0 && playerCharacters.healerPlayer.healthPoints <= 0 ){
+            alert("GAME OVER!!!")
             console.log("GAME OVER!!!")
         } else if ( enemyCharacters.enemy1.healthPoints <= 0 && enemyCharacters.enemy2.healthPoints <= 0 && enemyCharacters.enemy3.healthPoints <= 0 ){
+            alert("YOU WIN!!!")
             console.log("YOU WIN!!!")
         }
     }, [currentPhase])

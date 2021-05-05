@@ -153,7 +153,7 @@ Enemy.prototype.takeTurn = function (playerCharacters, setPlayerCharacters, enem
             }
         
         updateStatusEffects(this.id, enemyCharacters, setEnemyCharacters)   //here!
-        return moves.length * 1000
+        return moves.length * 1000 + 1000
     }
 }
 

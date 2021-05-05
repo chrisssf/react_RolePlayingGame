@@ -126,8 +126,10 @@ const GameActionBar = ( {
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
             />}
-
-            {/* testing  */}
+            
+            {/* testing!!!!!!!!!!!!!!!!!!!!!!!!!!  */}
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/>
+            <p>IGNORE THIS..... IT'S JUST TESTING</p>
             <div id="testBox" className="box transform right" onClick={() => test()}></div>
             <div className="box" ref={testBox} onClick={() => test()}></div>
             {/* <div className="box transform" ref={testBox} onClick={() => test()}></div> */}
@@ -146,7 +148,7 @@ const GameActionBar = ( {
                 </div> */}
                 <img src={background} alt={"image"}  className="test-background-image" onClick={() => test()}></img> 
                 <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden" onClick={() => test()}></img> 
-
+                <progress id="health" value="40" max="100"></progress>
             </div>
             {/* end of testing  */}
 

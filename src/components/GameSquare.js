@@ -302,6 +302,7 @@ const right = () => {
             <div id={"square" + squareNumber} onClick={() => handleClickSquare()} className={width > 500 ? `bigger-square-container ${squareStyling}` : `smaller-square-container ${squareStyling}` }>
                 {image ? 
                     <>
+                        <progress id={"health" + squareNumber} value={character.healthPoints} max={character.maxHealthPoints} className="health-bar"></progress>
                         <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
                         {/* <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden"></img>  */}
                         
@@ -313,7 +314,9 @@ const right = () => {
                         {/* <img src={require('../assets/' + item.name + '.png').default} alt={item.name} className="weapon-select-modal-image"></img>  */}
                     </>
                 : 
-                    <p>{squareNumber}</p>
+                    // THIS IS HELPFUL DURING DEVELOPMENT!!!!!!!!!!!!!!!!!!
+                    // <p>{squareNumber}</p> 
+                    <p></p>
 
                 }
 

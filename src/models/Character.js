@@ -13,15 +13,53 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     console.log("THIS", this);
 
     const targetElement = document.getElementById("square" + target.position)
+    setTimeout(() => {
+
+    const startingHealth = target.healthPoints
+    // let newHealth = 0
+    // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage
+    // target.healthPoints = newHealth
+    console.log("THIS", this);
+    let damageDone = 0
+    modifiedDamage === 0 ? damageDone = this.attackPoints : damageDone = modifiedDamage
+    target.statusEffects.forEach(statusEffect => {
+        if(statusEffect.effect === "armour down" ) damageDone *= 2
+        if(statusEffect.effect === "shield" ) {
+            const damageAfterShield = statusEffect.duration - damageDone
+            if (damageAfterShield > 0 ) {
+                statusEffect.duration = damageAfterShield
+                damageDone = 0
+            }
+            else {
+                damageDone = 0 - damageAfterShield
+                const statusEffectsWithoutShield = target.statusEffects.filter(filterEffect => filterEffect.effect !== "shield")
+                target.statusEffects = statusEffectsWithoutShield
+                setTarget(prevState => ({...prevState, [target.id]: target }))
+            }
+        }
+    })
+    target.healthPoints = startingHealth - damageDone
+    if ( target.healthPoints <= 0) {
+        target.position = 100
+        setTarget(prevState => ({...prevState, [target.id]: target }))
+    }
+
+    // const targetElement = document.getElementById("square" + target.position)
+    const targetHealthBar = document.getElementById("health" + target.position)
     // const attackerElement = document.getElementById("square" + this.position)
 
     // VERY SIMPLIFIED ATTACK ANIMATION!!!!!!!!!!!!!!!!!!!!!!!!!!
-    setTimeout(() => {
-        targetElement.style.backgroundColor = "yellow"
+    // setTimeout(() => {
+        // targetElement.style.backgroundColor = "yellow"
+        targetElement.classList.toggle("attacked")
+        if (target.position <= 25) {
+            targetHealthBar.value = startingHealth - damageDone
+        }
         // attackerElement.style.backgroundColor = "red"
     }, 300)
     setTimeout(() => {
-        targetElement.style.backgroundColor = "transparent"
+        // targetElement.style.backgroundColor = "transparent"
+        targetElement.classList.toggle("attacked")
         // attackerElement.style.backgroundColor = "transparent"
         // }, 501)
     }, 500)
@@ -65,36 +103,6 @@ Character.prototype.attack = function (target, setTarget, modifiedDamage = 0){
     //     targetElement.classList.toggle(attackDirection)
     //     targetElement.classList.toggle("hidden")
     // }, 501)
-
-
-    const startingHealth = target.healthPoints
-    // let newHealth = 0
-    // modifiedDamage === 0 ? newHealth = startingHealth - this.attackPoints : newHealth = startingHealth - modifiedDamage
-    // target.healthPoints = newHealth
-    console.log("THIS", this);
-    let damageDone = 0
-    modifiedDamage === 0 ? damageDone = this.attackPoints : damageDone = modifiedDamage
-    target.statusEffects.forEach(statusEffect => {
-        if(statusEffect.effect === "armour down" ) damageDone *= 2
-        if(statusEffect.effect === "shield" ) {
-            const damageAfterShield = statusEffect.duration - damageDone
-            if (damageAfterShield > 0 ) {
-                statusEffect.duration = damageAfterShield
-                damageDone = 0
-            }
-            else {
-                damageDone = 0 - damageAfterShield
-                const statusEffectsWithoutShield = target.statusEffects.filter(filterEffect => filterEffect.effect !== "shield")
-                target.statusEffects = statusEffectsWithoutShield
-                setTarget(prevState => ({...prevState, [target.id]: target }))
-            }
-        }
-    })
-    target.healthPoints = startingHealth - damageDone
-    if ( target.healthPoints <= 0) {
-        target.position = 100
-        setTarget(prevState => ({...prevState, [target.id]: target }))
-    }
 }
 
 Character.prototype.addEffectToTarget = function (item, target) {

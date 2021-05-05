@@ -3,13 +3,11 @@
     width: 85px;
     height: 85px;
     position: relative;
-
-
 }
 
 .smaller-square-container {
     box-sizing: border-box;
-    /* border: 1px solid lightgray; */
+    border: 1px solid lightgray;
     width: 18vw;
     height: 18vw;
     position: relative;
@@ -45,6 +43,48 @@
     top: 8px;
     left: 5px;
     /* left: 50px */
+}
+
+.health-bar {
+    width: 70%;
+    height: 8px;
+
+    position: absolute;
+    top: 1px;
+    left: 0px;
+    right: 0px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /* background: transparent; */
+    background-color: #eee;
+    border: none; /* Needed for Firefox */
+    border-radius: 5px;
+    color: #eee; /* For IE10 */
+    -webkit-appearance: none; /* Needed for WebKit/Blink */
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+.health-bar::-webkit-progress-bar{
+    background-color: #eee;
+    border: 0.5px solid black;
+    border-radius: 5px;
+}
+ .health-bar::-webkit-progress-value{
+    border-radius: 5px 0px 0px 5px;
+    background:red;
+ }
+
+.health-bar::-moz-progress-bar {
+    background-color: red;
+    border: 0.5px solid black;
+    border-radius: 5px;
+  }
+
+.attacked {
+    background-color: yellow;
 }
 
 .blah {
