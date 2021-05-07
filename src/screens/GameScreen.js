@@ -154,7 +154,7 @@ const GameScreen = () =>{
     }
 
     const handleImageClick = (character) => {
-        if (currentPhase !== "playerAttack") {
+        if(!attackableSquares.includes(character.position)){
             setModalIsOpen(true)
             setModalCharacter(character)
         }

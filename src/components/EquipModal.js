@@ -49,10 +49,10 @@ const EquipModal = ({
                     {/* <img src={WeaponImages[weapon.name].default} alt='sword' className="weapon-select-modal-image"></img>  */}
                     <p>{item.name}</p>
                     <img src={require('../assets/' + item.name + '.png').default} alt={item.name} className="weapon-select-modal-image"></img> 
-                    { itemType === "weapons" && <p>Damage: {item.attackPower}</p>}
+                    { itemType === "weapons" && <p>Damage: +{item.attackPower}</p>}
                     { itemType === "weapons" && <p>{meleeType} Chance: {item.activationChance}%</p>}
 
-                    { itemType === "spells" && <p>Damage: {item.spellPower}</p>}
+                    { itemType === "spells" && <p>Damage: +{item.spellPower}</p>}
                     { itemType === "spells" && <p>Effect: {item.effectName} with {item.activationChance}% chance for {item.duration} turns</p>}
                     {/* { itemType === "heals" && <p>Damage: {item.attackPower}</p>} */}
                     {/* <button onClick={() => handleEquipItem(item)}>Equip</button> */}
@@ -81,13 +81,13 @@ const EquipModal = ({
                     }
                 }}
                 >
-                <p><b><u>Change {equipmentType}</u></b></p>
-                {equipmentType === "Weapon" && <>
-                    <p>Each Weapon type has a chance to active a secondary effect...</p>
+                <h2>Change {equipmentType}</h2>
+                {equipmentType === "Weapon" && <div className="info-box">
+                    <p>Each Weapon type has a chance to activate a secondary effect...</p>
                     <p><u>Swords</u> can <u>pierce</u> dealing <u>double damage</u></p>
                     <p><u>Clubs</u> can <u>stun</u> for <u>1 turn</u></p>
                     <p><u>Axes</u> can <u>dismember</u> applying <u>attack down</u> for 10 turns </p>
-                </>}
+                </div>}
                 {playerCharacters[selectedCharacter]["equipped" + equipmentType] ? 
                     <p><b>Currently Equipped {equipmentType} {playerCharacters[selectedCharacter]["equipped" + equipmentType].name}</b></p>
                 :

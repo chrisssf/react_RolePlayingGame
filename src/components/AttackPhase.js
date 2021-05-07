@@ -23,6 +23,12 @@ const AttackPhase = ({
     // const [ weaponChangeModalIsOpen, setWeaponChangeModalIsOpen ] = useState(false)
     const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
 
+    let equipType = ""
+    if (selectedCharacter === "meleePlayer") equipType = "Weapon"
+    else if (selectedCharacter === "magicPlayer") equipType = "Spell"
+    else if (selectedCharacter === "healerPlayer") equipType = "Heal"
+
+
     // const [ equippedWeapon, setEquippedWeapon ] = useState(playerCharacters[selectedCharacter].equippedWeapon)
 
     const handleFinishedCharacterAttack = () => {
@@ -70,15 +76,16 @@ const AttackPhase = ({
 
     return (
         <div>
-            <p>Attack Phase</p>
-                <div>
+            <p className="phase-text">Attack Phase</p>
+                <div className="phase-content">
                     <p>Currently Attacking with {playerCharacters[selectedCharacter].type}</p> 
                     <button onClick={() => handleFinishedCharacterAttack()}>End {playerCharacters[selectedCharacter].type}'s turn without attacking </button>
-                    {selectedCharacter === "meleePlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Weapon</button>}
+                    {/* {selectedCharacter === "meleePlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Weapon</button>}
                     {selectedCharacter === "magicPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Spell</button>}
-                    {selectedCharacter === "healerPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Heal</button>}
-                    <button onClick={() => handleCancel()}>Back</button>
-                    <p>After finishing movement for this character it cannot be moved again until next movement phase, canceling doesn't use characters movement for this turn</p>
+                    {selectedCharacter === "healerPlayer" && <button onClick={() => handleChangeEquipped()}>Change Equipped Heal</button>} */}
+                    <button onClick={() => handleChangeEquipped()}>Change Equipped {equipType}</button>
+                    <button onClick={() => handleCancel()}>Back To Movement Phase</button>
+                    <p>You can <b>Change Equipped {equipType}</b>, <b>click a highlighted</b> enemy to attack, <b>End Turn Without attacking</b> or go <b>Back To Movement Phase</b></p>
                 </div>
             {console.log("equipmentType111111", selectedCharacter)}
 

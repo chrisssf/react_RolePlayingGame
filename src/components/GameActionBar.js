@@ -126,14 +126,32 @@ const GameActionBar = ( {
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
             />}
-            
+            <div className="info-box main-info-box">
+                <h2>Basic Info</h2>
+                <p>Click a character at any time to get its current status</p>
+                <p>All player's characters act first and then all enemy characters will take their turn</p>
+                <p>Select a character to control ={'>'} Move them ={'>'} change equipment/spells if necessary ={'>'} then attack if in range of an enemy</p>
+                <p>Repeat until all characters have completed their turn</p>
+                <p>Win by killing all enemies before they kill you!</p>
+
+                <h3>Movement</h3>
+                <p>All player characters can move 2 squares non-diagonally</p> 
+                <p>All enemy characters can move 3 squares non-diagonally</p> 
+                <p>All characters can move through other characters but cannot finish on the same square as another character</p> 
+                
+                <h3>Attack</h3>
+                <p>All player characters can attack a single target within 2 squares either straight up, down, left or right</p>
+                <p>All enemy characters can attack a single target in an adjacent square either straight up, down, left or right</p>
+            </div>
             {/* testing!!!!!!!!!!!!!!!!!!!!!!!!!!  */}
             <br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <p>IGNORE THIS..... IT'S JUST TESTING</p>
-            <div id="testBox" className="box transform right" onClick={() => test()}></div>
-            <div className="box" ref={testBox} onClick={() => test()}></div>
+            {/* <div id="testBox" className="box transform right" onClick={() => test()}></div>
+            <div className="box" ref={testBox} onClick={() => test()}></div> */}
             {/* <div className="box transform" ref={testBox} onClick={() => test()}></div> */}
-            <input type="button" id="button" value="Click Me" onClick={() => test()}></input>
+            {/* <input type="button" id="button" value="Click Me" onClick={() => test()}></input> */}
+
+
             <input type="button" id="button" value="UP" onClick={() => up()}></input>
             <input type="button" id="button" value="DOWN" onClick={() => down()}></input>
             <input type="button" id="button" value="LEFT" onClick={() => left()}></input>
@@ -148,7 +166,6 @@ const GameActionBar = ( {
                 </div> */}
                 <img src={background} alt={"image"}  className="test-background-image" onClick={() => test()}></img> 
                 <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden" onClick={() => test()}></img> 
-                <progress id="health" value="40" max="100"></progress>
             </div>
             {/* end of testing  */}
 
