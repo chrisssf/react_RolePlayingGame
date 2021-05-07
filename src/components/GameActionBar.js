@@ -143,6 +143,17 @@ const GameActionBar = ( {
                 <p>All player characters can attack a single target within 2 squares either straight up, down, left or right</p>
                 <p>All enemy characters can attack a single target in an adjacent square either straight up, down, left or right</p>
             </div>
+            <div className="bibliography-container">
+                <p><b>Bibliography</b></p>
+                <div className="bibliography-item">
+                    <img src={require('../assets/armour break.png').default} alt="armour break" className="bibliography-image"></img> 
+                    <p>Shield broken by johartcamp from the Noun Project</p>
+                </div>
+                <div className="bibliography-item">
+                    <img src={require('../assets/attack break.png').default} alt="attack break" className="bibliography-image"></img> 
+                    <p>Sword Broken by João Filipe F. Rocha from the Noun Project</p>
+                </div>
+            </div>
             {/* testing!!!!!!!!!!!!!!!!!!!!!!!!!!  */}
             <br/><br/><br/><br/><br/><br/><br/><br/><br/>
             <p>IGNORE THIS..... IT'S JUST TESTING</p>

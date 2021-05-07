@@ -20,3 +20,22 @@ h2 {
 h3 {
   margin: 20px 5px 10px 5px;
 }
+
+.bibliography-container {
+  margin-top: 100px;
+  text-align: center;
+}
+
+.bibliography-item {
+  display: flex;
+  justify-content: center;
+}
+
+.bibliography-item img {
+  /* margin-right: 10px; */
+  display: block;
+  width: 30px;
+}
+
+
+.content p {margin: 0;}
