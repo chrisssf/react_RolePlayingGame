@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+# React RPG
+
+React RPG is a turn based stategy game where the player must contol three different characters to defeat three AI controlled enemy characters. Players can move their characters around the battlefield strategically and use a number of different character specific weapons and spells to win the battle. 
+
+This game is still in development but is currently playable, all features described are fully functional however additional features and styling are still to be added.
+
+### Link
+
+Play React RPG here https://react-rpg-431df.web.app/
+
+
+## Technology
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+App made using React with functional components and Hooks.
 
-In the project directory, you can run:
+Hosted using Firebase Hosting.
 
-### `npm start`
+## Still To Add
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- Use Firebase Authentication to log in and Firebase Database to store characters and progress
+- Upgrades for characters after winning a battle
+- Multiple levels with many battles and a boss fight per level
+- More Player and Enemy Characters
+- More Weapons/spells
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Screenshots
 
-### `npm test`
+The Game is not finished and there are many areas which have not been styled or optimised yet. 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+<img width="400" src="https://user-images.githubusercontent.com/56926112/117453234-9ce3b780-af3c-11eb-8ab6-bc73b8d789c8.png"> <img width="400" src="https://user-images.githubusercontent.com/56926112/117452736-09aa8200-af3c-11eb-91b0-c05fc94862d3.png">
 
-### `npm run build`
+<img width="400" src="https://user-images.githubusercontent.com/56926112/117452815-2050d900-af3c-11eb-8abc-bee7a5a24b47.png"> <img width="400" src="https://user-images.githubusercontent.com/56926112/117452851-2777e700-af3c-11eb-9897-865ffe654244.png">
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<img width="400" src="https://user-images.githubusercontent.com/56926112/117452868-2d6dc800-af3c-11eb-960e-615f72665f9b.png"> <img width="400" src="https://user-images.githubusercontent.com/56926112/117453929-6f4b3e00-af3d-11eb-9627-0a072c388c9b.png">
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Installation
 
-### `npm run eject`
+To get app running on your machine locally, follow the steps below.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Clone
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+> Clone this repo to your local machine 
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Setup
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+> install packages
 
-## Learn More
+```shell
+$ npm install
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+> Run the app in the development mode. 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```shell
+$ npm start
+```
 
-### Code Splitting
+> Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
