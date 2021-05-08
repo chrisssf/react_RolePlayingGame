@@ -205,13 +205,13 @@ const getPossibleAttackPaths = (attackablePositions, currentPosition) => {
         if ( rowDifference < 0 ) movementPath = [...Array(Math.abs(rowDifference)).fill(5)]
         else if(rowDifference > 0) movementPath = [...Array(Math.abs(rowDifference)).fill(-5)]
 
-        console.log("movementPath1", movementPath)
+        console.log("movementPathVertical", movementPath)
 
         const columnDifference = adjustedEnemyPosition - attackablePosition
         if ( columnDifference < 0 ) movementPath = [...movementPath, ...Array(Math.abs(columnDifference)).fill(1)]
         else if(columnDifference > 0) movementPath = [...movementPath, ...Array(Math.abs(columnDifference)).fill(-1)]
         console.log("columnDifference", columnDifference)
-        console.log("movementPath2", movementPath)
+        console.log("movementPathFull", movementPath)
 
         return movementPath
     })

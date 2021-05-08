@@ -51,6 +51,8 @@ const GameScreen = () =>{
         healerPlayer: peter
     }
 
+    // HAVE AN ARRAY OF MANY PRE-MADE ENEMIES, WHEN STARTING A NEW ROOM, PICK 3 
+    // TO RANDOMLY PUT IN BY SETTING THEIR POSITIONS
     const enemy1 = new Enemy("ORCenemy1", 35, 100, 10, "enemy1", "orc")
     const enemy2 = new Enemy("ORCenemy2", 35, 100, 15, "enemy2", "orc")
     const enemy3 = new Enemy("ORCenemy3", 35, 100, 20, "enemy3", "orc")

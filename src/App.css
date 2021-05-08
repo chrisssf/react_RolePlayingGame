@@ -21,6 +21,85 @@ h3 {
   margin: 20px 5px 10px 5px;
 }
 
+.full-map-container {
+  width: 90vw;
+  position: relative;
+  border: 1px solid black;
+}
+
+.full-map-image {
+
+  width: 100%;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+
+  /* width: 300px; */
+  /* height: 600px; */
+  /* object-fit: cover; */
+
+  /* clip-path: inset(35% 50% 0% 0%); */
+
+}
+
+.map-cover-container {
+  width: 90vw;
+  height: 90vw;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+
+
+  display: grid;
+  grid-template-columns: auto auto auto;
+  /* background-color: #2196F3; */
+}
+
+#map-cover-item1 {
+  background-color: black;
+}
+
+#map-cover-item2 {
+  background-color: black;
+}
+
+#map-cover-item3 {
+  background-color: black;
+}
+
+/* #map-cover-item4 {
+  background-color: black;
+} */
+
+#map-cover-item5 {
+  background-color: black;
+}
+#map-cover-item6 {
+  background-color: black;
+}
+
+#map-cover-item7 {
+  background-color: black;
+}
+#map-cover-item8 {
+  background-color: black;
+}
+
+#map-cover-item9 {
+  background-color: black;
+}
+
+.map-cover-item {
+  /* background-color: rgba(255, 255, 255, 0.8); */
+  font-size: 30px;
+  text-align: center;
+  width: 100%;
+
+  /* border: 1px solid black; */
+}
+
 .bibliography-container {
   margin-top: 100px;
   text-align: center;
@@ -36,6 +115,5 @@ h3 {
   display: block;
   width: 30px;
 }
-
 
 .content p {margin: 0;}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './GameActionBar.css'
 import CharacterTurnSelect from './CharacterTurnSelect.js'
 import MovementPhase from './MovementPhase.js'
@@ -84,6 +84,21 @@ const GameActionBar = ( {
         if(selectedCharacter) startingPosition.current = playerCharacters[selectedCharacter]["position"]
     }, [selectedCharacter])
 
+
+
+    // MAP STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    const [ currentMapArea, setCurrentMapArea ] = useState(4)
+    // everytime currentArea changes, need to check of completed, if not => populate with enemies
+    const [ discoveredMapAreas, setDiscoveredMapAreas ] = useState([4])
+    // if pushing new areas the last index will always be uncompleted unless .length = 9 and token is available
+    // so if currentArea === last discovered index => need to populate with enemies and an upgrade
+    const [ areaUnlockTokenAvailable, setAreaUnlockTokenAvailable ] = useState(false)
+
+    const handleMapClick = (clickedArea) => {
+        console.log("clickedArea", clickedArea);
+    }
+    // END OF MAP STUFF!!!!!!!!!!!!!!!!!!!!!
+
     return (
         <div>
             <p>GameActionBar</p>
@@ -126,6 +141,7 @@ const GameActionBar = ( {
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
             />}
+
             <div className="info-box main-info-box">
                 <h2>Basic Info</h2>
                 <p>Click a character at any time to get its current status</p>
@@ -178,6 +194,21 @@ const GameActionBar = ( {
                 <img src={background} alt={"image"}  className="test-background-image" onClick={() => test()}></img> 
                 <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden" onClick={() => test()}></img> 
             </div>
+            <div className="full-map-container">
+                <div className="map-cover-container">
+                    <div className="map-cover-item" id="map-cover-item1" onClick={() => handleMapClick(1)}></div>
+                    <div className="map-cover-item" id="map-cover-item2" onClick={() => handleMapClick(2)}></div>
+                    <div className="map-cover-item" id="map-cover-item3" onClick={() => handleMapClick(3)}></div>  
+                    <div className="map-cover-item" id="map-cover-item4" onClick={() => handleMapClick(4)}></div>
+                    <div className="map-cover-item" id="map-cover-item5" onClick={() => handleMapClick(5)}></div>
+                    <div className="map-cover-item" id="map-cover-item6" onClick={() => handleMapClick(6)}></div>  
+                    <div className="map-cover-item" id="map-cover-item7" onClick={() => handleMapClick(7)}></div>
+                    <div className="map-cover-item" id="map-cover-item8" onClick={() => handleMapClick(8)}></div>
+                    <div className="map-cover-item" id="map-cover-item9" onClick={() => handleMapClick(9)}></div>  
+                </div>
+                <img src={require('../assets/full desert.jpg').default} alt="full map" className="full-map-image"></img> 
+            </div>
+
             {/* end of testing  */}
 
         </div>
