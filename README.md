@@ -1,6 +1,6 @@
 # React RPG
 
-React RPG is a turn based stategy game where the player must contol three different characters to defeat three AI controlled enemy characters. Players can move their characters around the battlefield strategically and use a number of different character specific weapons and spells to win the battle. 
+React RPG is a turn based strategy game where the player must control three different characters to defeat three AI controlled enemy characters. Players can move their characters around the battlefield strategically and use a number of different character specific weapons and spells to win the battle. 
 
 This game is still in development but is currently playable, all features described are fully functional however additional features and styling are still to be added.
 
