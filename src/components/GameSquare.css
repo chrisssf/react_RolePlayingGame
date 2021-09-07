@@ -98,16 +98,26 @@
     left: 30px
   }
 
+.chest-image {
+    height: 90%;
+    margin-top: 5px;
+    position: relative;
+}
+
 .attack-image {
-    /* position: absolute; */
+    position: relative;
     bottom: -10px;
     height: 90%;
     max-width: 100%;
     background-color: yellow;
+    /* z-index: 3; */
 
     /* height: 80%; */
-    position: relative;
-    z-index: 10
+
+    /* position: absolute; */
+    /* left: 0px; */
+    /* margin-left: auto;
+    margin-right: auto; */
 }
 
 .attack-modal-container {

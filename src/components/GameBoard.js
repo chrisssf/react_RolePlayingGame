@@ -18,7 +18,14 @@ const GameBoard = ({
     usedCharacters,
     setUsedCharacters,
     setAttackableSquares,
-    displayStatusEffects }) => {
+    displayStatusEffects,
+    allChestStatus,
+    setAllChestStatus,
+    currentMapArea,
+    weaponsCollection,
+    spellsCollection,
+    healsCollection,
+    handleOpenMap }) => {
 
 
     const myRefs = useRef([])
@@ -28,7 +35,7 @@ const GameBoard = ({
         const gameSquares = []
         for ( let i = 1; i < 26; i++ ) {
             gameSquares.push(<GameSquare 
-                ref={() => (myRefs.current[i] = "bob")}
+                ref={() => (myRefs.current[i] = "bob")} // TAKE THIS OUT
 
                 key={i} 
                 squareNumber={i} 
@@ -47,6 +54,13 @@ const GameBoard = ({
                 setUsedCharacters={setUsedCharacters}
                 setAttackableSquares={setAttackableSquares}
                 displayStatusEffects={displayStatusEffects}
+                allChestStatus={allChestStatus}
+                setAllChestStatus={setAllChestStatus}
+                currentMapArea={currentMapArea}
+                weaponsCollection={weaponsCollection}
+                spellsCollection={spellsCollection}
+                healsCollection={healsCollection}
+                handleOpenMap={handleOpenMap}
             />)
         }   
         return gameSquares  

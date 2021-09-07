@@ -1,6 +1,8 @@
 import React from 'react';
 // import ReactDOM from 'react-dom'    ----->DONT KNOW IF THIS IS NEEDED!!!
 import Modal from 'react-modal'
+// TESTING 
+import EquipModal from './EquipModal.js'
 
 const CharacterInfoModal = ({
     modalIsOpen,
@@ -10,12 +12,17 @@ const CharacterInfoModal = ({
     character,
     playerCharacters,
     selectedCharacter,
-    handleModalAttack }) => {
+    handleModalAttack,
+
+    equipModalIsOpen,
+    setEquipModalIsOpen,
+    setSelectedCharacter }) => {
 
     const clickedCharacter = modalCharacter || character 
 
     const isAttackModal = () => {
         let sectionToDisplay = null
+        console.log("character1", character)
         if ( character ) {
             sectionToDisplay = <> 
                 {selectedCharacter === "healerPlayer" && playerCharacters["healerPlayer"]["equippedHeal"] !== null ? <p>Heal {character.name} with {playerCharacters["healerPlayer"]["equippedHeal"].name}</p> : 
@@ -36,7 +43,9 @@ const CharacterInfoModal = ({
         // console.log("character", selectedCharacter);
     }
 
+    // TESTING added eqip modal and fragment below
     return (
+        <>
         <Modal
             className="modal-container"
             appElement={document.getElementById('root')}
@@ -47,7 +56,7 @@ const CharacterInfoModal = ({
                 }
             }}
         >   
-
+            {console.log("character", character)}
             {/* <button className="modal-close-button" onClick={() => setModalIsOpen(false)}>
                 Close
             </button> */}
@@ -58,7 +67,15 @@ const CharacterInfoModal = ({
             <p>Health: {clickedCharacter.healthPoints} / {clickedCharacter.maxHealthPoints}</p>
             {/* <p>status: {modalCharacter.statusEffects[0] ? modalCharacter.statusEffects[0].effect : ""}</p> */}
             {displayStatusEffects(clickedCharacter)}
+            <button className="modal-close-button" onClick={() => {
+                // setSelectedCharacter(modalCharacter)
+                setEquipModalIsOpen(true)
+            }}>
+                meh
+            </button>
         </Modal>
+        <EquipModal />
+        </>
     )
 }
 

@@ -18,10 +18,12 @@ const AttackPhase = ({
     setEnemyMovementPhase,
     startingPosition,
     usedCharacters,
-    setUsedCharacters }) =>{
+    setUsedCharacters,
+    equipModalIsOpen,
+    setEquipModalIsOpen }) =>{
 
     // const [ weaponChangeModalIsOpen, setWeaponChangeModalIsOpen ] = useState(false)
-    const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
+    // const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
 
     let equipType = ""
     if (selectedCharacter === "meleePlayer") equipType = "Weapon"

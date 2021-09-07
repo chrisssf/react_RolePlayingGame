@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react'
 // import ReactDOM from 'react-dom'
 // import Modal from 'react-modal'
+import EquipModal from '../components/EquipModal.js' // REMOVE!!!!!!!!!!!
+import MapModal from '../components/MapModal.js'
+
 
 import './GameScreen.css'
 import GameBoard from '../components/GameBoard.js'
@@ -27,8 +30,8 @@ const GameScreen = () =>{
     const club = new MeleeWeapon("club-6", 6, "club")
     const axe = new MeleeWeapon("axe-4", 4, "axe")
     const fireball = new Spell("fireball", 3, "burn", 10, 3) // no logic for burn yet
-    const armourBreak = new Spell("armour break", 0, "armour down", 100, 3)
-    const attackBreak = new Spell("attack break", 0, "attack down", 100, 3) // no logic for attack down yet
+    const armourBreak = new Spell("armour break", 0, "armour down", 80, 3)
+    const attackBreak = new Spell("attack break", 0, "attack down", 80, 3)
     const freeze = new Spell("freeze", 0, "frozen", 70 , 1)
     const heal = new Heal("heal", 10)
     const shield = new Heal("shield", 0, "shield", 20)
@@ -44,6 +47,19 @@ const GameScreen = () =>{
     matt.equippedSpell = fireball
     // peter.equippedHeal = heal
     // ken.equippedWeapon = sword
+    const sword2 = new MeleeWeapon("sword-5", 7, "sword")
+    const club2 = new MeleeWeapon("club-6", 8, "club")
+    const axe2 = new MeleeWeapon("axe-4", 6, "axe")
+    const weaponsCollection = [sword2, club2, axe2]
+    const fireball2 = new Spell("fireball", 10, "burn", 10, 3) // no logic for burn yet
+    // const armourBreak2 = new Spell("armour break", 0, "armour down", 100, 3)
+    const attackBreak2 = new Spell("attack break", 0, "attack down", 100, 3) 
+    const freeze2 = new Spell("freeze", 0, "frozen", 85 , 1)
+    const spellsCollection = [fireball2, attackBreak2, freeze2]
+    const heal2 = new Heal("heal", 30)
+    const shield2 = new Heal("shield", 0, "shield", 40)
+    const attackUp = new Heal("attack up", 0, "attack up", 3)
+    const healsCollection = [heal2, shield2, attackUp]
 
     let startingPlayerCharacters = {
         meleePlayer: ken,
@@ -53,9 +69,9 @@ const GameScreen = () =>{
 
     // HAVE AN ARRAY OF MANY PRE-MADE ENEMIES, WHEN STARTING A NEW ROOM, PICK 3 
     // TO RANDOMLY PUT IN BY SETTING THEIR POSITIONS
-    const enemy1 = new Enemy("ORCenemy1", 35, 100, 10, "enemy1", "orc")
-    const enemy2 = new Enemy("ORCenemy2", 35, 100, 15, "enemy2", "orc")
-    const enemy3 = new Enemy("ORCenemy3", 35, 100, 20, "enemy3", "orc")
+    const enemy1 = new Enemy("ORCenemy1", 35, 1, 10, "enemy1", "orc")
+    const enemy2 = new Enemy("ORCenemy2", 35, 1, 15, "enemy2", "orc")
+    const enemy3 = new Enemy("ORCenemy3", 35, 1, 20, "enemy3", "orc")
 
     let startingEnemyCharacters = {
         enemy1: enemy1,
@@ -74,6 +90,32 @@ const GameScreen = () =>{
     const [ modalCharacter, setModalCharacter ] = useState(null)
     const [ movableSquares, setMovableSquares ] = useState([])
     const [ attackableSquares, setAttackableSquares ] = useState([])
+    const [ equipModalIsOpen, setEquipModalIsOpen ] = useState(false)
+    const [ mapModalIsOpen, setMapModalIsOpen ] = useState(false)
+    const [ allChestStatus, setAllChestStatus ] = useState(["", "", "", "", "", "", "", "", ""])
+
+
+
+
+    // MAP STUFF!!!!!!!!!!!!!!!!!!!!!!!!!!!! needs moved later!
+    const [ currentMapArea, setCurrentMapArea ] = useState(4)
+    // everytime currentArea changes, need to check if completed, if not => populate with enemies
+    const [ discoveredMapAreas, setDiscoveredMapAreas ] = useState([4])
+    // if pushing new areas the last index will always be uncompleted unless .length = 9 and token is available
+    // so if currentArea === last discovered index => need to populate with enemies and an upgrade
+    const [ areaUnlockTokenAvailable, setAreaUnlockTokenAvailable ] = useState(false)
+
+
+    const handleMapClick = (clickedArea) => {
+        console.log("clickedArea", clickedArea);
+        if (areaUnlockTokenAvailable) {
+            document.getElementById("map-cover-item" + clickedArea).classList.remove("map-cover-item-black")
+            setAreaUnlockTokenAvailable(false)
+        }
+    }
+    // END OF MAP STUFF!!!!!!!!!!!!!!!!!!!!!
+
+
 
     useEffect(() =>{
         if(usedCharacters.length === 3) {
@@ -104,13 +146,44 @@ const GameScreen = () =>{
         console.log("currentPhase", currentPhase)
 
         if ( playerCharacters.meleePlayer.healthPoints <= 0 && playerCharacters.magicPlayer.healthPoints <= 0 && playerCharacters.healerPlayer.healthPoints <= 0 ){
-            alert("GAME OVER!!!")
+            // alert("GAME OVER!!!")
             console.log("GAME OVER!!!")
+            setCurrentPhase("battleLose")
         } else if ( enemyCharacters.enemy1.healthPoints <= 0 && enemyCharacters.enemy2.healthPoints <= 0 && enemyCharacters.enemy3.healthPoints <= 0 ){
-            alert("YOU WIN!!!")
+            // alert("YOU WIN!!!")
             console.log("YOU WIN!!!")
+            setCurrentPhase("battleWin")
+            handleBattleWin()
         }
     }, [currentPhase])
+
+    const handleBattleWin = () => {
+        setAreaUnlockTokenAvailable(true)
+        const allLocations = [];
+
+        for (let i = 1; i <= 25; i++) {
+            allLocations.push(i);
+        }
+        const playerPositions = []
+        playerPositions.push(playerCharacters.meleePlayer.position)
+        playerPositions.push(playerCharacters.magicPlayer.position)
+        playerPositions.push(playerCharacters.healerPlayer.position)
+
+        const possibleChestLocations = allLocations.filter(location => !playerPositions.includes(location))
+        const randomLocationIndex = Math.floor(Math.random() * possibleChestLocations.length)
+        const randomChestPosition = possibleChestLocations[randomLocationIndex]
+
+        const chest = {status: "closed", position: randomChestPosition}
+        const allChestStatusForState = allChestStatus
+        allChestStatusForState[currentMapArea - 1] = chest
+        // OLD!!!!!!!!!!!
+        // const allChestStatusForState = allChestStatus.map((chestStatus, index) => {
+        //     if ( currentMapArea === index + 1) return chest
+        //     else return chestStatus
+        // })
+        setAllChestStatus(allChestStatusForState)
+
+    }
 
 
     const calculateMovementLocations = (startingPosition, numberOfStepsAllowed) => {
@@ -170,9 +243,14 @@ const GameScreen = () =>{
         return <p>status: {finished}</p>
     }
 
+    const handleOpenMap = () => {
+        setMapModalIsOpen(true)
+    }
+
     return (
         <div>
             <p>GameScreen</p>
+            <h1 onClick={() => handleOpenMap()}>MAP!</h1>
             <GameBoard 
                 selectedCharacter={selectedCharacter}
                 setSelectedCharacter={setSelectedCharacter}
@@ -189,6 +267,13 @@ const GameScreen = () =>{
                 setUsedCharacters={setUsedCharacters}
                 setAttackableSquares={setAttackableSquares}
                 displayStatusEffects={displayStatusEffects}
+                allChestStatus={allChestStatus}
+                setAllChestStatus={setAllChestStatus}
+                currentMapArea={currentMapArea}
+                weaponsCollection={weaponsCollection}
+                spellsCollection={spellsCollection}
+                healsCollection={healsCollection}
+                handleOpenMap={handleOpenMap}
             />
             <GameActionBar 
                 selectedCharacter={selectedCharacter}
@@ -205,6 +290,8 @@ const GameScreen = () =>{
                 setEnemyMovementPhase={setEnemyMovementPhase}
                 usedCharacters={usedCharacters}
                 setUsedCharacters={setUsedCharacters}
+                equipModalIsOpen={equipModalIsOpen}
+                setEquipModalIsOpen={setEquipModalIsOpen}
             />
             {modalCharacter && 
             <CharacterInfoModal
@@ -212,6 +299,10 @@ const GameScreen = () =>{
                 setModalIsOpen={setModalIsOpen}
                 modalCharacter={modalCharacter}
                 displayStatusEffects={displayStatusEffects}
+                equipModalIsOpen={equipModalIsOpen}
+                setEquipModalIsOpen={setEquipModalIsOpen}
+                
+                setSelectedCharacter={setSelectedCharacter}
             />}
             {/* {modalCharacter && <Modal
                 className="modal-container"
@@ -232,6 +323,41 @@ const GameScreen = () =>{
                 <p>status: {modalCharacter.statusEffects[0] ? modalCharacter.statusEffects[0].effect : ""}</p>
                 {displayStatusEffects()}
             </Modal>} */}
+
+            {/* WORKING MAP CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+            {/* <div className="full-map-container">
+                <div className="map-cover-container">
+                    <div className={"map-cover-item map-cover-item-black"} id="map-cover-item1" onClick={() => handleMapClick(1)}></div>
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item2" onClick={() => handleMapClick(2)}></div>
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item3" onClick={() => handleMapClick(3)}></div>  
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item4" onClick={() => handleMapClick(4)}></div>
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item5" onClick={() => handleMapClick(5)}></div>
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item6" onClick={() => handleMapClick(6)}></div>  
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item7" onClick={() => handleMapClick(7)}></div>
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item8" onClick={() => handleMapClick(8)}></div>
+                    <div className="map-cover-item map-cover-item-black" id="map-cover-item9" onClick={() => handleMapClick(9)}></div>  
+                </div>
+                <img src={require('../assets/full desert.jpg').default} alt="full map" className="full-map-image"></img> 
+            </div> */}
+            {/* END WORKING MAP CODE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
+
+
+            {/* REMOVE!!!!! OR FIX */}
+            {/* <EquipModal 
+                    equipModalIsOpen={equipModalIsOpen} 
+                    setEquipModalIsOpen={setEquipModalIsOpen}
+                    playerCharacters={playerCharacters}
+                    setPlayerCharacters={setPlayerCharacters}
+
+                    // selectedCharacter={modalCharacter}
+                /> */}
+
+            <MapModal 
+                mapModalIsOpen={mapModalIsOpen} 
+                setMapModalIsOpen={setMapModalIsOpen}
+                areaUnlockTokenAvailable={areaUnlockTokenAvailable}
+                setAreaUnlockTokenAvailable={setAreaUnlockTokenAvailable}
+            />
         </div>
     )
 }

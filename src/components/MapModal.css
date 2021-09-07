@@ -1,0 +1,11 @@
+.map-modal {
+    background-color: yellow;
+    width: 95vw;
+
+    position: fixed;
+	top: 5%;
+	left: 2.5%;
+    padding: 10px;
+    box-sizing: border-box;
+    /* overflow: scroll; */
+}

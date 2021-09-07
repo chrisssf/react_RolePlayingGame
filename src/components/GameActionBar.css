@@ -144,8 +144,8 @@
   }
 
   .hidden {
-    /* display: none; */
-    visibility: hidden;
+    display: none;
+    /* visibility: hidden; */
   }
 
   .attack-left {

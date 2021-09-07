@@ -3,9 +3,6 @@ import React from 'react';
 import Modal from 'react-modal'
 
 import './AttackPhase.css'
-
-
-    
     
 const EquipModal = ({
     equipModalIsOpen, 
@@ -54,7 +51,9 @@ const EquipModal = ({
 
                     { itemType === "spells" && <p>Damage: +{item.spellPower}</p>}
                     { itemType === "spells" && <p>Effect: {item.effectName} with {item.activationChance}% chance for {item.duration} turns</p>}
-                    {/* { itemType === "heals" && <p>Damage: {item.attackPower}</p>} */}
+                    { itemType === "heals" && <p>Heal: +{item.healPower} HP</p>}
+                    { itemType === "heals" && item.effectName !== undefined && <p>Effect: {item.effectName} </p>}
+
                     {/* <button onClick={() => handleEquipItem(item)}>Equip</button> */}
                 </div>
             )
@@ -70,7 +69,7 @@ const EquipModal = ({
     
     return (
         <>
-            {console.log("equipmentType", selectedCharacter)}
+            {console.log("equipmentType", equipmentType)}
             {equipmentType && <Modal
                 className="weapon-select-modal-container"
                 appElement={document.getElementById('root')}

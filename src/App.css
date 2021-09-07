@@ -22,15 +22,16 @@ h3 {
 }
 
 .full-map-container {
-  width: 90vw;
+  /* width: 90vw; */
+  width: 80vh;
+  left: 5%;
   position: relative;
   border: 1px solid black;
 }
 
 .full-map-image {
-
   width: 100%;
-  position: absolute;
+  /* position: absolute; */
   top: 0px;
   left: 0px;
   z-index: 1;
@@ -40,55 +41,21 @@ h3 {
   /* object-fit: cover; */
 
   /* clip-path: inset(35% 50% 0% 0%); */
-
 }
 
 .map-cover-container {
-  width: 90vw;
-  height: 90vw;
+  /* width: 90vw;
+  height: 90vw; */
+  width: 80vh;
+  height: 80vh;
   position: absolute;
   top: 0px;
   left: 0px;
   z-index: 2;
 
-
   display: grid;
   grid-template-columns: auto auto auto;
   /* background-color: #2196F3; */
-}
-
-#map-cover-item1 {
-  background-color: black;
-}
-
-#map-cover-item2 {
-  background-color: black;
-}
-
-#map-cover-item3 {
-  background-color: black;
-}
-
-/* #map-cover-item4 {
-  background-color: black;
-} */
-
-#map-cover-item5 {
-  background-color: black;
-}
-#map-cover-item6 {
-  background-color: black;
-}
-
-#map-cover-item7 {
-  background-color: black;
-}
-#map-cover-item8 {
-  background-color: black;
-}
-
-#map-cover-item9 {
-  background-color: black;
 }
 
 .map-cover-item {
@@ -96,8 +63,13 @@ h3 {
   font-size: 30px;
   text-align: center;
   width: 100%;
-
   /* border: 1px solid black; */
+}
+
+.map-cover-item-black {
+  background-color: black;
+  border: 1px solid grey;
+
 }
 
 .bibliography-container {
@@ -117,3 +89,15 @@ h3 {
 }
 
 .content p {margin: 0;}
+
+@media screen and (max-width: 700px){
+  .full-map-container {
+    /* width: 90vw; */
+    width: 80vw;
+  }
+  .map-cover-container {
+    width: 80vw;
+    height: 80vw;
+  }
+
+}

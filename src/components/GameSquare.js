@@ -3,12 +3,14 @@ import React, { useState, useEffect, useRef } from 'react';
 // import Modal from 'react-modal'
 import './GameSquare.css'
 import CharacterInfoModal from '../components/CharacterInfoModal.js'
+import RewardModal from '../components/RewardModal.js'
 import mageImage from '../assets/mage.png'
 import knightImage from '../assets/knight.png'
 import priestImage from '../assets/priest.png'
 import orcImage from '../assets/orc.png'
 
 import sword from '../assets/axe.png'
+import EquipModal from './EquipModal.js' // REMOVE OR FIX
 
 
 // import boardImages from '../assets/boardImages'
@@ -34,7 +36,14 @@ const GameSquare = ({
     usedCharacters,
     setUsedCharacters,
     setAttackableSquares,
-    displayStatusEffects
+    displayStatusEffects,
+    allChestStatus,
+    setAllChestStatus,
+    currentMapArea,
+    weaponsCollection,
+    spellsCollection,
+    healsCollection,
+    handleOpenMap
  }) =>{
 
     // TRYING TO GET REFS WORKING!!!!!!!!!!!!!!!
@@ -54,6 +63,10 @@ const GameSquare = ({
     const [ squareStyling, setSquareStyling ] = useState("")
     const [ character, setCharacter ] = useState(null)
     const [ modalIsOpen, setModalIsOpen ] = useState(false)
+    const [ rewardModalIsOpen, setRewardModalIsOpen ] = useState(false)
+    const [randomWeapon, setRandomWeapon ] = useState(null)
+    const [randomSpell, setRandomSpell ] = useState(null)
+    const [randomHeal, setRandomHeal ] = useState(null)
 
 //test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     // const [ fing, setFing ] = useState("meleePlayer")
@@ -216,6 +229,52 @@ const right = () => {
 
     }
 
+    const displayChest = () => {
+        console.log("currentMapArea", currentMapArea);
+        console.log("current chest status", allChestStatus[currentMapArea - 1]);
+        if (allChestStatus[currentMapArea - 1] !== "" && allChestStatus[currentMapArea - 1].position === squareNumber){
+            if(allChestStatus[currentMapArea - 1].status === "closed"){
+                return <img src={require('../assets/closedchest.png').default} alt={"chest"}  className="chest-image" onClick={() => handleOpenChest()}></img>
+            } else {
+                return <img src={require('../assets/openchest.png').default} alt={"chest"}  className="chest-image"></img>
+            }
+        }
+    }
+
+    
+
+    const handleOpenChest = () => {
+        const chest = {status: "open", position: squareNumber}
+        const allChestStatusForState = allChestStatus
+        allChestStatusForState[currentMapArea - 1] = chest
+
+        // const allChestStatusForState = allChestStatus.map((chestStatus, index) => {
+        //     if ( currentMapArea === index + 1) return chest
+        //     else return chestStatus
+        // })
+
+        if (randomHeal === null && randomSpell === null && randomWeapon === null) {
+            const randomWeaponIndex = Math.floor(Math.random() * weaponsCollection.length)
+            setRandomWeapon(weaponsCollection[randomWeaponIndex])
+
+            const randomSpellIndex = Math.floor(Math.random() * spellsCollection.length)
+            setRandomSpell(spellsCollection[randomSpellIndex])
+
+            const randomHealIndex = Math.floor(Math.random() * healsCollection.length)
+            setRandomHeal(healsCollection[0])
+        }
+
+        setAllChestStatus(allChestStatusForState)
+        setTimeout(() => {
+            setRewardModalIsOpen(true)
+            allChestStatusForState[currentMapArea - 1] = {status: "closed", position: squareNumber}
+            setAllChestStatus(allChestStatusForState)
+            
+        }, 400)
+
+        
+    }
+
 
     const displayImage = () => {
         let htmlToReturn = null
@@ -303,7 +362,7 @@ const right = () => {
                 {image ? 
                     <>
                         <progress id={"health" + squareNumber} value={character.healthPoints} max={character.maxHealthPoints} className="health-bar"></progress>
-                        {character.statusEffects.find(x => x.effect === "shield") !== undefined && <img src={require('../assets/' + 'shield' + '.png').default} alt="shielded" className="shield-background" ></img>}
+                        {character.statusEffects.find(status => status.effect === "shield") !== undefined && <img src={require('../assets/' + 'shield' + '.png').default} alt="shielded" className="shield-background" ></img>}
                         <img src={image} alt={image} className="game-square-image" onClick={() => handleImageClick(character)}></img> 
                         {/* <img src={sword} ref={testImage} alt={"image"}  className="test-image hidden"></img>  */}
                         
@@ -317,7 +376,7 @@ const right = () => {
                 : 
                     // THIS IS HELPFUL DURING DEVELOPMENT!!!!!!!!!!!!!!!!!!
                     // <p>{squareNumber}</p> 
-                    <p></p>
+                    null
 
                 }
 
@@ -329,7 +388,7 @@ const right = () => {
                 {/* <img src={require('../assets/' + 'orc' + '.png').default} id={"attackImage" + squareNumber} alt={"image"}  className="attack-image hidden"></img>  */}
                 {/* starts with very small image as placeholder...... */}
                 <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" id={"attackImage" + squareNumber} alt={"image"}  className="attack-image hidden"></img>
-
+                {allChestStatus[currentMapArea - 1].position === squareNumber && displayChest()}
             </div>
             {/* {character && selectedCharacter && <Modal
                 className="attack-modal-container"
@@ -361,6 +420,32 @@ const right = () => {
                 handleModalAttack={handleModalAttack}
                 displayStatusEffects={displayStatusEffects}
             />}
+            {randomSpell !== null && randomWeapon !== null && randomHeal !== null && <RewardModal 
+                rewardModalIsOpen={rewardModalIsOpen}
+                setRewardModalIsOpen={setRewardModalIsOpen}
+                playerCharacters={playerCharacters}
+                randomHeal={randomHeal}
+                randomWeapon={randomWeapon}
+                randomSpell={randomSpell}
+                setPlayerCharacters={setPlayerCharacters}
+                setAllChestStatus={setAllChestStatus}
+                allChestStatus={allChestStatus}
+                currentMapArea={currentMapArea}
+                weaponsCollection={weaponsCollection}
+                spellsCollection={spellsCollection}
+                healsCollection={healsCollection}
+                handleOpenMap={handleOpenMap}
+            />}
+
+
+            {/* REMOVE OR FIX */}
+            {/* {selectedCharacter && <EquipModal 
+                    equipModalIsOpen={equipModalIsOpen} 
+                    setEquipModalIsOpen={setEquipModalIsOpen}
+                    playerCharacters={playerCharacters}
+                    setPlayerCharacters={setPlayerCharacters}
+                    selectedCharacter={selectedCharacter}
+            />} */}
         </>
     )
 }
