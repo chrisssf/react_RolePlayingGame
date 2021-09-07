@@ -72,6 +72,12 @@ h3 {
 
 }
 
+.map-cover-item-yellow {
+  background-color: yellow;
+  border: 1px solid grey;
+
+}
+
 .bibliography-container {
   margin-top: 100px;
   text-align: center;

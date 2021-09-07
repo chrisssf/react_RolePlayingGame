@@ -14,7 +14,7 @@ const MapModal = ({
 
     const [ currentMapArea, setCurrentMapArea ] = useState(4)
     // everytime currentArea changes, need to check if completed, if not => populate with enemies
-    const [ discoveredMapAreas, setDiscoveredMapAreas ] = useState([4])
+    const [ discoveredMapAreas, setDiscoveredMapAreas ] = useState([4, 5])
     // if pushing new areas the last index will always be uncompleted unless .length = 9 and token is available
     // so if currentArea === last discovered index => need to populate with enemies and an upgrade
 
@@ -31,6 +31,13 @@ const MapModal = ({
                     // document.getElementById("map-cover-item" + area).classList.remove("map-cover-item-black")
                     refsArrayForMapCover.current[area - 1].current.classList.remove("map-cover-item-black")
                 })
+                if(areaUnlockTokenAvailable){
+                    const unlockableMapLocations = calculatePossibleMapUnlockLocations()
+                    unlockableMapLocations.forEach(location => {
+                        refsArrayForMapCover.current[location - 1].current.classList.remove("map-cover-item-black")
+                        refsArrayForMapCover.current[location - 1].current.classList.add("map-cover-item-yellow")
+                    })
+                }
             }, 5) // setTimeout is needed here because REF is null without it.
                   // Testing showed this is due to being inside the <Modal>, possibly find better solution later!
         }
@@ -38,10 +45,31 @@ const MapModal = ({
 
 
     const handleMapClick = (clickedArea) => {
-        if (areaUnlockTokenAvailable) {
+
+        const unlockableMapLocations = calculatePossibleMapUnlockLocations()
+
+        if (areaUnlockTokenAvailable && unlockableMapLocations.includes(clickedArea)) {
+            unlockableMapLocations.forEach(location => {
+                refsArrayForMapCover.current[location - 1].current.classList.remove("map-cover-item-yellow")
+                if(location !== clickedArea) refsArrayForMapCover.current[location - 1].current.classList.add("map-cover-item-black")
+            })
             setDiscoveredMapAreas([...discoveredMapAreas, clickedArea])
             setAreaUnlockTokenAvailable(false)
         }
+    }
+
+    const calculatePossibleMapUnlockLocations = () => {
+        const mapCoverWidth = 3
+        const mapCoverheight = 3
+        const unlockableMapLocations = []
+        discoveredMapAreas.forEach((mapArea) => {
+            const currentRow = Math.ceil(mapArea / mapCoverWidth)
+            if(mapArea - mapCoverWidth > 0 && !discoveredMapAreas.includes(mapArea - mapCoverWidth) && !unlockableMapLocations.includes(mapArea - mapCoverWidth)) unlockableMapLocations.push(mapArea - mapCoverWidth)
+            if(mapArea + mapCoverWidth <= mapCoverWidth * mapCoverheight && !discoveredMapAreas.includes(mapArea + mapCoverWidth) && !unlockableMapLocations.includes(mapArea + mapCoverWidth)) unlockableMapLocations.push(mapArea + mapCoverWidth)
+            if(mapArea - 1 > 0 && currentRow === Math.ceil((mapArea - 1) / mapCoverWidth) && !discoveredMapAreas.includes(mapArea - 1) && !unlockableMapLocations.includes(mapArea - 1)) unlockableMapLocations.push(mapArea - 1)
+            if(mapArea + 1 <= mapCoverWidth * mapCoverheight && currentRow === Math.ceil((mapArea + 1) / mapCoverWidth) && !discoveredMapAreas.includes(mapArea + 1) && !unlockableMapLocations.includes(mapArea + 1)) unlockableMapLocations.push(mapArea + 1)
+        })
+        return unlockableMapLocations
     }
 
     const createMapCoverGrid = () => {
